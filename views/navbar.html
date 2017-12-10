@@ -1,0 +1,123 @@
+<style>
+
+
+.navcontainer{
+  opacity: 1;
+  background: #000000;
+
+}
+md-nav-bar .md-button._md-nav-button.md-unselected{
+color: rgba(237, 233, 10, 0.945);
+}
+
+md-nav-bar .md-button._md-nav-button.md-hover{
+color: rgba(255, 255, 255, 0.986);
+}
+
+.md-button.md-accent {
+    color: rgb(57, 239, 187);
+}
+
+#grad1{
+    min-height: 4rem;
+    background-color: #563d7c;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.05),inset 0 -1px 0 rgba(0,0,0,.1);
+    padding-right: .5rem;
+    padding-left: .5rem;
+}
+
+.navcontainer li:hover{
+  cursor: pointer;
+  padding-left: 2vw;
+  width: 100%;
+  background: rgba(80, 78, 78, 0.1);
+  background: -webkit-linear-gradient(90deg, rgba(225, 225, 225, 0.1), rgba(80, 78, 78, 0));
+  background: linear-gradient(90deg, rgba(225, 225, 225, 0.1), rgba(80, 78, 78, 0));
+}
+
+.fontsizetab{
+    font-size: 0.7em;
+  }
+
+@media screen and (min-width: 769px){
+
+  .fontsizetab{
+    font-size: 1.0em;
+  }
+
+
+}
+</style>
+<md-content flex>
+        
+    <md-nav-bar layout="column"
+        id="grad1"
+        md-no-ink-bar="disableInkBar"
+        md-selected-nav-item="currentNavItem"
+        nav-bar-aria-label="navigation links"
+        
+        >
+
+        <md-button ng-hide="status()" class="menu md-icon-button" ng-click="open()">
+            <md-icon style="color:white;" md-svg-icon="menu"></md-icon>
+        </md-button>
+
+        <md-button ng-show="status()" class="menu md-icon-button" ng-click="close()">
+            <md-icon style="color:white;" md-svg-icon="close"></md-icon>
+        </md-button>
+
+        <md-nav-item md-nav-href="#/" name="Home">
+        Home
+        </md-nav-item>
+        <md-nav-item md-nav-href="#/about" name="About">
+        About
+        </md-nav-item>
+        <md-nav-item md-nav-href="#/" name="Contact">
+        Contact
+        </md-nav-item>
+        <span flex></span>
+        <span flex></span>
+        <md-nav-item md-nav-href="#/login" layout-align="end" name="Login">Login</md-nav-item>
+        <md-nav-item md-nav-href="#/signup"  layout-align="end" name="Signup">Signup</md-nav-item>              
+    </md-nav-bar>
+    
+    <md-content layout="column" layout-fill  >
+    <md-sidenav 
+        id="nav1"
+        md-component-id="left"   
+        class="md-sidenav-left"
+        md-whiteframe="4"
+        style="
+        opacity:1;
+        height: 100vh;
+        max-width: 20vw;
+        z-index: 9999999999;
+        overflow-x: hidden;
+        position: fixed;
+        margin-top:7vh;
+        "
+       >
+            <md-toolbar style="background-color:black;">
+            <h4 class="md-toolbar-tools" style="text-align:center">DASHBOARD</h4>
+            </md-toolbar>
+            <md-list class="navcontainer">
+                <!-- List item #1 -->
+                <ul>
+                    <a href="/#newTrans" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">NEW TRANSACTION</li></a>                        
+                    
+                    <a href="/#inventory" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">INVENTORY</li></a>                        
+                    
+                    <a href="/#balance" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">CHECK BALANCE</li></a>                        
+                    
+                    <a href="/#pastTrans" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">PAST TRANSACTIONS</li></a>                        
+                    
+                    <a href="/#verifyTrans" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">VERIFY TRANSACTION</li></a>                        
+                                 
+                </ul>
+                
+                
+                        
+            </md-list>
+    </md-sidenav>    
+</md-content>
+</md-content>
