@@ -3,7 +3,7 @@
 
 .navcontainer{
   opacity: 1;
-  background: #000000;
+  background: #b9b4b4;
 
 }
 md-nav-bar .md-button._md-nav-button.md-unselected{
@@ -15,7 +15,7 @@ color: rgba(255, 255, 255, 0.986);
 }
 
 .md-button.md-accent {
-    color: rgb(57, 239, 187);
+    color: rgb(255, 255, 255);
 }
 
 #grad1{
@@ -81,7 +81,7 @@ color: rgba(255, 255, 255, 0.986);
         <md-nav-item md-nav-href="#/signup"  layout-align="end" name="Signup">Signup</md-nav-item>              
     </md-nav-bar>
     
-    <md-content layout="column" layout-fill  >
+    <md-content layout="column" layout-fill   >
     <md-sidenav 
         id="nav1"
         md-component-id="left"   
@@ -90,32 +90,29 @@ color: rgba(255, 255, 255, 0.986);
         style="
         opacity:1;
         height: 100vh;
-        max-width: 20vw;
+        max-width: 30vw;
         z-index: 9999999999;
         overflow-x: hidden;
         position: fixed;
-        margin-top:7vh;
+        margin-top:8vh;        
         "
        >
-            <md-toolbar style="background-color:black;">
+            <md-toolbar>
             <h4 class="md-toolbar-tools" style="text-align:center">DASHBOARD</h4>
             </md-toolbar>
             <md-list class="navcontainer">
-                <!-- List item #1 -->
                 <ul>
-                    <a href="/#newTrans" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">NEW TRANSACTION</li></a>                        
+                    <a href="/#newTrans" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">NEW TRANSACTION</li></a>                        
                     
-                    <a href="/#inventory" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">INVENTORY</li></a>                        
+                    <a href="/#inventory" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">INVENTORY</li></a>                        
                     
-                    <a href="/#balance" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">CHECK BALANCE</li></a>                        
+                    <a href="/#balance" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">CHECK BALANCE</li></a>                        
                     
-                    <a href="/#pastTrans" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">PAST TRANSACTIONS</li></a>                        
+                    <a href="/#pastTrans" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">PAST TRANSACTIONS</li></a>                        
                     
-                    <a href="/#verifyTrans" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">VERIFY TRANSACTION</li></a>                        
+                    <a href="/#verifyTrans" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">VERIFY TRANSACTION</li></a>                        
                                  
-                </ul>
-                
-                
+                </ul>              
                         
             </md-list>
     </md-sidenav>    

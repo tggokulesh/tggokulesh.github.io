@@ -1,1 +1,109 @@
-<p>This is the newTrans view.</p>
+<style>
+
+.card{
+    width: 80vw;
+    height: auto;
+}
+
+/* @media screen and (min-width: 768px){
+    .card {
+    width:200vw;
+    height:auto;
+} */
+
+.card p{
+    color: rgb(39, 38, 38);
+    }
+
+.card img{
+  position: relative;
+  width: 50%;
+  height: auto;
+  margin: 10% 20%;
+  box-sizing: content-box;
+}
+    
+.card:hover{
+  border: 2px solid rgb(65, 3, 61);
+  box-shadow: 3px 3px 25px 2px gainsboro;
+  
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.demo-dialog-example {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+      0 13px 19px 2px rgba(0, 0, 0, 0.14),
+      0 5px 24px 4px rgba(0, 0, 0, 0.12);
+  width: 500px;
+}
+</style>
+
+<div class="md-paading">
+
+<div style="text-align:center;" layout-align="center" layout-margin="4% 5%">
+    <md-button class="md-raised md-primary" ng-click="newTrans()" style="margin-top: 25px;font-size: 1em;" >New Transaction</md-button>
+</div>
+
+<div layout="row" layout-xs="column" layout-align="center">
+
+    <md-card class="card" ng-click="selectGoods()">
+      <img ng-src="images/full_basket_shopping-512.png" class="md-card-image" alt="Select Goods">
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Select Goods</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <p>
+            Enter name of the goods and give description about them!
+        </p>
+      </md-card-content>
+    </md-card>
+
+    <md-card class="card"  ng-click="selectGoods()">
+            <img ng-src="images/quantity.png" class="md-card-image" style="margin-top:10%" alt="Decide quantity,Buying or selling?">
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-headline">Decide Quantity. Buying or Selling?</span>
+              </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+              <p>
+                Enter the quantity of the good and choose to buy or sell!
+              </p>
+            </md-card-content>
+    </md-card>
+
+    <md-card class="card"  ng-click="selectGoods()">
+            <img ng-src="images/participant.png" class="md-card-image" alt="other participants">
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-headline">Select other participants</span>
+              </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+              <p>
+                Enter other participants
+            </p>
+            </md-card-content>
+    </md-card>
+
+
+    <md-card class="card"  ng-click="selectGoods()">
+            <img ng-src="images/bank.jpg" class="md-card-image" alt="Bank">
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-headline">Choose Bank</span>
+              </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+              <p>
+                  Enter a Bank name
+              </p>
+            </md-card-content>
+    </md-card> 
+
+</div>    
+</div>

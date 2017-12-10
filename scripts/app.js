@@ -25,9 +25,9 @@ angular.module('protoApp', [
       .icon("close","./images/svg/close.svg")
       .icon("share", "./images/svg/share.svg", 24);
       
-      $mdThemingProvider.theme('default')
-      .primaryPalette('brown')
-      .accentPalette('red');
+      // $mdThemingProvider.theme('default')
+      // .primaryPalette('brown')
+      // .accentPalette('red');
       })
   .config(function ($routeProvider) {
     $routeProvider

@@ -1,0 +1,47 @@
+<style>
+
+.demo-dialog-content {
+  padding: 10px 15px;
+  width: 100%;
+}
+
+.demo-dialog-button {
+  width: 100%;
+}
+
+
+</style>
+<div role="dialog" aria-label="Select goods" layout="column" layout-align="center center">
+        <md-toolbar>
+          <div class="md-toolbar-tools">
+            <h2>Step1: Select goods</h2>
+          </div>
+        </md-toolbar>
+      
+        <div class="demo-dialog-content" layout="column" layout-xs="column" >
+
+                <md-input-container>
+                        <label>Name of the good</label>
+                        <input ng-model="name" type="text">
+                </md-input-container>
+                        
+                <md-input-container>
+                <label>Description</label>
+                <textarea ng-model="description"></textarea>
+                </md-input-container>
+
+                <md-input-container>
+                        <label>No of Goods</label>
+                        <input ng-model="inventory" type="number"></textarea>
+                </md-input-container>
+
+        </div>
+      
+        <div layout="row" class="demo-dialog-button">
+          <md-button md-autofocus flex class="md-primary" ng-click="addGoods()">
+            Submit
+          </md-button>
+        </div>
+      </div>
+      
+      
