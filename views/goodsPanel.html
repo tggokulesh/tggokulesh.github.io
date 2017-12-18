@@ -1,6 +1,6 @@
 <style>
 
-.demo-dialog-content {
+.goods-dialog {
   padding: 10px 15px;
   width: 100%;
 }
@@ -9,25 +9,24 @@
   width: 100%;
 }
 
-
 </style>
-<div role="dialog" aria-label="Select goods" layout="column" layout-align="center center">
+<div role="dialog" aria-label="Select goods" layout="column" layout-align="center">
         <md-toolbar>
           <div class="md-toolbar-tools">
-            <h2>Step1: Select goods</h2>
+            <h2>Step 1: Select goods</h2>
           </div>
         </md-toolbar>
       
-        <div class="demo-dialog-content" layout="column" layout-xs="column" >
+        <div class="goods-dialog" layout="column" layout-xs="column" >
 
-                <md-input-container>
+                <!-- <md-input-container>
                         <label>Name of the good</label>
                         <input ng-model="name" type="text">
-                </md-input-container>
+                </md-input-container> -->
                         
                 <md-input-container>
-                <label>Description</label>
-                <textarea ng-model="description"></textarea>
+                <label>Description of Good</label>
+                <input ng-model="description"></input>
                 </md-input-container>
 
                 <md-input-container>

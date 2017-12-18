@@ -1,0 +1,42 @@
+<style>
+    
+    .partici-dialog {
+      padding: 10px 15px;
+      width: 100%;
+    }
+    
+    .demo-dialog-button {
+      width: 100%;
+    }
+    
+    
+    </style>
+    <div role="dialog" aria-label="Select participant" layout="column" layout-align="center center">
+            <md-toolbar>
+              <div class="md-toolbar-tools">
+                <h2>Step 3: Select other participants</h2>
+              </div>
+            </md-toolbar>
+          
+            <div class="partici-dialog" layout="column" layout-xs="column" >
+                               
+                    <md-input-container>
+                        <label>Email Id</label>
+                        <input ng-model="email" type="email"></input>
+                    </md-input-container>
+        
+                    <md-input-container>
+                            <label>Company Name</label>
+                            <input ng-model="CompanyName" type="text"/>
+                    </md-input-container>
+    
+            </div>
+          
+            <div layout="row" class="demo-dialog-button">
+              <md-button md-autofocus flex class="md-primary" ng-click="addParticipant()">
+                Submit
+              </md-button>
+            </div>
+          </div>
+          
+          

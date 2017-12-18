@@ -1,0 +1,51 @@
+<style>
+    .quantity-dialog {
+      padding: 10px 15px;
+      width: 100%;
+    }
+    
+    .demo-dialog-button {
+      width: 100%;
+    }
+</style>
+    <div role="dialog" aria-label="decide Quantity" layout="column" layout-align="center center">
+            <md-toolbar>
+              <div class="md-toolbar-tools">
+                <h2>Step 2: Decide Quantity, buying or Selling</h2>
+              </div>
+            </md-toolbar>
+          
+            <div class="quantity-dialog" layout="column" layout-xs="column" >
+
+                    <md-input-container>
+                            <label>Enter Password for transaction</label>
+                            <input ng-model="rhash" type="text">
+                    </md-input-container>
+    
+                    <md-input-container>
+                            <label>Quantity of the good</label>
+                            <input ng-model="quantity" type="number">
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>Price of the good</label>
+                        <input ng-model="price" type="number">
+                    </md-input-container>
+                            
+                    <md-radio-group ng-model="state" layout="row" layout-xs="column">
+                        
+                        <md-radio-button value="Selling" class="md-primary">Selling</md-radio-button>
+                        <md-radio-button value="Buying"> Buying </md-radio-button>
+                        
+                    </md-radio-group>
+    
+            </div>
+          
+            <div layout="row" class="demo-dialog-button">
+              <md-button md-autofocus flex class="md-primary" ng-click="addQuantity()">
+                Submit
+              </md-button>
+            </div>
+          </div>
+          
+          

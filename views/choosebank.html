@@ -1,0 +1,41 @@
+<style>
+    
+    .bank-dialog {
+      padding: 10px 15px;
+      width: 100%;
+    }
+    
+    .demo-dialog-button {
+      width: 100%;
+    }
+    
+</style>
+    <div role="dialog" aria-label="Select bank" layout="column" layout-align="center center">
+            <md-toolbar>
+              <div class="md-toolbar-tools">
+                <h2>Step 4: Select Bank</h2>
+              </div>
+            </md-toolbar>
+          
+            <div class="bank-dialog" layout="column" layout-xs="column" >
+                                
+                    <md-input-container>
+                    <label>Email Id</label>
+                    <input ng-model="email" type="email"></input>
+                    </md-input-container>
+    
+                    <md-input-container>
+                            <label>Bank Name</label>
+                            <input ng-model="CompanyName" type="text"/>
+                    </md-input-container>
+    
+            </div>
+          
+            <div layout="row" class="demo-dialog-button">
+              <md-button md-autofocus flex class="md-primary" ng-click="addBank()">
+                Submit
+              </md-button>
+            </div>
+          </div>
+          
+          

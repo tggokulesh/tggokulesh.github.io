@@ -1,1 +1,27 @@
-<p>This is the inventory view.</p>
+<style>
+        
+    .card{
+            height: auto;
+        }
+</style>
+<md-card class="card" layout-align="center">
+        <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Goods ID</th>
+                            <th>Quantity</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="good in goods">
+                            <td>{{good.GoodsID}}</td>
+                            <td>{{good.rinventory}}</td>
+                            <td>{{good.Description}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>    
+</md-card>
+

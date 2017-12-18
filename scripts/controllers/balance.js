@@ -9,9 +9,5 @@
  */
 angular.module('protoApp')
   .controller('BalanceCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+    
   });
