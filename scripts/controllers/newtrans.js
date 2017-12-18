@@ -8,7 +8,7 @@
  * Controller of the protoApp
  */
 angular.module('protoApp')
-  .controller('NewtransCtrl', function ($scope,$http,$mdPanel,$controller,$rootScope) {
+  .controller('NewtransCtrl', function ($scope,$http,$mdPanel,$mdToast,$rootScope) {
     $scope._mdPanel = $mdPanel;
     $scope.openFrom = "button";
     $scope.closeTo = "button";
@@ -51,7 +51,7 @@ angular.module('protoApp')
 
     var bankObject = {
       "$class": "org.acme.retail.Bank",
-      "bhash": "",
+      "bhash": "b",
       "email": "",
       "CompanyName": ""
     };
@@ -70,6 +70,59 @@ angular.module('protoApp')
     var isStep2 = false;
     var isStep3 = false;
     var isStep4 = false;
+    
+    var last = {
+      bottom: false,
+      top: true,
+      left: false,
+      right: true
+    };
+
+    $scope.Step1 = "step 1";
+    $scope.Step2 = "step 2";
+    $scope.Step3 = "step 3";
+    $scope.Step4 = "step 4";
+
+    function stepStatus(step,message){
+      switch(step){
+        case 'Step1': $scope.Step1 = message;break;
+        case 'Step2': $scope.Step2 = message;break;
+        case 'Step3': $scope.Step3 = message;break;
+        case 'Step4': $scope.Step4 = message;break;
+        }
+    }
+    
+  $scope.toastPosition = angular.extend({},last);
+
+  $scope.getToastPosition = function() {
+    sanitizePosition();
+
+    return Object.keys($scope.toastPosition)
+      .filter(function(pos) { return $scope.toastPosition[pos]; })
+      .join(' ');
+  };
+
+  function sanitizePosition() {
+    var current = $scope.toastPosition;
+
+    if ( current.bottom && last.top ) current.top = false;
+    if ( current.top && last.bottom ) current.bottom = false;
+    if ( current.right && last.left ) current.left = false;
+    if ( current.left && last.right ) current.right = false;
+
+    last = angular.extend({},current);
+  }
+
+    function  showSimpleToast(message) {
+      var pinTo = $scope.getToastPosition();
+  
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(message)
+          .position(pinTo )
+          .hideDelay(3000)
+      );
+    };
 
     var position = $scope._mdPanel.newPanelPosition()
     .absolute()
@@ -104,6 +157,11 @@ angular.module('protoApp')
       return o;
     };
 
+    $scope.demo = {
+      showTooltip : false,
+      tipDirection : 'top'
+    };
+
     $scope.selectGoods = function() {
       selectPanel(GoodsCtrl,'views/goodsPanel.html','goods-dialog');      
     };
@@ -120,6 +178,27 @@ angular.module('protoApp')
       selectPanel(BankCtrl,'views/choosebank.html','bank-dialog');            
     }; 
        
+    $scope.submitTrans = function(){
+      if(isStep1 && isStep2 && isStep3 && isStep4){
+        TransactionObject.goods = "resource:org.acme.retail.Goods#"+goodObject.GoodsID;
+        TransactionObject.listing = "resource:org.acme.retail.GoodsListing#"+goodsListObject.ListingID;
+        TransactionObject.other = "resource:org.acme.retail.Other#"+participantObject.email;
+        TransactionObject.bank = "resource:org.acme.retail.Bank#"+bankObject.email;
+        TransactionObject.retailer = "resource:org.acme.retail.Retailer#"+goodObject.retailer;
+        // TransactionObject.transactionId = shuffle(numbers).toString();
+        TransactionObject.timestamp = Date.now();
+
+        $http.post("http://52.87.34.178:3000/api/Offer",TransactionObject).then((res)=>{
+          if(res.status===200){
+            $scope.submit = true;
+            showSimpleToast("Transaction successfully done");
+          }
+      });
+      }else{
+        alert("Please complete above Steps to submit the Transaction");
+      }
+    };
+
     function selectPanel(panelCtrl,panelUrl,panelclass){
 
       config.controller = panelCtrl;
@@ -138,7 +217,8 @@ angular.module('protoApp')
           $http.post("http://52.87.34.178:3000/api/Goods",goodObject).then((res)=>{
               if(res.status===200){
                 isStep1 = true;
-                alert("Successfully done");
+                stepStatus('Step1',"step 1 completed!");
+                showSimpleToast("Step 1 completed!");
               }
               $scope._mdPanelRef && $scope._mdPanelRef.close();  
             });
@@ -164,7 +244,8 @@ angular.module('protoApp')
             $http.post("http://52.87.34.178:3000/api/GoodsListing",goodsListObject).then((res)=>{
                 if(res.status===200){
                   isStep2 = true;
-                  alert("Successfully done");
+                  stepStatus('Step2',"step 2 completed!");
+                  showSimpleToast("Step 2 completed!");
                 }
                 $scope._mdPanelRef && $scope._mdPanelRef.close();            
             });
@@ -186,7 +267,8 @@ angular.module('protoApp')
             $http.post("http://52.87.34.178:3000/api/Other",participantObject).then((res)=>{
                 if(res.status===200){
                   isStep3 = true;
-                  alert("Successfully done");
+                  stepStatus('Step3',"step 3 completed!");
+                  showSimpleToast("Step 3 completed!");
                 }
                 $scope._mdPanelRef && $scope._mdPanelRef.close();            
             });
@@ -209,7 +291,9 @@ angular.module('protoApp')
             $http.post("http://52.87.34.178:3000/api/Bank",bankObject).then((res)=>{
                 if(res.status===200){
                   isStep4 = true;
-                  alert("Successfully done");
+                  stepStatus('Step4',"step 4 completed!");                  
+                  $scope.submit = false;                  
+                  showSimpleToast("Step 4 completed!");
                 }
                 $scope._mdPanelRef && $scope._mdPanelRef.close();            
             });
@@ -219,24 +303,7 @@ angular.module('protoApp')
         }; 
       }
 
-      $scope.newTrans = function(){
-        if(isStep1 && isStep2 && isStep3 && isStep4){
-          $scope.submit = false;
-          TransactionObject.goods = "resource:org.acme.retail.Goods#"+goodObject.GoodsID;
-          TransactionObject.other = "resource:org.acme.retail.Other#"+participantObject.email;
-          TransactionObject.retailer = "resource:org.acme.retail.Retailer#"+goodObject.retailer;
-          TransactionObject.transactionId = shuffle(numbers);
-          TransactionObject.timestamp = Date.now();
-
-          $http.post("http://52.87.34.178:3000/api/Offer",TransactionObject).then((res)=>{
-            if(res.status===200){
-              $scope.submit = true;
-              alert("Transaction successfully done");
-            }
-        });
-        }else{
-          alert("Please complete above Steps to submit the Transaction");
-        }
+      $scope.status = function(){
+        return $scope.submit;
       }
-
     });
