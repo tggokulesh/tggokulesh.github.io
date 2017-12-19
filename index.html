@@ -27,6 +27,12 @@
       <!-- <script src="https://www.google.com/recaptcha/api.js"></script> --> 
 
   </head>
+<style>
+  .md-fab.docs-scroll-fab {
+    position: fixed !important;
+  }
+</style>
+  
   <body ng-app="protoApp">
 
     <!-- Add your site or application content here -->
@@ -34,6 +40,12 @@
     
     <div class="container" style="background-color:white;opacity:1;padding:4vh 4vh;">
     <div ng-view="" ></div>
+
+    <md-button id="scrollbutton" class="md-fab md-fab-bottom-right docs-scroll-fab md-button md-ink-ripple scrolling" type="button" ng-transclude="" docs-scroll-class="scrolling" aria-label="Back to Top">
+        <md-icon md-svg-src="/images/svg/ic_keyboard_arrow_up_black_24px.svg" class="ng-scope" role="img" aria-hidden="true"></md-icon>
+      <div class="md-ripple-container" ></div>
+      <md-tooltip md-direction="top">Back to Top</md-tooltip>
+    </md-button>
     </div>
 
     <!-- <div class="footer">
@@ -52,6 +64,16 @@
 
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
+    </script>
+
+    <script>
+
+        $("#scrollbutton").click(function() {
+          console.log("CLICKED");
+          $("html, body").animate({ scrollTop: 0 }, "slow");
+          return false; 
+        });
+        
     </script>
 
     <!-- build:js(.) scripts/vendor.js -->

@@ -32,10 +32,10 @@
 .card:hover{
   border: 2px solid rgb(65, 3, 61);
   box-shadow: 3px 3px 25px 2px gainsboro;
-  
   cursor: pointer;
   box-sizing: border-box;
 }
+
 .demo-dialog-example {
   background: white;
   border-radius: 4px;
@@ -44,11 +44,23 @@
       0 5px 24px 4px rgba(0, 0, 0, 0.12);
   width: 50vw;
 }
+
+#toaster {
+  position: fixed;
+  top: 56px;
+  height: 48px;
+  left: 0;
+  width: 100%;
+  z-index: 10000;
+}
+
 </style>
 
 <div class="md-pading">
 
-<div layout="row" layout-xs="column" layout-align="center" layout-margin="10" layout-margin-xs="20">
+<div id="toaster" layout-align="center"></div>
+
+<div layout="row" layout-xs="column" layout-align="center" layout-margin="30" layout-margin-xs="20">
 
     <md-card class="card" ng-click="selectGoods()">
       <md-tooltip  md-direction="{{demo.tipDirection}}">

@@ -119,7 +119,8 @@ angular.module('protoApp')
       $mdToast.show(
         $mdToast.simple()
           .textContent(message)
-          .position(pinTo )
+          .parent(document.querySelectorAll('#toaster'))
+          .position(pinTo)
           .hideDelay(3000)
       );
     };
