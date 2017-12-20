@@ -26,7 +26,7 @@ angular.module('protoApp')
       "Description": "",
       "rinventory": 0,
       "ostate": "Other",
-      "retailer":'ram@1.com'
+      "retailer":'r@1.com'
     };
 
     var goodsListObject = {
@@ -214,7 +214,7 @@ angular.module('protoApp')
         $scope.addGoods = function() {
           goodObject.GoodsID = shuffle(numbers).toString();
           goodObject.Description = $scope.description;
-          goodObject.rinventory = $scope.inventory;
+          // goodObject.rinventory = $scope.inventory;
           $http.post("http://52.87.34.178:3000/api/Goods",goodObject).then((res)=>{
               if(res.status===200){
                 isStep1 = true;
