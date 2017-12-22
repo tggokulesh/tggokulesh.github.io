@@ -1,1 +1,59 @@
-<p>This is the login view.</p>
+<style media="screen">
+        .swal-footer {
+          text-align: center;
+        }
+        .swal-button { 
+          padding: 7px 19px;
+          border-radius: 2px;
+          background-color: #4962B3;
+          font-size: 12px;
+          border: 1px solid #3e549a;
+          text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+        }
+        </style>
+        <div style="width:50vw; min-height:100vh; overflow-x: hidden; padding-top: 5vh; padding-bottom: 5vh; margin: auto; min-width: 320px;">
+          <div ng-cloak="ng-cloak" style="margin-top:5%;">
+            <md-card flex="flex">
+              <md-card-title>
+                <md-card-title-text>
+                  <span class="md-headline" layout="row" layout-align="center center">Login here!</span>
+                </md-card-title-text>
+              </md-card-title>
+              <md-card-content >
+                <form name="LoginForm" novalidate>
+    
+                    <!--Email-->
+                    <md-input-container class="md-icon-float md-block">
+                        <label class="flabel">Email</label>
+                        <input required type="email" name="clientEmail" ng-model="credentials.email"
+                        minlength="1" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+                        <span ng-show="LoginForm.clientEmail.$dirty && LoginForm.clientEmail.$valid"
+                        class="glyphicon glyphicon-ok form-control-feedback"
+                        style="cursor: pointer; pointer-events: all;"></span>
+                        <div ng-messages="LoginForm.clientEmail.$error" role="alert">
+                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                            Enter valid email address.
+                            </div>
+                        </div>
+                    </md-input-container>
+    
+                    <!-- Password  -->
+                    <md-input-container class="md-block">
+                        <label class="flabel">Password</label>
+                        <input type="password"  name="credentials_password" ng-required="true" ng-model="credentials.Password" >
+                        <div ng-messages="LoginForm.credentials_password.$error">
+                        <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+                    
+                    <br/>
+                    <div layout="row" layout-align="center center">
+                       <md-button class="md-raised md-primary" ng-click="loginCredentials()" ng-disabled="!LoginForm.$valid">LOGIN</md-button>
+                    </div>
+        
+                   </form>
+                 </md-card-content>
+               </md-card>
+             </div>
+        </div>
+        

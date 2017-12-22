@@ -20,7 +20,16 @@
           
             <div class="partici-dialog" layout="column" layout-xs="column" >
                                
-                    <md-input-container>
+                <md-input-container flex="50">
+                    <label>Select participant</label>
+                    <md-select name="participant" ng-model="email" required>
+                      <md-option ng-repeat="other in others track by $index" value="{{other.email}}">{{other.CompanyName}}</md-option>
+                    </md-select>
+                    <!-- <div class="errors" ng-messages="myForm.favoriteColor.$error">
+                      <div ng-message="required">Required</div>
+                    </div> -->
+                </md-input-container>
+                    <!-- <md-input-container>
                         <label>Email Id</label>
                         <input ng-model="email" type="email"></input>
                     </md-input-container>
@@ -28,7 +37,7 @@
                     <md-input-container>
                             <label>Company Name</label>
                             <input ng-model="CompanyName" type="text"/>
-                    </md-input-container>
+                    </md-input-container> -->
     
             </div>
           

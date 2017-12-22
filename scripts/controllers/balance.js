@@ -8,18 +8,25 @@
  * Controller of the protoApp
  */
 angular.module('protoApp')
-  .controller('BalanceCtrl', function ($scope,$http,$mdPanel,$mdToast,$rootScope) {
+  .controller('BalanceCtrl', function ($scope,$http,$mdPanel,$mdToast,$rootScope,$routeParams) {
 
     $scope.retailer = {};
     $scope.view = true;
+    $scope.$on('isAuthenticated',function(event,data){
+      if(data){
+        $scope.isAuthenticated = true;
+      }else{
+        $location.url('/login');
+      }
+    });
+
     var offers = [];
     var myOffers = [];
     $scope.trans = [];
     var trans = [];
+    var email = $routeParams.email;
 
-    
-
-    $http.get("http://52.87.34.178:3000/api/Retailer/"+"r@1.com").then( (res =>{
+    $http.get("http://52.87.34.178:3000/api/Retailer/"+email).then( (res =>{
       if(res.status ===200){
         $scope.retailer = res.data;        
       }
@@ -44,7 +51,7 @@ angular.module('protoApp')
       $http.get("http://52.87.34.178:3000/api/Offer/").then( (res =>{
             if(res.status === 200){
               offers = getMyTrans(res.data);
-              console.log(offers[0].transactionId);    
+              // console.log(offers[0].transactionId);    
               for(var i=0;i<offers.length;i++){
                 var current = offers[i];
                 GetTransDetails(current);                

@@ -1,1 +1,101 @@
-<p>This is the signup view.</p>
+<style media="screen">
+    .swal-footer {
+      text-align: center;
+    }
+    .swal-button { 
+      padding: 7px 19px;
+      border-radius: 2px;
+      background-color: #4962B3;
+      font-size: 12px;
+      border: 1px solid #3e549a;
+      text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+    }
+    </style>
+    <div style="width:50vw; min-height:100vh; overflow-x: hidden; padding-top: 5vh; padding-bottom: 5vh; margin: auto; min-width: 320px;">
+      <div ng-cloak="ng-cloak" style="margin-top:5%;">
+        <md-card flex="flex">
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline" layout="row" layout-align="center center">Register yourself for free!</span>
+            </md-card-title-text>
+          </md-card-title>
+          <md-card-content >
+            <form name="signupForm" novalidate>
+
+                <!--Email-->
+                <md-input-container class="md-icon-float md-block">
+                    <label class="flabel">Email</label>
+                    <input required type="email" name="clientEmail" ng-model="user.email"
+                    minlength="1" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+                    <span ng-show="signupForm.clientEmail.$dirty && signupForm.clientEmail.$valid"
+                    class="glyphicon glyphicon-ok form-control-feedback"
+                    style="cursor: pointer; pointer-events: all;"></span>
+                    <div ng-messages="signupForm.clientEmail.$error" role="alert">
+                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                        Enter valid email address.
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <!--Company -->
+                <md-input-container class="md-block">
+                        <label class="flabel">Name of your Company</label>
+                        <input type="text" name="CompanyName" ng-model="user.CompanyName" ng-required="true">
+                        <div ng-messages="signupForm.CompanyName.$error">
+                            <div ng-message="required">Your CompanyName is required.</div>
+                        </div>
+                </md-input-container>
+
+                <!-- Password  -->
+                <md-input-container class="md-block">
+                    <label class="flabel">Password</label>
+                    <input type="password"  name="user_password" ng-required="true" ng-model="user.Password" password-verify="{{user.confirm_password}}">
+                    <div ng-messages="signupForm.user_password.$error">
+                    <div ng-message="required">This is required.</div>
+                    <div ng-message="passwordVerify">Password doesn't match.</div>
+                    </div>
+                </md-input-container>
+        
+                <md-input-container class="md-block">
+                    <label class="flabel">Confirm Password</label>
+                    <input  id="confirm_password" ng-model="user.confirm_password" name="confirm_password" type="password"  ng-required="true" password-verify="{{user.Password}}">
+                    <div ng-messages="signupForm.confirm_password.$error">
+                    <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+            
+                <!--Occupation -->
+                <div class="md-block">
+                        <label class="flabel">Occupation</label>
+                        <md-radio-group ng-model="user.occupation" required layout="row" layout-xs="column">
+                            
+                            <md-radio-button value="Retailer" class="md-primary">Retailer</md-radio-button>
+                            <md-radio-button value="Bank"> Bank </md-radio-button>
+                            
+                        </md-radio-group>
+                        <div ng-messages="signupForm.occupation.$error">
+                            <div ng-message="required">Your Occupation is required.</div>
+                        </div>
+                </div>
+                    
+
+                <!--Balance-->
+                <md-input-container class="md-block" style="margin-top:40px;" ng-show="user.occupation=='Retailer'">
+                        <label class="flabel">Enter your Balance</label>
+                        <input  id="balance" ng-model="user.Balance" name="balance" type="Number"  ng-required="true">
+                        <div ng-messages="signupForm.balance.$error">
+                        <div ng-message="required">This is required.</div>
+                        </div>
+                </md-input-container>    
+                
+                <br/>
+                <div layout="row" layout-align="center center">
+                   <md-button class="md-raised md-primary" ng-click="createUser()" ng-disabled="!signupForm.$valid">SIGNUP</md-button>
+                </div>
+    
+               </form>
+             </md-card-content>
+           </md-card>
+         </div>
+    </div>
+    

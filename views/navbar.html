@@ -74,8 +74,10 @@ color: rgba(255, 255, 255, 0.986);
         </md-nav-item>
         <span flex></span>
         <span flex></span>
-        <md-nav-item md-nav-href="#/login" layout-align="end" name="Login">Login</md-nav-item>
-        <md-nav-item md-nav-href="#/signup"  layout-align="end" name="Signup">Signup</md-nav-item>              
+        <md-nav-item ng-hide="isAuthenticated" md-nav-href="#/login" layout-align="end" name="Login">Login</md-nav-item>
+        <md-nav-item ng-hide="isAuthenticated" md-nav-href="#/signup"  layout-align="end" name="Signup">Signup</md-nav-item>
+        <md-nav-item ng-show="isAuthenticated" md-nav-href="#/userProfile" layout-align="end" name="Login">Profile</md-nav-item>
+        <md-nav-item ng-show="isAuthenticated" md-nav-href="#/logout"  layout-align="end" name="Signup">LogOut</md-nav-item>                            
     </md-nav-bar>
     
     <div class="sidenav1">
@@ -99,18 +101,33 @@ color: rgba(255, 255, 255, 0.986);
             <md-toolbar>
             <h4 class="md-toolbar-tools" style="text-align:center">DASHBOARD</h4>
             </md-toolbar>
-            <md-list class="navcontainer">
-                <ul>
-                    <a href="/#newTrans" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">NEW TRANSACTION</li></a>                        
+            <md-content class="md-padding" ng-hide="isAuthenticated" layout="column">
+               <span class="md-sub-heading">Please Login if you already Registered!</span>
+               <span class="md-sub-heading">Please Register if you didnt!</span>               
+            </md-content>
+            <md-list ng-show="isAuthenticated" class="navcontainer">
+                <ul ng-show="isRetailer">
+
+                    <a href="/#newTrans/{{retailer.email}}" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">NEW TRANSACTION</li></a>                        
                     
-                    <a href="/#inventory" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">INVENTORY</li></a>                        
+                    <a href="/#inventory/{{retailer.email}}" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">INVENTORY</li></a>                        
                     
-                    <a href="/#balance" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">CHECK BALANCE</li></a>                        
+                    <a href="/#balance/{{retailer.email}}" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">CHECK BALANCE</li></a>                        
                     
-                    <a href="/#pastTrans" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">PAST TRANSACTIONS</li></a>                        
+                    <a href="/#pastTrans/{{retailer.email}}" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">PAST TRANSACTIONS</li></a>                        
                     
-                    <a href="/#verifyTrans" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">VERIFY TRANSACTION</li></a>                        
-                                 
+                    <a href="/#verifyTrans/{{retailer.email}}" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">VERIFY TRANSACTION</li></a>                        
+                      
+                    <a href="/#verifyTrans/{{retailer.email}}" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">TRANSACTION REQUESTS</li></a>                        
+                    
+                </ul>
+
+                <ul ng-hide="isRetailer">
+                    <a href="/#newTrans" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">FINANCIAL REQUESTS</li></a>                        
+                    <a href="/#newTrans" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">VERIFY TRANSACTIONS</li></a>                        
+                </ul>    
+                    
+                    
                 </ul>              
                         
             </md-list>

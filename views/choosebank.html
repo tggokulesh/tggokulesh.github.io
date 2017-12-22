@@ -19,7 +19,17 @@
           
             <div class="bank-dialog" layout="column" layout-xs="column" >
                                 
-                    <md-input-container>
+              <md-input-container flex="50">
+                <label>Select Bank</label>
+                <md-select name="bank" ng-model="email" required>
+                  <md-option ng-repeat="bank in banks track by $index" value="bank.email">{{bank.CompanyName}}</md-option>
+                </md-select>
+                <!-- <div class="errors" ng-messages="myForm.favoriteColor.$error">
+                  <div ng-message="required">Required</div>
+                </div> -->
+              </md-input-container>
+
+                    <!-- <md-input-container>
                     <label>Email Id</label>
                     <input ng-model="email" type="email"></input>
                     </md-input-container>
@@ -27,7 +37,7 @@
                     <md-input-container>
                             <label>Bank Name</label>
                             <input ng-model="CompanyName" type="text"/>
-                    </md-input-container>
+                    </md-input-container> -->
     
             </div>
           

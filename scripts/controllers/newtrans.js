@@ -8,7 +8,7 @@
  * Controller of the protoApp
  */
 angular.module('protoApp')
-  .controller('NewtransCtrl', function ($scope,$http,$mdPanel,$mdToast,$rootScope) {
+  .controller('NewtransCtrl', function ($location,$scope,$http,$mdPanel,$mdToast,$rootScope,$routeParams) {
     $scope._mdPanel = $mdPanel;
     $scope.openFrom = "button";
     $scope.closeTo = "button";
@@ -18,15 +18,24 @@ angular.module('protoApp')
       open: $scope.duration,
       close: $scope.duration
     };
+
+    $scope.$on('isAuthenticated',function(event,data){
+      if(data){
+        $scope.isAuthenticated = true;
+      }else{
+        $location.url('/login');
+      }
+    });
+
     $scope.submit = true;
-    
+    var email = $routeParams.email;
     var goodObject = {
       "$class": "org.acme.retail.Goods",
       "GoodsID": "",
       "Description": "",
       "rinventory": 0,
       "ostate": "Other",
-      "retailer":'r@1.com'
+      "retailer":''
     };
 
     var goodsListObject = {
@@ -39,21 +48,16 @@ angular.module('protoApp')
       "ostate": "Other",
       "state1": "Pending",
       "goods": "",
-      "other": "resource:org.acme.retail.Other#",
+      "other": "",
       "retailer":""
     };
 
     var participantObject = {
-      "$class": "org.acme.retail.Other",
       "email": "",
-      "CompanyName": ""
     }
 
     var bankObject = {
-      "$class": "org.acme.retail.Bank",
-      "bhash": "b",
       "email": "",
-      "CompanyName": ""
     };
 
     var TransactionObject = {
@@ -151,11 +155,15 @@ angular.module('protoApp')
       hasBackdrop: true,
     };
   
-    var numbers = [1,2,3,4,5,6,7,8,9,10];       
+    var numbers = [1,2,3,4,5];       
     
     function shuffle(o) {
+      var resp = "";
       for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-      return o;
+      for(var k;k<o.length;k++){
+        resp = resp + o[i];
+      }
+      return resp;
     };
 
     $scope.demo = {
@@ -186,7 +194,6 @@ angular.module('protoApp')
         TransactionObject.other = "resource:org.acme.retail.Other#"+participantObject.email;
         TransactionObject.bank = "resource:org.acme.retail.Bank#"+bankObject.email;
         TransactionObject.retailer = "resource:org.acme.retail.Retailer#"+goodObject.retailer;
-        // TransactionObject.transactionId = shuffle(numbers).toString();
         TransactionObject.timestamp = Date.now();
 
         $http.post("http://52.87.34.178:3000/api/Offer",TransactionObject).then((res)=>{
@@ -214,7 +221,7 @@ angular.module('protoApp')
         $scope.addGoods = function() {
           goodObject.GoodsID = shuffle(numbers).toString();
           goodObject.Description = $scope.description;
-          // goodObject.rinventory = $scope.inventory;
+          goodObject.retailer = email;
           $http.post("http://52.87.34.178:3000/api/Goods",goodObject).then((res)=>{
               if(res.status===200){
                 isStep1 = true;
@@ -231,7 +238,7 @@ angular.module('protoApp')
         $scope._mdPanelRef = mdPanelRef;
       
         $scope.addQuantity = function() {
-          if(isStep1){
+          if(isStep1 && isStep2){
             goodsListObject.goods = "resource:org.acme.retail.Goods#"+goodObject.GoodsID;
             goodsListObject.state1 = "Accepted";
             goodsListObject.ListingID = shuffle(numbers).toString();
@@ -239,43 +246,44 @@ angular.module('protoApp')
             goodsListObject.quantity = $scope.quantity;
             goodsListObject.state = $scope.state;
             goodsListObject.Price = $scope.price;
+            goodsListObject.other =  "resource:org.acme.retail.Retailer#"+participantObject.email;
             goodsListObject.retailer = "resource:org.acme.retail.Retailer#"+goodObject.retailer;
             console.log("GOODSIDAPPENDED");
             
             $http.post("http://52.87.34.178:3000/api/GoodsListing",goodsListObject).then((res)=>{
                 if(res.status===200){
                   isStep2 = true;
-                  stepStatus('Step2',"step 2 completed!");
-                  showSimpleToast("Step 2 completed!");
+                  stepStatus('Step3',"step 3 completed!");
+                  showSimpleToast("Step 3 completed!");
                 }
                 $scope._mdPanelRef && $scope._mdPanelRef.close();            
             });
           }else{
-            alert("Please complete Step 1 first");
+            alert("Please complete Step 1 and 2");
           }
         }; 
       }
 
       function ParticipantCtrl(mdPanelRef,$scope){
         $scope._mdPanelRef = mdPanelRef;
-        
+        $scope.others = [];
+        $http.get("http://52.87.34.178:3000/api/Other").then((res =>{
+          if(res.status === 200){
+            $scope.others = res.data;
+          }
+        }));
+
         $scope.addParticipant = function() {
-          if(isStep1 && isStep2){
+          if(isStep1){
 
             participantObject.email = $scope.email;
-            participantObject.CompanyName = $scope.CompanyName;
-            
-            $http.post("http://52.87.34.178:3000/api/Other",participantObject).then((res)=>{
-                if(res.status===200){
-                  isStep3 = true;
-                  stepStatus('Step3',"step 3 completed!");
-                  showSimpleToast("Step 3 completed!");
-                }
-                $scope._mdPanelRef && $scope._mdPanelRef.close();            
-            });
-              
+            isStep3 = true;
+            stepStatus('Step2',"step 2 completed!");
+            showSimpleToast("Step 2 completed!");
+            $scope._mdPanelRef && $scope._mdPanelRef.close(); 
+
           }else{
-            alert("Please complete Step 1 and 2");
+            alert("Please complete Step 1 first");            
           }
           
         }; 
@@ -283,21 +291,22 @@ angular.module('protoApp')
 
       function BankCtrl(mdPanelRef,$scope){
         $scope._mdPanelRef = mdPanelRef;
-        
+        $scope.banks = [];
+        $http.get("http://52.87.34.178:3000/api/Bank").then((res =>{
+          if(res.status === 200){
+            $scope.banks = res.data;
+          }
+        }));
         $scope.addBank = function() {
           if(isStep1 && isStep2 && isStep3){
             bankObject.email = $scope.email;
-            bankObject.CompanyName = $scope.CompanyName;
             
-            $http.post("http://52.87.34.178:3000/api/Bank",bankObject).then((res)=>{
-                if(res.status===200){
-                  isStep4 = true;
-                  stepStatus('Step4',"step 4 completed!");                  
-                  $scope.submit = false;                  
-                  showSimpleToast("Step 4 completed!");
-                }
-                $scope._mdPanelRef && $scope._mdPanelRef.close();            
-            });
+            isStep4 = true;
+            stepStatus('Step4',"step 4 completed!");                  
+            $scope.submit = false;                  
+            showSimpleToast("Step 4 completed!");
+          
+            $scope._mdPanelRef && $scope._mdPanelRef.close();            
           }else{
             alert("Please complete Step 1,2 and 3 first!");            
           }

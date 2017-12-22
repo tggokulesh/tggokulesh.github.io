@@ -14,4 +14,12 @@ angular.module('protoApp')
       'AngularJS',
       'Karma'
     ];
+    $scope.$on('isAuthenticated',function(event,data){
+      if(data){
+        $scope.isAuthenticated = true;
+      }else{
+        $location.url('/login');
+      }
+    });
+
   });

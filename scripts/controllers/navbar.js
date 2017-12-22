@@ -8,13 +8,27 @@
  * Controller of the protoApp
  */
 angular.module('protoApp')
-  .controller('NavbarCtrl',function ($scope, $timeout, $mdSidenav, $log,$mdComponentRegistry) {
+  .controller('NavbarCtrl',function ($scope, $timeout, $mdSidenav, $log,$mdComponentRegistry,$rootScope) {
     $scope.toggleLeft = buildDelayedToggler('left');
     $mdComponentRegistry.when('left').then(function() {
       // Now you can use $mdSidenav('left') or $mdSidenav('left', true) without getting an error.
       $scope.isOpen = $mdSidenav('left').isOpen();
-      
     })
+    $scope.isAuthenticated = false;
+    $scope.retailer = {};
+    $scope.$on('isAuthenticated',function(event,data){
+      if(data){
+        $scope.isAuthenticated = true;
+      }
+    })
+    $scope.$on('user',function(event,data){
+      if(data.occupation === "Retailer"){
+        $scope.isRetailer = true;
+        $scope.retailer = data;
+        console.log($scope.retailer);
+      }
+    })
+
     /**
      * Supplies a function that will continue to operate until the
      * time is up.

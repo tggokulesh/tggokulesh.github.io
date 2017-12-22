@@ -8,10 +8,92 @@
  * Controller of the protoApp
  */
 angular.module('protoApp')
-  .controller('SignupCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .directive('passwordVerify',function passwordVerify () {
+    return {
+        restrict: 'A', // only activate on element attribute
+        require: '?ngModel', // get a hold of NgModelController
+        link: function(scope, elem, attrs, ngModel) {
+          if (!ngModel) return; // do nothing if no ng-model
+
+          // watch own value and re-validate on change
+          scope.$watch(attrs.ngModel, function() {
+            validate();
+          });
+
+          // observe the other value and re-validate on change
+          attrs.$observe('passwordVerify', function(val) {
+            validate();
+          });
+
+          var validate = function() {
+            // values
+            var val1 = ngModel.$viewValue;
+            var val2 = attrs.passwordVerify;
+            // set validity
+            ngModel.$setValidity('passwordVerify', val1 === val2);
+          };
+        }
+    }
+})
+.controller('SignupCtrl', function ($http,$scope,$location) {
+  $scope.deactivate = true;
+  $scope.user = {};
+
+
+  $scope.createUser=function(){
+        
+    delete $scope.user.confirm_password;
+    $scope.user = $scope.user;
+    
+    $http.post("http://52.87.34.178:3000/api/User",$scope.user).then((res => {
+      if(res.status === 200){
+        console.log("Succefully user created");
+        if($scope.user.occupation == "Bank"){
+          
+          var bankObject = {
+            "$class": "org.acme.retail.Bank",
+            "email": $scope.user.email,
+            "CompanyName": $scope.user.CompanyName,
+            "bhash": $scope.user.CompanyName,                
+          };
+
+          $http.post("http://52.87.34.178:3000/api/Bank",bankObject).then((res =>{
+            console.log("Bank created");
+          }));              
+        }else if($scope.user.occupation == "Retailer"){
+
+          var otherObject = {
+            "$class": "org.acme.retail.Other",
+            "email": $scope.user.email,
+            "CompanyName": $scope.user.CompanyName
+          }
+
+          var retailerObject = {
+            "$class": "org.acme.retail.Retailer",
+            "email": $scope.user.email,
+            "CompanyName": $scope.user.CompanyName,
+            "Balance":$scope.user.Balance
+          }
+      
+          $http.post("http://52.87.34.178:3000/api/Retailer",retailerObject).then((res =>{
+            if(res.status === 200){
+              console.log("retailer created");                  
+            }
+          }));
+          $http.post("http://52.87.34.178:3000/api/Other",otherObject).then((res =>{
+            if(res.status === 200){
+              console.log("other created");                  
+            }         
+          }));   
+        }
+        alert("Successfully created!");
+        $location.url('/login');
+      }
+    })).catch(err => {
+      console.log('entered the error');
+      alert("Email is already registered!");
+      $location.url('/signup');
+    })
+      };
+
+});

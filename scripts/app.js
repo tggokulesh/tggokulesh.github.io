@@ -41,30 +41,45 @@ angular.module('protoApp', [
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
-      .when('/newTrans', {
+      .when('/newTrans/:email', {
         templateUrl: 'views/newtrans.html',
         controller: 'NewtransCtrl',
-        controllerAs: 'newTrans'
+        controllerAs: 'newTrans',
+        params: {
+          email: ""
+        }
       })
-      .when('/inventory', {
+      .when('/inventory/:email', {
         templateUrl: 'views/inventory.html',
         controller: 'InventoryCtrl',
-        controllerAs: 'inventory'
+        controllerAs: 'inventory',
+        params:{
+          email: ""
+        }
       })
-      .when('/balance', {
+      .when('/balance/:email', {
         templateUrl: 'views/balance.html',
         controller: 'BalanceCtrl',
-        controllerAs: 'balance'
+        controllerAs: 'balance',
+        params: {
+          email: ""
+        }
       })
-      .when('/pastTrans', {
+      .when('/pastTrans/:email', {
         templateUrl: 'views/pasttrans.html',
         controller: 'PasttransCtrl',
-        controllerAs: 'pastTrans'
+        controllerAs: 'pastTrans',
+        params: {
+          email: ""
+        }
       })
-      .when('/verifyTrans', {
+      .when('/verifyTrans/:email', {
         templateUrl: 'views/verifytrans.html',
         controller: 'VerifytransCtrl',
-        controllerAs: 'verifyTrans'
+        controllerAs: 'verifyTrans',
+        params: {
+          email: ""
+        }
       })
       .when('/login', {
         templateUrl: 'views/login.html',
