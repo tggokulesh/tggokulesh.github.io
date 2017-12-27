@@ -70,7 +70,8 @@
                         <md-radio-group ng-model="user.occupation" required layout="row" layout-xs="column">
                             
                             <md-radio-button value="Retailer" class="md-primary">Retailer</md-radio-button>
-                            <md-radio-button value="Bank"> Bank </md-radio-button>
+                            <md-radio-button value="Wholesaler"> Wholesaler </md-radio-button>                            
+                            <md-radio-button value="Bank" class="md-warn"> Bank </md-radio-button>
                             
                         </md-radio-group>
                         <div ng-messages="signupForm.occupation.$error">
@@ -78,11 +79,10 @@
                         </div>
                 </div>
                     
-
                 <!--Balance-->
                 <md-input-container class="md-block" style="margin-top:40px;" ng-show="user.occupation=='Retailer'">
                         <label class="flabel">Enter your Balance</label>
-                        <input  id="balance" ng-model="user.Balance" name="balance" type="Number"  ng-required="true">
+                        <input  id="balance" ng-model="user.Balance" name="balance" type="Number">
                         <div ng-messages="signupForm.balance.$error">
                         <div ng-message="required">This is required.</div>
                         </div>

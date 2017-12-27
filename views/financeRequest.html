@@ -1,0 +1,46 @@
+<style>
+        .finance-dialog{
+          padding: 10px 15px;
+          width: 100%;
+        }
+        
+        .demo-dialog-button {
+          width: 100%;
+        }
+        img{
+            position: relative;
+            width: 50%;
+            height: auto;
+            margin: 10% 20%;
+            box-sizing: content-box;
+        }
+    </style>
+        <div role="dialog" aria-label="finance Request" layout="column" layout-align="center center">
+                                                  
+            <div class="finance-dialog" layout="column" layout-xs="column" >
+        
+                    <img ng-src="images/finance.jpeg" class="md-card-image" style="margin-top:10%" alt="Need finance Help?">
+                    <span class="md-headline">Need Financial Help?</span>
+
+                    <md-input-container style="margin-top:2vw;">
+                            <label>Amount Needed</label>
+                            <input ng-model="Amount" type="number">
+                    </md-input-container>
+
+                    <md-radio-group ng-model="state" layout="row" layout-xs="column">
+                        
+                        <md-radio-button value="Required" class="md-primary">Required</md-radio-button>
+                        <md-radio-button value="Not_required"> Not Required </md-radio-button>
+                        
+                    </md-radio-group>
+    
+            </div>
+            
+            <div layout="row" class="demo-dialog-button">
+                <md-button md-autofocus flex class="md-primary" ng-click="addfinance()">
+                Submit
+                </md-button>
+            </div>
+            </div>
+              
+              

@@ -8,26 +8,47 @@
  * Controller of the protoApp
  */
 angular.module('protoApp')
-  .controller('NavbarCtrl',function ($scope, $timeout, $mdSidenav, $log,$mdComponentRegistry,$rootScope) {
+  .controller('NavbarCtrl',function ($scope, $window,$location, Auth, $timeout, $mdSidenav, $q,$log,$mdComponentRegistry,$rootScope) {
     $scope.toggleLeft = buildDelayedToggler('left');
     $mdComponentRegistry.when('left').then(function() {
       // Now you can use $mdSidenav('left') or $mdSidenav('left', true) without getting an error.
       $scope.isOpen = $mdSidenav('left').isOpen();
     })
-    $scope.isAuthenticated = false;
-    $scope.retailer = {};
-    $scope.$on('isAuthenticated',function(event,data){
-      if(data){
-        $scope.isAuthenticated = true;
-      }
-    })
-    $scope.$on('user',function(event,data){
-      if(data.occupation === "Retailer"){
-        $scope.isRetailer = true;
-        $scope.retailer = data;
-        console.log($scope.retailer);
-      }
-    })
+    
+    var roles = ["Bank","Retailer","Wholesaler"];
+    $scope.isAuthenticated = Auth.isLoggedIn();
+    console.log($scope.isAuthenticated+"AUTHENT");
+    
+    $scope.isBank = false;
+    $scope.isRetailer = false;
+    $scope.isWholesaler = false; 
+    $scope.user = {};
+
+    // $scope.$on("LoggedIn",function(event,data){
+    //   if(data){
+    //     $window.location.reload();
+    //   }
+    // });
+
+    if($scope.isAuthenticated){
+      Auth.getUser().then(function(data){
+        console.log("ENTERDE GET USER");
+        $scope.user = data;
+        if($scope.user!=null){
+          if($scope.user.occupation===roles[0])
+            $scope.isBank = true;
+          else if($scope.user.occupation === roles[1])
+            $scope.isRetailer = true;
+          else if($scope.user.occupation === roles[2])
+            $scope.isWholesaler = true;    
+        }
+      });
+    }
+    
+    $scope.logout = function(){
+      Auth.logout();
+      $window.location.reload();
+    }
 
     /**
      * Supplies a function that will continue to operate until the

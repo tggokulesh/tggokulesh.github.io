@@ -14,7 +14,7 @@
     <div role="dialog" aria-label="Select participant" layout="column" layout-align="center center">
             <md-toolbar>
               <div class="md-toolbar-tools">
-                <h2>Step 3: Select other participants</h2>
+                <h2>Step 2: Select other participants</h2>
               </div>
             </md-toolbar>
           
@@ -25,9 +25,7 @@
                     <md-select name="participant" ng-model="email" required>
                       <md-option ng-repeat="other in others track by $index" value="{{other.email}}">{{other.CompanyName}}</md-option>
                     </md-select>
-                    <!-- <div class="errors" ng-messages="myForm.favoriteColor.$error">
-                      <div ng-message="required">Required</div>
-                    </div> -->
+                    
                 </md-input-container>
                     <!-- <md-input-container>
                         <label>Email Id</label>

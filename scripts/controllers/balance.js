@@ -69,7 +69,14 @@ angular.module('protoApp')
       })
     )
     };
-
+    $scope.selectColor = function(tran){
+      
+        if(tran.status==="Pending"){
+          return "yellow";
+        }else{
+          return "white";
+        }
+    }
     function GetTransDetails(offer){
       $http.get('http://52.87.34.178:3000/api/GoodsListing/'+offer.listing.split('#')[1]).then((res =>{
         console.log(res.data.quantity);
@@ -79,6 +86,7 @@ angular.module('protoApp')
         'quantity':res.data.quantity,
         'goodsId':res.data.goods.split('#')[1],
         'state':res.data.state,
+        'status':res.data.state1,
         'price':res.data.Price,
         'participant':offer.other.split('#')[1],
         'time':offer.timestamp

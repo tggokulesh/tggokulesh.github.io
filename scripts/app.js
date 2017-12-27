@@ -8,7 +8,7 @@
  *
  * Main module of the application.
  */
-angular.module('protoApp', [
+var app = angular.module('protoApp', [
     'ngAnimate',
     'ngMaterial',
     'ngAria',
@@ -16,7 +16,8 @@ angular.module('protoApp', [
     'ngMessages',
     'ngResource',
     'ngRoute',
-    'ngSanitize'
+    'ngSanitize',
+    'authServices'
     ])
     .config(function($mdIconProvider,$mdThemingProvider){
       $mdIconProvider
@@ -34,12 +35,12 @@ angular.module('protoApp', [
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
-        controllerAs: 'main'
+        controllerAs: 'main',
       })
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl',
-        controllerAs: 'about'
+        controllerAs: 'about',
       })
       .when('/newTrans/:email', {
         templateUrl: 'views/newtrans.html',
@@ -47,7 +48,8 @@ angular.module('protoApp', [
         controllerAs: 'newTrans',
         params: {
           email: ""
-        }
+        },
+        authenticated:true
       })
       .when('/inventory/:email', {
         templateUrl: 'views/inventory.html',
@@ -55,7 +57,8 @@ angular.module('protoApp', [
         controllerAs: 'inventory',
         params:{
           email: ""
-        }
+        },
+        authenticated:true
       })
       .when('/balance/:email', {
         templateUrl: 'views/balance.html',
@@ -63,7 +66,8 @@ angular.module('protoApp', [
         controllerAs: 'balance',
         params: {
           email: ""
-        }
+        },
+        authenticated:true
       })
       .when('/pastTrans/:email', {
         templateUrl: 'views/pasttrans.html',
@@ -71,7 +75,8 @@ angular.module('protoApp', [
         controllerAs: 'pastTrans',
         params: {
           email: ""
-        }
+        },
+        authenticated:true
       })
       .when('/verifyTrans/:email', {
         templateUrl: 'views/verifytrans.html',
@@ -79,22 +84,49 @@ angular.module('protoApp', [
         controllerAs: 'verifyTrans',
         params: {
           email: ""
-        }
+        },
+        authenticated:true
       })
       .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
-        controllerAs: 'login'
+        controllerAs: 'login',
+        authenticated:false
       })
       .when('/signup', {
         templateUrl: 'views/signup.html',
         controller: 'SignupCtrl',
-        controllerAs: 'signup'
+        controllerAs: 'signup',
+        authenticated:false
       })
       .when('/navbar', {
         templateUrl: 'views/navbar.html',
         controller: 'NavbarCtrl',
         controllerAs: 'navbar'
+      })
+      .when('/transReq', {
+        templateUrl: 'views/transreq.html',
+        controller: 'TransreqCtrl',
+        controllerAs: 'transReq',
+        authenticated:true
+      })
+      .when('/financeReq', {
+        templateUrl: 'views/financereq.html',
+        controller: 'FinancereqCtrl',
+        controllerAs: 'financeReq',
+        authenticated:true
+      })
+      .when('/bankVerifyReq', {
+        templateUrl: 'views/bankverifyreq.html',
+        controller: 'BankverifyreqCtrl',
+        controllerAs: 'bankVerifyReq',
+        authenticated:true
+      })
+      .when('/logout', {
+        templateUrl: 'views/logout.html',
+        controller: 'LogoutCtrl',
+        controllerAs: 'logout',
+        authenticated:true
       })
       .otherwise({
         redirectTo: '/'
@@ -108,3 +140,26 @@ angular.module('protoApp', [
         controllerAs:'navbar'
     }
     });
+
+    app.run(['$rootScope', 'Auth', '$location',function($rootScope,Auth,$location){
+      
+          'ngInject';
+      
+        $rootScope.$on('$routeChangeStart',function(event,next,current){
+      
+          if(next.$$route !== undefined){
+            if(next.$$route.authenticated === true){
+              if(!Auth.isLoggedIn()){
+                event.preventDefault();
+                $location.path('/login');
+              }
+            }
+            else if(next.$$route.authenticated === false){
+              if(Auth.isLoggedIn()){
+                event.preventDefault();
+                $location.path('/');
+              }
+            }
+          }
+        });
+      }]);

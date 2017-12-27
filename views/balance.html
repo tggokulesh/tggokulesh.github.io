@@ -35,11 +35,11 @@
                     <th>Buying/Selling</th>
                     <th>Price</th>
                     <th>Participant</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="tran in trans track by $index">
-
+                <tr ng-repeat="tran in trans track by $index" >
                     <td style="
                         max-width: 16vw;
                         overflow: hidden;
@@ -51,6 +51,7 @@
                     <td>{{tran.state}}</td>
                     <td>{{tran.price}}</td>
                     <td>{{tran.participant}}</td>
+                    <td style="background-color:{{tran.status==='Pending'?'orange':'green'}}">{{tran.status}}</td>                    
         
                 </tr>
             </tbody>

@@ -15,26 +15,42 @@
   width: 80vw; 
   height: 80vh;
 }
+/* .card1{
+  width: 80vw;
+  height: auto;
+} */
 }
 
 .card p{
     color: rgb(39, 38, 38);
     }
 
-.card img{
+  .card img{
   position: relative;
   width: 50%;
   height: auto;
   margin: 10% 20%;
   box-sizing: content-box;
-}
-    
+} 
+/* .card1 img{
+  position: relative;
+  width: 50%;
+  height: auto;
+  margin: 10% 20%;
+  box-sizing: content-box;
+}  */
 .card:hover{
   border: 2px solid rgb(65, 3, 61);
   box-shadow: 3px 3px 25px 2px gainsboro;
   cursor: pointer;
   box-sizing: border-box;
 }
+/* .card1:hover{
+  border: 2px solid rgb(65, 3, 61);
+  box-shadow: 3px 3px 25px 2px gainsboro;
+  cursor: pointer;
+  box-sizing: border-box;
+} */
 
 .demo-dialog-example {
   background: white;
@@ -133,8 +149,11 @@
     </md-card> 
 
 </div>    
-
+<div style="text-align:center;" layout-align="center" layout-margin="4% 5%" layout="row" id="finance">
+    <label  style="margin-top: 35px;font-size: 1em;">Need Financial Help?</label>
+    <md-button class="md-raised md-primary" ng-click="financeRequest()" style="margin-top: 25px;font-size: 0.8em;" >Click here!</md-button>
+</div>
 <div style="text-align:center;" layout-align="center" layout-margin="4% 5%">
-    <md-button class="md-raised md-primary" ng-disabled="ctrl.submit" ng-click="submitTrans()" style="margin-top: 25px;font-size: 1em;" >Submit the Transaction</md-button>
+    <md-button class="md-raised md-primary" ng-disabled="submit" ng-click="submitTrans()" style="margin-top: 25px;font-size: 1em;" >Submit the Transaction</md-button>
 </div>
 </div>
