@@ -22,17 +22,18 @@
                     <img ng-src="images/finance.jpeg" class="md-card-image" style="margin-top:10%" alt="Need finance Help?">
                     <span class="md-headline">Need Financial Help?</span>
 
-                    <md-input-container style="margin-top:2vw;">
+                    <md-radio-group ng-model="financing" layout="row" layout-xs="column">
+                            
+                            <md-radio-button value="Need" class="md-primary">Required</md-radio-button>
+                            <md-radio-button value="Not_required"> Not Required </md-radio-button>
+                            
+                    </md-radio-group>
+
+                    <md-input-container style="margin-top:2vw;" ng-show="financing=='Need'">
                             <label>Amount Needed</label>
                             <input ng-model="Amount" type="number">
                     </md-input-container>
 
-                    <md-radio-group ng-model="state" layout="row" layout-xs="column">
-                        
-                        <md-radio-button value="Required" class="md-primary">Required</md-radio-button>
-                        <md-radio-button value="Not_required"> Not Required </md-radio-button>
-                        
-                    </md-radio-group>
     
             </div>
             

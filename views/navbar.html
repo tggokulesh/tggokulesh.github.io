@@ -38,13 +38,13 @@ color: rgba(255, 255, 255, 0.986);
 }
 
 .fontsizetab{
-    font-size: 0.7em;
+    font-size: 0.9em;
   }
 
 @media screen and (min-width: 769px){
 
   .fontsizetab{
-    font-size: 1.0em;
+    font-size: 1em;
   }
 
 .sidenav1{
@@ -71,7 +71,15 @@ color: rgba(255, 255, 255, 0.986);
 
         <md-nav-item md-nav-href="#/" name="Home">
         Home
+
         </md-nav-item>
+        <!-- <md-icon ng-show="isClicked" style="color:rgb(255, 254, 254);margin-top:1vw;" md-svg-icon="right"></md-icon>
+        
+        <md-nav-item name="{{routeName}}">
+            <p ng-show="isClicked">{{routeName}}</p>            
+        </md-nav-item> -->
+        
+        
         <span flex></span>
         <span flex></span>
         <md-nav-item ng-hide="isAuthenticated" md-nav-href="#/login" layout-align="end" name="Login">Login</md-nav-item>
@@ -91,7 +99,7 @@ color: rgba(255, 255, 255, 0.986);
         style="
         opacity:1;
         height: 100vh;
-        max-width: 25vw;
+        max-width: 30vw;
         z-index: 9999999999;
         overflow-x: hidden;
         position: fixed;
@@ -109,26 +117,25 @@ color: rgba(255, 255, 255, 0.986);
             <md-list ng-show="isAuthenticated" class="navcontainer">
                 <ul ng-show="isRetailer">
 
-                    <a href="/#newTrans/{{user.email}}" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">NEW TRANSACTION</li></a>                        
+                    <a href="/#newTrans/{{user.email}}" ng-click="close('NEW TRANSACTION')" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">NEW TRANSACTION</li></a>                        
                     
-                    <a href="/#inventory/{{user.email}}" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">INVENTORY</li></a>                        
+                    <a href="/#inventory/{{user.email}}" ng-click="close('INVENTORY')" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">INVENTORY</li></a>                        
                     
-                    <a href="/#balance/{{user.email}}" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">CHECK BALANCE</li></a>                        
+                    <a href="/#balance/{{user.email}}" ng-click="close('CHECK BALANCE')" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">CHECK BALANCE</li></a>                        
                     
-                    <a href="/#pastTrans/{{user.email}}" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">PAST TRANSACTIONS</li></a>                        
+                    <a href="/#pastTrans/{{user.email}}" ng-click="close('PAST TRANSACTIONS')" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">PAST TRANSACTIONS</li></a>                        
                     
-                    <a href="/#verifyTrans/{{user.email}}" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">VERIFY TRANSACTION</li></a>                        
+                    <a href="/#verifyTrans/{{user.email}}" ng-click="close('VERIFY TRANSACTION')" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">VERIFY TRANSACTION</li></a>                        
                       
                 </ul>
 
                 <ul ng-show="isWholesaler">
-                    <a href="/#verifyTrans/{{user.email}}" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">TRANSACTION REQUESTS</li></a>                        
+                    <a href="/#transReq/{{user.email}}" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">TRANSACTION REQUESTS</li></a>                        
                     
                 </ul>
-
                 <ul ng-show="isBank">
-                    <a href="/#newTrans" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">FINANCIAL REQUESTS</li></a>                        
-                    <a href="/#newTrans" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">VERIFY TRANSACTIONS</li></a>                        
+                    <a href="/#financeReq/{{user.email}}" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">FINANCIAL REQUESTS</li></a>                        
+                    <a href="/#bankVerifyReq/{{user.email}}" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">VERIFY TRANSACTIONS</li></a>                        
                 </ul>                    
                                             
             </md-list>

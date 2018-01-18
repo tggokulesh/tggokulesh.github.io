@@ -12,13 +12,6 @@ angular.module('protoApp')
 
     $scope.retailer = {};
     $scope.view = true;
-    $scope.$on('isAuthenticated',function(event,data){
-      if(data){
-        $scope.isAuthenticated = true;
-      }else{
-        $location.url('/login');
-      }
-    });
 
     var offers = [];
     var myOffers = [];

@@ -1,0 +1,36 @@
+<style>
+    
+    .verify-dialog {
+      padding: 10px 15px;
+      width: 100%;
+    }
+    
+    .demo-dialog-button {
+      width: 100%;
+    }
+    
+    </style>
+    <div role="dialog" aria-label="verify" layout="column" layout-align="center">
+            <md-toolbar>
+              <div class="md-toolbar-tools">
+                <h2>Verify the Transaction</h2>
+              </div>
+            </md-toolbar>
+          
+            <div class="verify-dialog" layout="column" layout-xs="column" >
+                                
+                    <md-input-container>
+                    <label>Enter Bhash of the Transaction</label>
+                    <input ng-model="bhash" type="text"></input>
+                    </md-input-container>
+    
+            </div>
+            <div ng-hide="error_message" class="md-warn">{{error_message}}</div>
+            <div layout="row" class="demo-dialog-button">
+              <md-button md-autofocus flex class="md-primary" ng-click="addBhash()">
+                Confirm
+              </md-button>
+            </div>
+          </div>
+          
+          

@@ -24,7 +24,9 @@ var app = angular.module('protoApp', [
       .defaultIconSet("./images/svg/avatars.svg", 128)
       .icon("menu", "./images/svg/menu.svg", 24)
       .icon("close","./images/svg/close.svg")
-      .icon("share", "./images/svg/share.svg", 24);
+      .icon("share", "./images/svg/share.svg", 24)
+      .icon("right","./images/svg/arrow_right.svg",24)
+      .icon("done","./images/svg/done.svg",48);
       
       // $mdThemingProvider.theme('default')
       // .primaryPalette('brown')
@@ -104,22 +106,31 @@ var app = angular.module('protoApp', [
         controller: 'NavbarCtrl',
         controllerAs: 'navbar'
       })
-      .when('/transReq', {
+      .when('/transReq/:email', {
         templateUrl: 'views/transreq.html',
         controller: 'TransreqCtrl',
         controllerAs: 'transReq',
+        params: {
+          email: ""
+        },
         authenticated:true
       })
-      .when('/financeReq', {
+      .when('/financeReq/:email', {
         templateUrl: 'views/financereq.html',
         controller: 'FinancereqCtrl',
         controllerAs: 'financeReq',
+        params: {
+          email: ""
+        },
         authenticated:true
       })
-      .when('/bankVerifyReq', {
+      .when('/bankVerifyReq/:email', {
         templateUrl: 'views/bankverifyreq.html',
         controller: 'BankverifyreqCtrl',
         controllerAs: 'bankVerifyReq',
+        params: {
+          email: ""
+        },
         authenticated:true
       })
       .when('/logout', {

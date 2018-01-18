@@ -18,7 +18,8 @@ angular.module('protoApp')
     var roles = ["Bank","Retailer","Wholesaler"];
     $scope.isAuthenticated = Auth.isLoggedIn();
     console.log($scope.isAuthenticated+"AUTHENT");
-    
+    $scope.isClicked=false;
+    $scope.routeName = "";
     $scope.isBank = false;
     $scope.isRetailer = false;
     $scope.isWholesaler = false; 
@@ -109,8 +110,12 @@ angular.module('protoApp')
         });
     });
 
-    $scope.close = function () {
-      console.log("ENTERED")
+    $scope.close = function (routeName) {
+      console.log("ENTERED");
+      if(routeName){
+        $scope.isClicked = true;
+        $scope.routeName = routeName;        
+      }
       // Component lookup should always be available since we are not using `ng-if`
       $mdSidenav('left').close()
         .then(function () {

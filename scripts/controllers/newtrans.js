@@ -351,23 +351,37 @@ angular.module('protoApp')
           console.log("NTERED FINANCE");
           if(isStep1 && isStep2 && isStep3 && isStep4){
             financeReq.RequestID = shuffle(numbers).toString();
-            financeReq.Amount = $scope.Amount;
             financeReq.financing = $scope.financing;
+            if($scope.financing=="Not_required"){
+              financeReq.Amount = 0;
+            }else{
+              financeReq.Amount = $scope.Amount;              
+            }
             financeReq.retailer = goodsListObject.retailer;
-            financeReq.listing = goodsListObject.ListingID;
+            financeReq.listing = "resource:org.acme.retail.GoodsListing#"+goodsListObject.ListingID;
             $http.post("http://52.87.34.178:3000/api/FinanceRequest",financeReq).then((res =>{
                 if(res.status === 200){
-                  Finance_Trans.request = financeReq.RequestID;
-                  Finance_Trans.bank = bankObject.email;
-                  Finance_Trans.retailer = email;
-                  Finance_Trans.timestamp = Date.now();
-                  $http.post("http://52.87.34.178:3000/api/Finance_Trans",Finance_Trans).then((res=>{
+
+                  if(financeReq.financing=="Need"){
+                    Finance_Trans.request = "resource:"+financeReq.$class+"#"+financeReq.RequestID;
+                    Finance_Trans.bank = bankObject.email;
+                    Finance_Trans.retailer = email;
+                    Finance_Trans.timestamp = Date.now();
+                    $http.post("http://52.87.34.178:3000/api/Finance_Trans",Finance_Trans).then((res=>{
+                      isStep5 = true;
+                      stepStatus('Step5',"step 5 completed!");                  
+                      showSimpleToast("Step 5 completed!");
+                      StatusTrans(false);                                   
+                      $scope._mdPanelRef && $scope._mdPanelRef.close();  
+                    }))
+                  }else{
                     isStep5 = true;
                     stepStatus('Step5',"step 5 completed!");                  
                     showSimpleToast("Step 5 completed!");
                     StatusTrans(false);                                   
-                    $scope._mdPanelRef && $scope._mdPanelRef.close();  
-                  }))
+                    $scope._mdPanelRef && $scope._mdPanelRef.close(); 
+                  }
+                 
                 }
             }));
                 
