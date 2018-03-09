@@ -7,14 +7,27 @@
  * # NavbarCtrl
  * Controller of the protoApp
  */
+
 angular.module('protoApp')
-  .controller('NavbarCtrl',function ($scope, $window,$location, Auth, $timeout, $mdSidenav, $q,$log,$mdComponentRegistry,$rootScope) {
+  .controller('NavbarCtrl',function ($scope, $mdMedia, $window,$location, Auth, $timeout, $mdSidenav, $q,$log,$mdComponentRegistry,$rootScope) {
     $scope.toggleLeft = buildDelayedToggler('left');
     $mdComponentRegistry.when('left').then(function() {
       // Now you can use $mdSidenav('left') or $mdSidenav('left', true) without getting an error.
       $scope.isOpen = $mdSidenav('left').isOpen();
     })
     
+
+    $scope.screenIsSmall = $mdMedia('sm');
+    $scope.customQuery = $mdMedia('(min-width: 1234px)');
+    $scope.anotherCustom = $mdMedia('max-width: 300px');
+
+    $(function () {
+      $(document).scroll(function () {
+        var $nav = $(".navcontainer");
+        $nav.toggleClass('fixednav', $(this).scrollTop() > $nav.height()+100);
+      });
+    });
+
     var roles = ["Bank","Retailer","Wholesaler"];
     $scope.isAuthenticated = Auth.isLoggedIn();
     console.log($scope.isAuthenticated+"AUTHENT");
@@ -50,6 +63,21 @@ angular.module('protoApp')
       Auth.logout();
       $window.location.reload();
     }
+
+    //Carousel 
+    $scope.myInterval = 3000;
+    $scope.slides = [
+      {
+        image: "images/slide1.jpg"
+      },
+      {
+        image: "images/slide2.jpg"
+      },
+      {
+        image: "images/slide3.png"
+      }
+    ];
+    
 
     /**
      * Supplies a function that will continue to operate until the
@@ -109,6 +137,8 @@ angular.module('protoApp')
             if(! mouse_is_inside) $scope.close();
         });
     });
+
+    
 
     $scope.close = function (routeName) {
       console.log("ENTERED");

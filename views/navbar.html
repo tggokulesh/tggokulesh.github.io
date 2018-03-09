@@ -2,75 +2,149 @@
 
 
 .navcontainer{
-  opacity: 1;
-  background: #b9b4b4;
-
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    z-index: 10;
+    transition: all .2s ease-in;
+    box-shadow: none;
+    font-family: Arial, Helvetica, sans-serif;   
+    font-size: 0.8rem;
 }
+
+.fixednav{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    z-index: 10;
+    transition: all .2s ease-in;
+    box-shadow: none;
+    background-color: #090909;
+    /* font-family: 'Raleway', Helvetica, Arial, sans-serif;  */
+    
+    box-shadow: 0 1px 10px rgba(0,0,0,.5);
+}
+
 md-nav-bar .md-button._md-nav-button.md-unselected{
     color: rgb(255, 255, 255);    
 }
 
+md-nav-bar .md-nav-item{
+    font-family: Arial, Helvetica, sans-serif;   
+    font-size: 0.5rem;
+}
 md-nav-bar .md-button._md-nav-button.md-hover{
-color: rgba(255, 255, 255, 0.986);
+color: #fbdb58;
 }
 
-.md-button.md-accent {
-    color: rgba(237, 233, 10, 0.945);
 
+
+
+.navcontainer :hover{
+    color: rgb(237, 222, 10);
 }
 
 #grad1{
-    background-color: #563d7c;
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.05),inset 0 -1px 0 rgba(0,0,0,.1);
-    padding-right: .5rem;
-    padding-left: .5rem;
-    position: relative;
-    width: 100%;
+   
+}
+.carousel-caption{
+    /* margin-bottom: 10vh; */
 }
 
-.navcontainer li:hover{
+/* .navcontainer li:hover{
   cursor: pointer;
   padding-left: 2vw;
   width: 100%;
   background: rgba(80, 78, 78, 0.1);
   background: -webkit-linear-gradient(90deg, rgba(225, 225, 225, 0.1), rgba(80, 78, 78, 0));
   background: linear-gradient(90deg, rgba(225, 225, 225, 0.1), rgba(80, 78, 78, 0));
+} */
+
+
+.menu{
+    visibility: hidden;
 }
 
-.fontsizetab{
-    font-size: 0.9em;
-  }
+.slides{
+    display: block;
+    /* margin: auto; */
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    transition: all .2s ease-in;
+    box-shadow: none;
+}
 
-@media screen and (min-width: 769px){
+.sidenav1{
+    visibility: hidden;
+}
 
-  .fontsizetab{
-    font-size: 1em;
-  }
+.md-button.md-accent {
+    color: rgb(237, 222, 10);
+
+@media screen and (max-width: 769px){
 
 .sidenav1{
     display: block;
+    visibility: visible;
+}
+
+.menu{
+    visibility: visible;
+}
+
+.md-button.md-accent {
+    color: rgb(237, 222, 10);
+
+
 }
 }
 </style>
-<section class="navsidebar">
-        
-    <md-nav-bar layout="column"
-        id="grad1"
+<section id="navbar" class = "navcontainer" layout ="column">
+    
+    <!-- <div id="slides_control" layout-align="center">
+            <div>
+                <carousel interval="myInterval">
+                <slide ng-repeat="slide in slides" active="slide.active">
+                    <img ng-src="{{slide.image}}" class="imgresponsive" 
+                    style=" position: relative;
+                    max-width: 100%;
+                    display:block;
+                    margin:auto;
+                    height: 50vh;">
+                    <div class="carousel-caption">
+                    <h4>Slide {{$index+1}}</h4>
+                    </div>
+                </slide>
+                </carousel>
+            </div>
+    </div> -->
+
+    <md-nav-bar
         md-no-ink-bar="true"
         md-selected-nav-item="currentNavItem"
         nav-bar-aria-label="navigation links"
+        
         >
-
-        <md-button  ng-hide="status()" class="menu md-icon-button" ng-click="open()">
+        
+        <md-button  class = "menu" ng-hide="status()" class="menu md-icon-button" ng-click="open()">
             <md-icon style="color:white;margin-top:0.4vw;" md-svg-icon="menu"></md-icon>
         </md-button>
 
-        <md-button ng-show="status()" class="menu md-icon-button" ng-click="close()">
+        <md-button class="menu" ng-show="status()" class="menu md-icon-button" ng-click="close()">
             <md-icon style="color:white;margin-top:0.4vw;" md-svg-icon="close"></md-icon>
         </md-button>
 
         <md-nav-item md-nav-href="#/" name="Home">
-        Home
+        <b>Home</b>
 
         </md-nav-item>
         <!-- <md-icon ng-show="isClicked" style="color:rgb(255, 254, 254);margin-top:1vw;" md-svg-icon="right"></md-icon>
@@ -78,16 +152,28 @@ color: rgba(255, 255, 255, 0.986);
         <md-nav-item name="{{routeName}}">
             <p ng-show="isClicked">{{routeName}}</p>            
         </md-nav-item> -->
-        
-        
-        <span flex></span>
-        <span flex></span>
-        <md-nav-item ng-hide="isAuthenticated" md-nav-href="#/login" layout-align="end" name="Login">Login</md-nav-item>
-        <md-nav-item ng-hide="isAuthenticated" md-nav-href="#/signup"  layout-align="end" name="Signup">Signup</md-nav-item>
-        <md-nav-item ng-show="isAuthenticated" md-nav-href="#/about" layout-align="end" name="Profile">Profile</md-nav-item>
-        <md-nav-item ng-show="isAuthenticated" md-nav-href="#/"  ng-click="logout()" layout-align="end" name="Logout">Logout</md-nav-item>                            
-    </md-nav-bar>
     
+        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#newTrans/{{user.email}}" ng-click="close('NEW TRANSACTION')">NEW TRANSACTION</md-nav-item>              
+        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#inventory/{{user.email}}" ng-click="close('INVENTORY')" >INVENTORY</md-nav-item>    
+        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#balance/{{user.email}}" ng-click="close('CHECK BALANCE')" >CHECK BALANCE</md-nav-item>         
+        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#pastTrans/{{user.email}}" ng-click="close('PAST TRANSACTIONS')" >PAST TRANSACTIONS</md-nav-item>                   
+        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#verifyTrans/{{user.email}}" ng-click="close('VERIFY TRANSACTION')" >VERIFY TRANSACTION</md-nav-item>                        
+            
+
+        <md-nav-item ng-show="isAuthenticated && isWholesaler" href="/#transReq/{{user.email}}" ng-click="close()">TRANSACTION REQUESTS</md-nav-item>          
+                    
+        <md-nav-item ng-show="isAuthenticated && isBank" md-nav-href="/#financeReq/{{user.email}}" ng-click="close()" >FINANCIAL REQUESTS</md-nav-item>                    
+        <md-nav-item ng-show="isAuthenticated && isBank" md-nav-href="/#bankVerifyReq/{{user.email}}" ng-click="close()" >VERIFY TRANSACTIONS</md-nav-item>                        
+                                            
+        <span flex></span>
+        <span flex></span>
+        <md-nav-item ng-hide="isAuthenticated" md-nav-href="#/login" layout-align="end" name="Login"><b>Login</b></md-nav-item>
+        <md-nav-item ng-hide="isAuthenticated" md-nav-href="#/signup"  layout-align="end" name="Signup"><b>Signup</b></md-nav-item>
+        <md-nav-item ng-show="isAuthenticated" md-nav-href="#/about" layout-align="end" name="Profile"><b>Profile</b></md-nav-item>
+        <md-nav-item ng-show="isAuthenticated" md-nav-href="#/"  ng-click="logout()" layout-align="end" name="Logout"><b>Logout</b></md-nav-item>                            
+    </md-nav-bar>
+
+
     <div class="sidenav1">
 
     <md-sidenav 
@@ -103,7 +189,6 @@ color: rgba(255, 255, 255, 0.986);
         z-index: 9999999999;
         overflow-x: hidden;
         position: fixed;
-        margin-top:48px;
         "
        >
             <md-toolbar>

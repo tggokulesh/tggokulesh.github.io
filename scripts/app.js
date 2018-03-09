@@ -17,7 +17,8 @@ var app = angular.module('protoApp', [
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'authServices'
+    'authServices',
+    'ui.bootstrap'
     ])
     .config(function($mdIconProvider,$mdThemingProvider){
       $mdIconProvider
@@ -27,7 +28,10 @@ var app = angular.module('protoApp', [
       .icon("share", "./images/svg/share.svg", 24)
       .icon("right","./images/svg/arrow_right.svg",24)
       .icon("done","./images/svg/done.svg",48);
-      
+      // .icon("slide1","./images/",48);
+      // .icon("slide2","./images/",48);
+      // .icon("slide3","./images/",48);
+
       // $mdThemingProvider.theme('default')
       // .primaryPalette('brown')
       // .accentPalette('red');
