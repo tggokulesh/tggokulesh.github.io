@@ -1,8 +1,11 @@
 <style>
 
 .card{
-    width: 80vw;
-    height: auto;
+    padding: 1vh 1vw;
+    width: 15vw;
+    height: 50vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 @media screen and (max-width: 768px){
@@ -15,44 +18,37 @@
   width: 80vw; 
   height: 80vh;
 }
-/* .card1{
-  width: 80vw;
-  height: auto;
-} */
+
 }
 
 .card p{
-    color: rgb(39, 38, 38);
+   
+    font-family: din_lightregular;
+    color: #302f2f;
+    font-size: 1 rem;
+    margin: 0 auto 5vh;
     }
 
+
   .card img{
+  padding: 5%;
   position: relative;
   width: 50%;
   height: auto;
-  margin: 10% 20%;
+  margin: 2vh auto;
   box-sizing: content-box;
 } 
-/* .card1 img{
-  position: relative;
-  width: 50%;
-  height: auto;
-  margin: 10% 20%;
-  box-sizing: content-box;
-}  */
+
 .card:hover{
   border: 2px solid rgb(65, 3, 61);
   box-shadow: 3px 3px 25px 2px gainsboro;
-  cursor: pointer;
   box-sizing: border-box;
 }
-/* .card1:hover{
-  border: 2px solid rgb(65, 3, 61);
-  box-shadow: 3px 3px 25px 2px gainsboro;
-  cursor: pointer;
-  box-sizing: border-box;
-} */
+
 
 .demo-dialog-example {
+  position: fixed;
+  top:0;
   background: white;
   border-radius: 4px;
   box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
@@ -60,6 +56,19 @@
       0 5px 24px 4px rgba(0, 0, 0, 0.12);
   width: 50vw;
 }
+
+.newTrans-flex{
+        padding: 0px;
+        min-width: 100%;
+        background-size: cover;
+        width: 100%;
+        height:60vh;  
+        z-index: 5;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-image: url("/images/backgrd.png");
+        position: relative;
+      }
 
 #toaster {
   position: fixed;
@@ -70,29 +79,75 @@
   z-index: 10000;
 }
 
+.headline{
+  margin:0 auto;
+  font-weight: bold;  
+}
+
+
+
+.cards-list{
+  margin: 5vh auto;
+}
+
+body {
+    top: 0 !important;
+  }
+md-backdrop{
+position: fixed;
+top: 0;
+}
+/* md-backdrop {
+
+background-color: '{{background-900-0.0}}';
+}
+.md-opaque.md-THEME_NAME-theme {
+  background-color: '{{background-900-1.0}}';
+} */
+
+.md-dialog-container{
+position:fixed;
+top:0 !important;
+overflow:hidden;
+}
+
+
+
 </style>
+
+<body>
+
+<div class="newTrans-flex flex-center flex-justify flex-column center full-height" > 
+    <div class="layout-container" layout-align="center center">
+        <div class="inner-banner-content">
+                    <h1 class="banner-title">
+                        Procedures for New Transactions 
+                    
+                    </h1>
+                    <p>Have an exciting problem in mind? Want to know how deep learning can help your enterprise? Get in touch and let us take it forward to solve your problem together.</p>
+        </div>  
+    </div>   
+</div>
 
 <div class="md-pading" layout="column">
 
 <div id="toaster" layout-align="center center"></div>
 
-<div layout="row" layout-xs="column" layout-align="center" layout-margin="30" layout-margin-xs="20">
+<div class="cards-list" layout="row" layout-xs="column" layout-align="center" layout-margin="30" layout-margin-xs="20">
 
-    <md-card class="card" ng-click="selectGoods()">
+    <md-card class="card" ng-click="selectGoods()" >
       <md-tooltip  md-direction="{{demo.tipDirection}}">
           {{Step1}}
       </md-tooltip>
       <img ng-src="images/full_basket_shopping-512.png" class="md-card-image" alt="Select Goods">
       <md-card-title>
         <md-card-title-text>
-          <span class="md-headline">Select Goods</span>
+          <span class="headline" style="font-size:1 rem;" >Select Goods</span>
         </md-card-title-text>
       </md-card-title>
-      <md-card-content>
         <p>
             Enter name of the goods and give description about them!
         </p>
-      </md-card-content>
     </md-card>
 
     
@@ -104,31 +159,30 @@
             <img ng-src="images/participant.png" class="md-card-image" alt="other participants">
             <md-card-title>
               <md-card-title-text>
-                <span class="md-headline">Select other participants</span>
+                <span class="headline"  style="font-size:1 rem;">Select Participants</span>
               </md-card-title-text>
             </md-card-title>
-            <md-card-content>
               <p>
                 Enter other participants
             </p>
-            </md-card-content>
     </md-card>
 
     <md-card class="card"  ng-click="decideQuantity()">
         <md-tooltip  md-direction="{{demo.tipDirection}}" >
             {{Step3}}
         </md-tooltip>
-            <img ng-src="images/quantity.png" class="md-card-image" style="margin-top:10%" alt="Decide quantity,Buying or selling?">
+            <img ng-src="images/quantity.png" class="md-card-image" alt="Decide quantity,Buying or selling?">
             <md-card-title>
               <md-card-title-text>
-                <span class="md-headline">Decide Quantity. Buying or Selling?</span>
+                <span class="headline"  style="font-size:1 rem;" >Decide Quantity</span>
               </md-card-title-text>
             </md-card-title>
-            <md-card-content>
-              <p>
-                Enter the quantity of the good and choose to buy or sell!
-              </p>
-            </md-card-content>
+            <div>
+                <p>
+                    Enter the quantity of the good and choose to buy or sell!
+                  </p>
+            </div>
+             
     </md-card>
 
     <md-card class="card"  ng-click="selectBank()">
@@ -138,14 +192,15 @@
             <img ng-src="images/bank.jpg" class="md-card-image" alt="Bank">
             <md-card-title>
               <md-card-title-text>
-                <span class="md-headline">Choose Bank</span>
+                <span class="headline"  style="font-size:1 rem;" >Choose Bank</span>
               </md-card-title-text>
             </md-card-title>
-            <md-card-content>
-              <p>
-                  Enter a Bank name
-              </p>
-            </md-card-content>
+            <div>
+                <p>
+                    Enter a Bank name
+                </p>
+            </div>
+             
     </md-card> 
 
 </div>    
@@ -157,3 +212,4 @@
     <md-button class="md-raised md-primary" ng-disabled="submit" ng-click="submitTrans()" style="margin-top: 25px;font-size: 1em;" >Submit the Transaction</md-button>
 </div>
 </div>
+</body>

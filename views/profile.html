@@ -1,0 +1,119 @@
+<style>
+    .card{
+        margin: auto;
+        padding: 5vh 5vw;
+    }
+
+    .inner-details{
+        padding: 5vh 5vw;
+        margin: auto;
+        flex-direction: row;
+        display: flex;
+
+    }
+    td{
+        padding: 1vh 1vw;
+    }
+    .balance{
+        padding: 5vh 5vw;
+        margin: auto;
+    }
+    .titles{
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: 1vh 1vw;
+        width: 15vw;
+    }
+</style>
+
+<div class="common-flex flex-center flex-justify flex-column center full-height" > 
+        <div class="layout-container" layout-align="center center">
+            <div class="inner-banner-content">
+                        <h1 class="banner-title">
+                           User Profile
+                        
+                        </h1>
+                        <p>Here we show user details and have cool features like check Balance and view recent transactions!</p>
+            </div>  
+        </div>   
+</div>
+
+       
+        
+  
+<md-card class="card" layout-align="center">
+        <md-card-title class="headline" layout="column"> User Profile </md-card-title>
+
+        <div class="inner-details">
+                <img ng-src="/images/svg/user.png" class="md-card-image" style="margin:auto 5vw; height:100px; width: 100px; border-radius:50%;" alt="User pic">
+
+                <div class="table-responsive">
+                        <table class="table-striped">
+                            <tbody>
+                                <tr>
+                                <td class="titles">Name </td>
+                                <td>Mr X</td>
+                                </tr>
+                                <tr>
+                                    <td class="titles">Email id </td>
+                                    <td>{{user.email}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titles">User Category </td>
+                                    <td>{{user.occupation}}</td>
+                                </tr>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div> 
+                    <div class="balance" layout="row" layout-margin="20">
+                            <label >AVAILABLE BALANCE :  </label>
+                            <p>{{retailer.Balance}}</p>
+                    </div>
+                </div>
+
+                              
+                <md-card-actions layout="row" layout-align="center">
+                        <md-button style="padding:2vh 2vw; margin:2vh auto;"ng-show="view" class="md-raised md-primary md-padding" md-ink-ripple="#FFFFFF" ng-click="viewTrans()">View Recent Transactions</md-button>
+                </md-card-actions>
+                <md-card-actions layout="row" layout-align="center">
+                    <md-button style="padding:2vh 2vw;margin:4vh auto;" ng-hide="view" class="md-raised md-warning md-padding" md-ink-ripple="#FFFFFF" ng-click="hideTrans()">Hide Recent Transactions</md-button>
+                </md-card-actions>
+            
+                <div class="table-responsive" ng-hide="view">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Transaction ID</th>
+                                <th>Quantity</th>
+                                <th>GoodsID</th>
+                                <th>Buying/Selling</th>
+                                <th>Price</th>
+                                <th>Participant</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="tran in trans track by $index" >
+                                <td style="
+                                    max-width: 16vw;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                ">{{tran.transactionId}}</td>
+                                <td>{{tran.quantity}}</td>
+                                <td>{{tran.goodsId}}</td>
+                                <td>{{tran.state}}</td>
+                                <td>{{tran.price}}</td>
+                                <td>{{tran.participant}}</td>
+                                <td style="background-color:{{tran.status==='Pending'?'orange':'green'}}">{{tran.status}}</td>                    
+                    
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+            </div>                
+    
+    
+</div>
+</md-card>

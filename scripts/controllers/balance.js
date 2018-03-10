@@ -18,7 +18,7 @@ angular.module('protoApp')
     $scope.trans = [];
     var trans = [];
     var email = $routeParams.email;
-
+    
     $http.get("http://52.87.34.178:3000/api/Retailer/"+email).then( (res =>{
       if(res.status ===200){
         $scope.retailer = res.data;        

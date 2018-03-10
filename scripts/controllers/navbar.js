@@ -24,7 +24,7 @@ angular.module('protoApp')
     $(function () {
       $(document).scroll(function () {
         var $nav = $(".navcontainer");
-        $nav.toggleClass('fixednav', $(this).scrollTop() > $nav.height()+100);
+        $nav.toggleClass('fixednav', $(this).scrollTop() > $nav.height());
       });
     });
 

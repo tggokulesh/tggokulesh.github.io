@@ -2,7 +2,30 @@
     .md-clickable:hover{
         background-color: rgb(230, 230, 231);
     }
+
+    .card{
+        margin: auto;
+        height: auto;
+        padding: 5vh 5vw;
+    }
 </style>
+
+<div class="common-flex flex-center flex-justify flex-column center full-height" > 
+        <div class="layout-container" layout-align="center center">
+            <div class="inner-banner-content">
+                        <h1 class="banner-title">
+                           Want to Verify your Transactions  
+                        
+                        </h1>
+                        <p>Here is the list of all Tranactions you did shown with their ids and relevant details.
+                            Now to verify click any transaction in the table !
+                        </p>
+            </div>  
+        </div>   
+</div>
+
+<md-card class="card" layout-align="center">
+        <md-card-title class="headline" layout="column"> Verify Transaction </md-card-title>
 <div class="table-responsive" ng-hide="view" layout-align="center">
     <table class="table">
         <thead>
@@ -34,3 +57,4 @@
         </tbody>
     </table>
 </div> 
+</md-card>

@@ -7,19 +7,63 @@
         width: 100%;
         height: 100%;
         background-repeat: no-repeat;
+        z-index: 5;
         background-position: center center;
-        background-image: url("/images/home.jpg");
+        background-image: url("/images/home2gif.gif");
         position: relative;
+      }
+      .main-banner{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+     .banner-title{
+       color: white;
+       text-align: center;
+     }
+     p{
+       color: whitesmoke;
+       text-align: center;
+     }
+
+     .md-headline::after{
+        content: "";
+        width: 60px;
+        height: 2px;
+        background-color: #f04f43;
+        display: block;
+        margin:10px auto 0;
+      }
+
+      .fixed-flex{
+        padding: 0px;
+        min-height: 625px;
+        min-width: 100%;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-image: url("/images/home3.jpg");
+        position: fixed;
+      }
+      .wrapper{
+          display: flex;
+          flex-direction: column;
       }
     </style>
 
     
     <!--Header end-->
     <!--Banner start-->
+    <div class="wrapper">
+
     <div class="main-flex flex-center flex-justify flex-column center full-height" >    
     </div>
+
     <section class="main-banner">
-        <div class="scontainer">
+        <div class="container">
             <div class="inner-banner-content">
                 <h1 class="banner-title">
                     TECHNOLOGY
@@ -29,4 +73,23 @@
         </div>
 
     </section>
-   
+    <!-- <div class="fixed-flex">
+    </div> -->
+    
+    <div style=" background-color:transparent;position:relative; width:60vw; min-height:100vh; overflow-x: hidden; padding-top: 5vh; padding-bottom: 5vh; margin:auto;">
+            <div ng-cloak="ng-cloak" >
+              <md-card flex="flex" style=" background-color:transparent;">
+                <md-card-title>
+                  <md-card-title-text>
+                    <span class="md-headline" layout-align="center" style="text-align:center;"> About Us              
+                    </span>
+                  </md-card-title-text>
+                </md-card-title>
+                <md-card-content style="text-align:center;" >
+                    We are a bunch of highly enthusiastic students about Blockchain from IIT Madras.
+                    We used Hyperledger blockchain for building the backend of this platform and we used 
+                    studmax frontend developer who has done a great job!
+                </md-card-content>
+                 </md-card>
+               </div>
+</div>

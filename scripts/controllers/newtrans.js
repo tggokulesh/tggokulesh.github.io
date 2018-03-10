@@ -171,10 +171,11 @@ angular.module('protoApp')
       panelClass: 'demo-dialog-example',
       position: position,
       trapFocus: true,
-      zIndex: 80,
+      zIndex: 10,
       clickOutsideToClose: true,
       clickEscapeToClose: true,
-      hasBackdrop: true,
+      disableParentScroll:true,
+      hasBackdrop: true
     };
   
     var numbers = [1,2,3,4,5];       
@@ -229,6 +230,7 @@ angular.module('protoApp')
           if(res.status===200){
             $scope.submit = true;
             showSimpleToast("Transaction successfully done");
+            location.reload();
           }
       });
       }else{

@@ -24,6 +24,11 @@ var app = angular.module('protoApp', [
       $mdIconProvider
       .defaultIconSet("./images/svg/avatars.svg", 128)
       .icon("menu", "./images/svg/menu.svg", 24)
+      .icon("logo1", "./images/svg/block2.svg", 48)
+      .icon("logo2", "./images/svg/blockchain.svg", 24)
+      .icon("logo3", "./images/svg/world.svg", 128)
+
+
       .icon("close","./images/svg/close.svg")
       .icon("share", "./images/svg/share.svg", 24)
       .icon("right","./images/svg/arrow_right.svg",24)
@@ -43,10 +48,14 @@ var app = angular.module('protoApp', [
         controller: 'MainCtrl',
         controllerAs: 'main',
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about',
+      .when('/profile/:email', {
+        templateUrl: 'views/profile.html',
+        controller: 'ProfileCtrl',
+        controllerAs: 'profile',
+        params:{
+          email: ""
+        },
+        authenticated:true
       })
       .when('/newTrans/:email', {
         templateUrl: 'views/newtrans.html',
