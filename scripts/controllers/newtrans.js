@@ -8,7 +8,7 @@
  * Controller of the protoApp
  */
 angular.module('protoApp')
-  .controller('NewtransCtrl', function ($location,$scope,$http,$mdPanel,$mdToast,$rootScope,$routeParams) {
+  .controller('NewtransCtrl', function ($location,$mdDialog,$scope,$http,$mdPanel,$mdToast,$rootScope,$routeParams) {
     $scope._mdPanel = $mdPanel;
     $scope.openFrom = "button";
     $scope.closeTo = "button";
@@ -18,6 +18,7 @@ angular.module('protoApp')
       open: $scope.duration,
       close: $scope.duration
     };
+    $('html,body').scrollTop(0);
 
     $scope.submit = true;
 
@@ -27,14 +28,12 @@ angular.module('protoApp')
       "GoodsID": "",
       "Description": "",
       "rinventory": 0,
-      "ostate": "Other",
       "retailer":''
     };
 
     var goodsListObject = {
       "$class": "org.acme.retail.GoodsListing",
-      "ListingID": "",
-      "rhash": "",
+      "ListingID": "",  
       "quantity": 0,
       "Price": 0,
       "state": "Buying",
@@ -42,7 +41,8 @@ angular.module('protoApp')
       "state1": "Pending",
       "goods": "",
       "other": "",
-      "retailer":""
+      "retailer":"",
+      "bank":""
     };
 
     var participantObject = {
@@ -53,34 +53,34 @@ angular.module('protoApp')
       "email": "",
     };
 
-    var TransactionObject = {
-      "$class": "org.acme.retail.Offer",
-      "listing": "",
-      "other": "",
-      "retailer": "",
-      "bank": "",
-      "transactionId": "",
-      "timestamp": ""
-    };
+    // var TransactionObject = {
+    //   "$class": "org.acme.retail.Offer",
+    //   "listing": "",
+    //   "other": "",
+    //   "retailer": "",
+    //   "bank": "",
+    //   "transactionId": "",
+    //   "timestamp": ""
+    // };
 
     var financeReq = {
       "$class": "org.acme.retail.FinanceRequest",
       "RequestID": "",
       "Amount": 0,
       "financing": "Not_required",
-      "request": "Rejected",
+      "request": "Pending",
       "retailer": "",
       "listing": ""
     };
 
-    var Finance_Trans = {
-      "$class": "org.acme.retail.Finance_Trans",
-      "request": "",
-      "retailer": "",
-      "bank": "",
-      "transactionId": "",
-      "timestamp": ""
-    }
+    // var Finance_Trans = {
+    //   "$class": "org.acme.retail.Finance_Trans",
+    //   "request": "",
+    //   "retailer": "",
+    //   "bank": "",
+    //   "transactionId": "",
+    //   "timestamp": ""
+    // }
 
     var isStep1 = false;
     var isStep2 = false;
@@ -178,6 +178,8 @@ angular.module('protoApp')
       hasBackdrop: true
     };
   
+    var alert;
+    
     var numbers = [1,2,3,4,5];       
     
     function shuffle(o) {
@@ -209,6 +211,7 @@ angular.module('protoApp')
     $scope.selectBank = function() {
       selectPanel(BankCtrl,'views/choosebank.html','bank-dialog');            
     }; 
+
     $scope.financeRequest = function() {
       selectPanel(FinanceCtrl,'views/financeRequest.html','finance-dialog');            
     }; 
@@ -217,26 +220,26 @@ angular.module('protoApp')
       $scope.financeRequest();
     }
 
-    $scope.submitTrans = function(){
-      if(isStep1 && isStep2 && isStep3 && isStep4 && isStep5){
-        TransactionObject.goods = "resource:org.acme.retail.Goods#"+goodObject.GoodsID;
-        TransactionObject.listing = "resource:org.acme.retail.GoodsListing#"+goodsListObject.ListingID;
-        TransactionObject.other = "resource:org.acme.retail.Other#"+participantObject.email;
-        TransactionObject.bank = "resource:org.acme.retail.Bank#"+bankObject.email;
-        TransactionObject.retailer = "resource:org.acme.retail.Retailer#"+goodObject.retailer;
-        TransactionObject.timestamp = Date.now();
+    // $scope.submitTrans = function(){
+    //   if(isStep1 && isStep2 && isStep3 && isStep4 && isStep5){
+    //     TransactionObject.goods = "resource:org.acme.retail.Goods#"+goodObject.GoodsID;
+    //     TransactionObject.listing = "resource:org.acme.retail.GoodsListing#"+goodsListObject.ListingID;
+    //     TransactionObject.other = "resource:org.acme.retail.Other#"+participantObject.email;
+    //     TransactionObject.bank = "resource:org.acme.retail.Bank#"+bankObject.email;
+    //     TransactionObject.retailer = "resource:org.acme.retail.Retailer#"+goodObject.retailer;
+    //     TransactionObject.timestamp = Date.now();
 
-        $http.post("http://52.87.34.178:3000/api/Offer",TransactionObject).then((res)=>{
-          if(res.status===200){
-            $scope.submit = true;
-            showSimpleToast("Transaction successfully done");
-            location.reload();
-          }
-      });
-      }else{
-        alert("Please complete above Steps to submit the Transaction");
-      }
-    };
+    //     $http.post("http://52.87.34.178:3000/api/Offer",TransactionObject).then((res)=>{
+    //       if(res.status===200){
+    //         $scope.submit = true;
+    //         showSimpleToast("Order Placed successfully");
+    //         location.reload();
+    //       }
+    //   });
+    //   }else{
+    //     alert("Please complete above Steps to submit the Transaction");
+    //   }
+    // };
 
     function selectPanel(panelCtrl,panelUrl,panelclass){
 
@@ -292,36 +295,6 @@ angular.module('protoApp')
         }; 
       }
 
-      function QuantityCtrl(mdPanelRef,$scope,$rootScope){
-        $scope._mdPanelRef = mdPanelRef;
-        
-        $scope.addQuantity = function() {
-          if(isStep1 && isStep2){
-            goodsListObject.goods = "resource:org.acme.retail.Goods#"+goodObject.GoodsID;
-            // goodsListObject.state1 = "Accepted";
-            goodsListObject.ListingID = shuffle(numbers).toString();
-            goodsListObject.rhash = $scope.rhash;
-            goodsListObject.quantity = $scope.quantity;
-            goodsListObject.state = $scope.state;
-            goodsListObject.Price = $scope.price;
-            goodsListObject.other =  "resource:org.acme.retail.Other#"+participantObject.email;
-            goodsListObject.retailer = "resource:org.acme.retail.Retailer#"+goodObject.retailer;
-            console.log("GOODSIDAPPENDED");
-            
-            $http.post("http://52.87.34.178:3000/api/GoodsListing",goodsListObject).then((res)=>{
-                if(res.status===200){
-                  isStep3 = true;
-                  stepStatus('Step3',"step 3 completed!");
-                  showSimpleToast("Step 3 completed!");
-                }
-                $scope._mdPanelRef && $scope._mdPanelRef.close();            
-            });
-          }else{
-            alert("Please complete Step 1 and 2");
-          }
-        }; 
-      }
-
       function BankCtrl(mdPanelRef,$scope){
         $scope._mdPanelRef = mdPanelRef;
         $scope.banks = [];
@@ -330,60 +303,118 @@ angular.module('protoApp')
             $scope.banks = res.data;
           }
         }));
+
         $scope.addBank = function() {
-          if(isStep1 && isStep2 && isStep3){
+          if(isStep1 && isStep2){
             bankObject.email = $scope.email;
             
-            isStep4 = true;
-            stepStatus('Step4',"step 4 completed!");                  
-            showSimpleToast("Step 4 completed!");
-            $('#finance').show();            
+            isStep3 = true;
+            stepStatus('Step3',"step 3 completed!");
+            showSimpleToast("Step 3 completed!");
+            
             $scope._mdPanelRef && $scope._mdPanelRef.close(); 
-            // showfinance();           
+          }else{
+            alert("Please complete Step 1 and 2");
+          }
+        }; 
+      }
+
+      function QuantityCtrl(mdPanelRef,$scope,$rootScope){
+        $scope._mdPanelRef = mdPanelRef;
+        
+        $scope.addQuantity = function() {
+          if(isStep1 && isStep2 && isStep3){
+            goodsListObject.goods = "resource:org.acme.retail.Goods#"+goodObject.GoodsID;
+            goodsListObject.state1 = "Pending";
+            goodsListObject.ListingID = shuffle(numbers).toString();
+            goodsListObject.quantity = $scope.quantity;
+            goodsListObject.state = $scope.state;
+            goodsListObject.Price = $scope.price;
+            goodsListObject.other =  "resource:org.acme.retail.Other#"+participantObject.email;
+            goodsListObject.retailer = "resource:org.acme.retail.Retailer#"+goodObject.retailer;
+            goodsListObject.bank = "resource:org.acme.retail.Bank#"+bankObject.email;
+
+            console.log("GOODSIDAPPENDED");
+            
+            $http.post("http://52.87.34.178:3000/api/GoodsListing",goodsListObject).then((res)=>{
+                if(res.status===200){
+                  isStep4 = true;
+                  stepStatus('Step4',"step 4 completed!");                  
+                  showSimpleToast("Step 4 completed!");
+                  if(goodsListObject.state==="Buying"){
+                    $('#finance').show();            
+                  }else{
+                    $scope.submit = true;
+                    showDialog("Order Placed successfully");
+                  }
+                }
+
+                $scope._mdPanelRef && $scope._mdPanelRef.close();            
+            });
           }else{
             alert("Please complete Step 1,2 and 3 first!");            
           }
         }; 
       }
 
+      
+      function showDialog(message) {
+
+          alert = $mdDialog.alert({
+            title: 'Congrats',
+            textContent: message+'!',
+            ok: 'Close'
+          });
+
+          $mdDialog
+            .show( alert )
+            .finally(function() {
+              alert = undefined;
+              location.reload();               
+
+            });
+      }
+
+
       function FinanceCtrl(mdPanelRef,$scope){
         $scope._mdPanelRef = mdPanelRef;
         
         $scope.addfinance = function() {
-          console.log("NTERED FINANCE");
+          console.log("ENTERED FINANCE");
           if(isStep1 && isStep2 && isStep3 && isStep4){
             financeReq.RequestID = shuffle(numbers).toString();
             financeReq.financing = $scope.financing;
             if($scope.financing=="Not_required"){
               financeReq.Amount = 0;
             }else{
-              financeReq.Amount = $scope.Amount;              
+              financeReq.Amount = goodsListObject.quantity*goodsListObject.Price;      
+              financeReq.request = "Pending";        
             }
             financeReq.retailer = goodsListObject.retailer;
             financeReq.listing = "resource:org.acme.retail.GoodsListing#"+goodsListObject.ListingID;
             $http.post("http://52.87.34.178:3000/api/FinanceRequest",financeReq).then((res =>{
                 if(res.status === 200){
 
-                  if(financeReq.financing=="Need"){
-                    Finance_Trans.request = "resource:"+financeReq.$class+"#"+financeReq.RequestID;
-                    Finance_Trans.bank = bankObject.email;
-                    Finance_Trans.retailer = email;
-                    Finance_Trans.timestamp = Date.now();
-                    $http.post("http://52.87.34.178:3000/api/Finance_Trans",Finance_Trans).then((res=>{
-                      isStep5 = true;
-                      stepStatus('Step5',"step 5 completed!");                  
-                      showSimpleToast("Step 5 completed!");
-                      StatusTrans(false);                                   
-                      $scope._mdPanelRef && $scope._mdPanelRef.close();  
-                    }))
-                  }else{
-                    isStep5 = true;
-                    stepStatus('Step5',"step 5 completed!");                  
-                    showSimpleToast("Step 5 completed!");
-                    StatusTrans(false);                                   
-                    $scope._mdPanelRef && $scope._mdPanelRef.close(); 
-                  }
-                 
+                  // if(financeReq.financing=="Need"){
+                  //   Finance_Trans.request = "resource:"+financeReq.$class+"#"+financeReq.RequestID;
+                  //   Finance_Trans.bank = bankObject.email;
+                  //   Finance_Trans.retailer = email;
+                  //   Finance_Trans.timestamp = Date.now();
+                  //   $http.post("http://52.87.34.178:3000/api/Finance_Trans",Finance_Trans).then((res=>{
+                  //     isStep5 = true;
+                  //     stepStatus('Step5',"step 5 completed!");                  
+                  //     showSimpleToast("Step 5 completed!");
+                  //     StatusTrans(false);                                   
+                  //     $scope._mdPanelRef && $scope._mdPanelRef.close();  
+                  //   }))
+                  // }else{
+                  isStep5 = true;
+                  stepStatus('Step5',"step 5 completed!");   
+                  $scope.submit = true;
+                  $scope._mdPanelRef && $scope._mdPanelRef.close(); 
+                  showDialog("Order Placed successfully");
+                  StatusTrans(true);                                   
+
                 }
             }));
                 

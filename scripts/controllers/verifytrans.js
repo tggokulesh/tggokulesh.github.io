@@ -14,6 +14,7 @@ angular.module('protoApp')
     $scope.trans = [];
     var trans = [];
     var email = $routeParams.email;
+    $('html,body').scrollTop(0);
 
     function getMyTrans(offers) {
       for(var j=0;j<offers.length;j++){

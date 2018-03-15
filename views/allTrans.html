@@ -1,0 +1,75 @@
+<style>
+    .card{
+        padding: 3vh 3vw;
+        margin: auto;
+        width: 60vw;
+        height: auto;
+    }
+    .allTrans-dialog {
+      padding: 2vh 2vw;
+      width: 100%;
+    }
+
+    .demo-dialog-button{
+        padding: 1vh 1vw;
+        float: right;
+        width: 50%;
+    }
+</style>
+
+    <div role="dialog" aria-label="Review Trans" layout="column" layout-align="center">
+            <md-toolbar>
+              <div class="md-toolbar-tools">
+                <h2>Review Transactions</h2>
+              </div>
+            </md-toolbar>
+          
+            <div class="allTrans-dialog" layout="column" layout-xs="column" >
+
+                <md-card class="card" layout-align="center">
+                    <md-card-title class="headline" layout="column"> All Transactions of the retailer </md-card-title>
+                <div class="table-responsive" ng-hide="view" layout="center center">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Quantity</th>
+                            <th>GoodsID</th>
+                            <th>Buying/Selling</th>
+                            <th>Price</th>
+                            <th>Participant</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="tran in trans track by $index" >
+                            <td style="
+                                max-width: 16vw;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                            ">{{tran.transactionId}}</td>
+                            <td>{{tran.quantity}}</td>
+                            <td>{{tran.goodsId}}</td>
+                            <td>{{tran.state}}</td>
+                            <td>{{tran.price}}</td>
+                            <td>{{tran.participant}}</td>
+                            <td style="background-color:{{tran.status==='Pending'?'orange':'green'}}">{{tran.status}}</td>                    
+                
+                        </tr>
+                    </tbody>
+                </table>
+                </div> 
+                </md-card>
+                
+            </div>
+          
+            <div layout="column" class="demo-dialog-button">
+              <md-button md-autofocus flex class="md-primary" ng-click="approveRequest(true)">
+                Accept
+              </md-button>
+              <md-button md-autofocus flex class="md-danger" ng-click="approveRequest(false)">
+                Reject
+            </md-button>
+            </div>
+          </div>

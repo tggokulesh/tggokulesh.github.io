@@ -13,6 +13,8 @@ angular.module('protoApp')
       'email':"",
       'Password':""
     };
+    $('html,body').scrollTop(0);
+
 
     var numbers = [1,2,3,4,5];       
     

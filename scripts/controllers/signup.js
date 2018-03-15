@@ -40,6 +40,7 @@ angular.module('protoApp')
   $scope.deactivate = true;
   $scope.user = {};
   var roles = ["Bank","Retailer","Wholesaler"];
+  $('html,body').scrollTop(0);
 
   $scope.createUser=function(){
         

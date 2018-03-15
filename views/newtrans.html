@@ -1,10 +1,11 @@
 <style>
 
 .card{
-    padding: 1vh 1vw;
-    width: 15vw;
+    padding: 2vh 1vw;
+    width: 20vw;
     height: 50vh;
-    overflow-y: auto;
+    margin-top: 2vh;
+    overflow-y: hidden;
     overflow-x: hidden;
 }
 
@@ -25,8 +26,9 @@
    
     font-family: din_lightregular;
     color: #302f2f;
-    font-size: 1 rem;
-    margin: 0 auto 5vh;
+    font-size: 0.8 rem;
+    margin: 0 auto 2vh;
+    text-align: center;
     }
 
 
@@ -146,7 +148,7 @@ overflow:hidden;
         </md-card-title-text>
       </md-card-title>
         <p>
-            Enter name of the goods and give description about them!
+            Enter name of the goods or Choose existing goods
         </p>
     </md-card>
 
@@ -167,9 +169,27 @@ overflow:hidden;
             </p>
     </md-card>
 
+    <md-card class="card"  ng-click="selectBank()">
+            <md-tooltip md-direction="{{demo.tipDirection}}">
+                {{Step3}}
+            </md-tooltip>
+                <img ng-src="images/bank.jpg" class="md-card-image" alt="Bank">
+                <md-card-title>
+                  <md-card-title-text>
+                    <span class="headline"  style="font-size:1 rem;" >Choose Bank</span>
+                  </md-card-title-text>
+                </md-card-title>
+                <div>
+                    <p>
+                        Enter a Bank name
+                    </p>
+                </div>
+                 
+    </md-card> 
+
     <md-card class="card"  ng-click="decideQuantity()">
         <md-tooltip  md-direction="{{demo.tipDirection}}" >
-            {{Step3}}
+            {{Step4}}
         </md-tooltip>
             <img ng-src="images/quantity.png" class="md-card-image" alt="Decide quantity,Buying or selling?">
             <md-card-title>
@@ -179,37 +199,23 @@ overflow:hidden;
             </md-card-title>
             <div>
                 <p>
-                    Enter the quantity of the good and choose to buy or sell!
+                    Enter the quantity of the good and other details
                   </p>
             </div>
              
     </md-card>
 
-    <md-card class="card"  ng-click="selectBank()">
-        <md-tooltip md-direction="{{demo.tipDirection}}">
-            {{Step4}}
-        </md-tooltip>
-            <img ng-src="images/bank.jpg" class="md-card-image" alt="Bank">
-            <md-card-title>
-              <md-card-title-text>
-                <span class="headline"  style="font-size:1 rem;" >Choose Bank</span>
-              </md-card-title-text>
-            </md-card-title>
-            <div>
-                <p>
-                    Enter a Bank name
-                </p>
-            </div>
-             
-    </md-card> 
+    
 
 </div>    
+
 <div style="text-align:center;" layout-align="center" layout-margin="4% 5%" layout="row" id="finance">
     <label  style="margin-top: 35px;font-size: 1em;">Step: 5 Need Financial Help?</label>
     <md-button class="md-raised md-primary" ng-click="financeRequest()" style="margin-top: 25px;font-size: 0.8em;" >Click here!</md-button>
 </div>
-<div style="text-align:center;" layout-align="center" layout-margin="4% 5%">
-    <md-button class="md-raised md-primary" ng-disabled="submit" ng-click="submitTrans()" style="margin-top: 25px;font-size: 1em;" >Submit the Transaction</md-button>
-</div>
+
+<!-- <div style="text-align:center;" layout-align="center" layout-margin="4% 5%">
+    <md-button class="md-raised md-primary" ng-disabled="submit" ng-click="submitTrans()" style="padding:2vh 2vw;margin-top: 25px;font-size: 1em;" >Submit the Transaction</md-button>
+</div> -->
 </div>
 </body>

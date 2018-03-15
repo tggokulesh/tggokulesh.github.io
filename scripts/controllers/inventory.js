@@ -11,7 +11,8 @@ angular.module('protoApp')
   .controller('InventoryCtrl', function ($scope,$http,$routeParams) {
     $scope.goods = [];
     var myGoods = [];
-    
+    $('html,body').scrollTop(0);
+
     var email = $routeParams.email;
 
     function getMyGoods(goods) {

@@ -15,7 +15,8 @@ angular.module('protoApp')
       // Now you can use $mdSidenav('left') or $mdSidenav('left', true) without getting an error.
       $scope.isOpen = $mdSidenav('left').isOpen();
     })
-    
+    $('html,body').scrollTop(0);
+
 
     $scope.screenIsSmall = $mdMedia('sm');
     $scope.customQuery = $mdMedia('(min-width: 1234px)');

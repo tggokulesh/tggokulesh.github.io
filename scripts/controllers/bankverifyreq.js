@@ -14,6 +14,8 @@ angular.module('protoApp')
     $scope.trans = [];
     var trans = [];
     var email = $routeParams.email;
+    $('html,body').scrollTop(0);
+
     $scope._mdPanel = $mdPanel;
     $scope.openFrom = "button";
     $scope.closeTo = "button";

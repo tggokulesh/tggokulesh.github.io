@@ -26,6 +26,7 @@ angular.module('protoApp')
     }))
 
     function getMyTrans(offers) {
+      myOffers = [];
       for(var j=0;j<offers.length;j++){
         if(offers[j].retailer.localeCompare("resource:org.acme.retail.Retailer#"+$scope.retailer.email)==0){
           myOffers.push(offers[j]);
@@ -39,29 +40,48 @@ angular.module('protoApp')
       $scope.view = true;
       
     }
+
     $scope.viewTrans = function(){
+
+      $scope.trans.length = 0;
+      trans.length = 0;
+      offers.length = 0;
+      $scope.view = false;
       
-      $http.get("http://52.87.34.178:3000/api/Offer/").then( (res =>{
-            if(res.status === 200){
-              offers = getMyTrans(res.data);
-              // console.log(offers[0].transactionId);    
-              for(var i=0;i<offers.length;i++){
-                var current = offers[i];
+      $http.get("http://52.87.34.178:3000/api/GoodsListing/").then( (res =>{
+          if(res.status === 200){
+            console.log(res.data[1]);
+            offers = getMyTrans(res.data);
+            for(var i=0;i<offers.length;i++){
+              var current = offers[i];
+              if(i<3){
                 GetTransDetails(current);                
-              };
-              $scope.view = false;
-              $scope.trans = trans;
-              trans.length = 0;
-              offers.length = 0;
-              console.log("CHECKING"+trans);
-              $scope.trans.sort(function(x, y){
-                return x.time - y.time;
-            })
-          }
-            
-      })
-    )
-    };
+              }
+            };
+            $scope.trans = trans;
+            console.log($scope.trans.length);
+            //offers.length = 0;
+            //trans.length = 0;
+            // offers.length = 0;
+            // console.log("CHECKING"+t);
+          //   $scope.trans.sort(function(x, y){
+          //     return x.time - y.time;
+          // })
+        }
+          
+    })
+  )
+    }
+
+  function getMyTrans(offers) {
+    for(var j=0;j<offers.length;j++){
+      if(offers[j].retailer.localeCompare("resource:org.acme.retail.Retailer#"+email)==0){
+        myOffers.push(offers[j]);
+      }
+    }
+    return myOffers;
+  }
+
     $scope.selectColor = function(tran){
       
         if(tran.status==="Pending"){
@@ -70,25 +90,23 @@ angular.module('protoApp')
           return "white";
         }
     }
+
     function GetTransDetails(offer){
-      $http.get('http://52.87.34.178:3000/api/GoodsListing/'+offer.listing.split('#')[1]).then((res =>{
-        console.log(res.data.quantity);
+        console.log("GIT");
 
         var tran = 
-        {'transactionId':offer.transactionId,
-        'quantity':res.data.quantity,
-        'goodsId':res.data.goods.split('#')[1],
-        'state':res.data.state,
-        'status':res.data.state1,
-        'price':res.data.Price,
+        {
+        'quantity':offer.quantity,
+        'goodsId':offer.goods.split('#')[1],
+        'state':offer.state,
+        'status':offer.state1,
+        'price':offer.Price,
         'participant':offer.other.split('#')[1],
-        'time':offer.timestamp
+        // 'bank':offer.bank.split('#')[1]
         };
 
-        if(trans.length<5){
           trans.push(tran);          
-        }
-        console.log(tran);
-  }))
+        
     }
+    
   });

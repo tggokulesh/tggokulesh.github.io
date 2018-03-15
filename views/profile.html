@@ -80,39 +80,33 @@
                     <md-button style="padding:2vh 2vw;margin:4vh auto;" ng-hide="view" class="md-raised md-warning md-padding" md-ink-ripple="#FFFFFF" ng-click="hideTrans()">Hide Recent Transactions</md-button>
                 </md-card-actions>
             
-                <div class="table-responsive" ng-hide="view">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Transaction ID</th>
-                                <th>Quantity</th>
-                                <th>GoodsID</th>
-                                <th>Buying/Selling</th>
-                                <th>Price</th>
-                                <th>Participant</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="tran in trans track by $index" >
-                                <td style="
-                                    max-width: 16vw;
-                                    overflow: hidden;
-                                    text-overflow: ellipsis;
-                                    white-space: nowrap;
-                                ">{{tran.transactionId}}</td>
-                                <td>{{tran.quantity}}</td>
-                                <td>{{tran.goodsId}}</td>
-                                <td>{{tran.state}}</td>
-                                <td>{{tran.price}}</td>
-                                <td>{{tran.participant}}</td>
-                                <td style="background-color:{{tran.status==='Pending'?'orange':'green'}}">{{tran.status}}</td>                    
-                    
-                            </tr>
-                        </tbody>
-                    </table>
-                </div> 
-            </div>                
+                <div class="table-responsive" ng-hide="view" layout="center center">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Quantity</th>
+                                    <th>GoodsID</th>
+                                    <th>Buying/Selling</th>
+                                    <th>Price</th>
+                                    <th>Participant</th>
+                                    <!-- <th>Bank</th> -->
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="tran in trans track by $index" >
+                                    <td>{{tran.quantity}}</td>
+                                    <td>{{tran.goodsId}}</td>
+                                    <td>{{tran.state}}</td>
+                                    <td>{{tran.price}}</td>
+                                    <td>{{tran.participant}}</td>
+                                    <!-- <td>{{tran.bank}}</td> -->
+                                    <td style="background-color:{{tran.status==='Pending'?'orange':'green'}}">{{tran.status}}</td>                    
+                        
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> 
     
     
 </div>

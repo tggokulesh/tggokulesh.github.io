@@ -14,4 +14,6 @@ angular.module('protoApp')
     //     $window.location.reload();        
     //   }
     // }
+    $('html,body').scrollTop(0);
+
     });

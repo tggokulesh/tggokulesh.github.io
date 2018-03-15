@@ -18,6 +18,7 @@ angular.module('protoApp')
       var trans = [];
       var email = $routeParams.email;
 
+      $('html,body').scrollTop(0);
 
       var last = {
         bottom: false,

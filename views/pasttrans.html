@@ -24,28 +24,23 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Transaction ID</th>
                 <th>Quantity</th>
                 <th>GoodsID</th>
                 <th>Buying/Selling</th>
                 <th>Price</th>
                 <th>Participant</th>
+                <!-- <th>Bank</th> -->
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="tran in trans track by $index" >
-                <td style="
-                    max-width: 16vw;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                ">{{tran.transactionId}}</td>
                 <td>{{tran.quantity}}</td>
                 <td>{{tran.goodsId}}</td>
                 <td>{{tran.state}}</td>
                 <td>{{tran.price}}</td>
                 <td>{{tran.participant}}</td>
+                <!-- <td>{{tran.bank}}</td> -->
                 <td style="background-color:{{tran.status==='Pending'?'orange':'green'}}">{{tran.status}}</td>                    
     
             </tr>

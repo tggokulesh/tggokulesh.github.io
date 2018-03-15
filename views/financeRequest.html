@@ -1,7 +1,7 @@
 <style>
         .finance-dialog{
-          padding: 10px 15px;
-          width: 100%;
+          padding: 2vh 2vw;
+          width: 100vw;
         }
         
         .demo-dialog-button {
@@ -10,7 +10,7 @@
         img{
             position: relative;
             width: 50%;
-            height: auto;
+            height: 60vh;
             margin: 10% 20%;
             box-sizing: content-box;
         }
@@ -24,17 +24,16 @@
 
                     <md-radio-group ng-model="financing" layout="row" layout-xs="column">
                             
-                            <md-radio-button value="Need" class="md-primary">Required</md-radio-button>
+                            <md-radio-button value="Required" class="md-primary">Required</md-radio-button>
                             <md-radio-button value="Not_required"> Not Required </md-radio-button>
                             
                     </md-radio-group>
 
-                    <md-input-container style="margin-top:2vw;" ng-show="financing=='Need'">
+                    <!-- <md-input-container style="margin-top:2vw;" ng-show="financing=='Need'">
                             <label>Amount Needed</label>
                             <input ng-model="Amount" type="number">
-                    </md-input-container>
+                    </md-input-container> -->
 
-    
             </div>
             
             <div layout="row" class="demo-dialog-button">
