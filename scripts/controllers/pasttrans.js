@@ -17,31 +17,15 @@ angular.module('protoApp')
     var email = $routeParams.email;
     $('html,body').scrollTop(0);
     $scope.view = false;
-    
-    
-    
-      
-    // $http.get('http://52.87.34.178:3000/api/GoodsListing/').then((res =>{
-    //   console.log(res.data.quantity);
 
-    //   var tran = 
-    //   {
-    //   'quantity':res.data.quantity,
-    //   'goodsId':res.data.goods.split('#')[1],
-    //   'state':res.data.state,
-    //   'status':res.data.state1,
-    //   'price':res.data.Price,
-    //   'participant':res.data.other.split('#')[1],
-    //   };
+    var id = "#transStatus";
 
-    //     trans.push(tran);          
-      
-    //   // console.log(tran);
-    // }))
+     
+    
 
     $http.get("http://52.87.34.178:3000/api/GoodsListing/").then( (res =>{
           if(res.status === 200){
-            console.log(res.data[1]);
+            console.log(res.data);
             offers = getMyTrans(res.data);
             for(var i=0;i<offers.length;i++){
               var current = offers[i];
@@ -49,17 +33,11 @@ angular.module('protoApp')
             };
             $scope.trans = trans;
             console.log($scope.trans.length);
-            //offers.length = 0;
-            //trans.length = 0;
-            // offers.length = 0;
-            // console.log("CHECKING"+t);
-          //   $scope.trans.sort(function(x, y){
-          //     return x.time - y.time;
-          // })
         }
           
     })
   )
+
 
   function getMyTrans(offers) {
     for(var j=0;j<offers.length;j++){
@@ -71,11 +49,13 @@ angular.module('protoApp')
   }
 
     $scope.selectColor = function(tran){
-      
+    
         if(tran.status==="Pending"){
-          return "yellow";
+          return "orange";
+        }else if(tran.status==="Accepted"){
+          return "green";
         }else{
-          return "white";
+          return "red";
         }
     }
 
@@ -90,10 +70,13 @@ angular.module('protoApp')
         'status':offer.state1,
         'price':offer.Price,
         'participant':offer.other.split('#')[1],
-        // 'bank':offer.bank.split('#')[1]
+        'bank':offer.bank.split('#')[1]
         };
 
-          trans.push(tran);          
+               
+
+        trans.push(tran); 
+         
         
     }
 

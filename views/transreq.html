@@ -11,6 +11,18 @@
 </style>
 <div>
 
+    <div class="common-flex flex-center flex-justify flex-column center full-height" > 
+            <div class="layout-container" layout-align="center center">
+                <div class="inner-banner-content">
+                            <h1 class="banner-title">
+                                Check all your Orders from the retailers all over the world!
+                            
+                            </h1>
+                            <p>Here is the list of all orders you got from retailers! Please accept or reject the order after inspecting the details given about each order!</p>
+                </div>  
+            </div>   
+    </div>
+
     <div id="toaster" layout-align="center center"></div>
 
     <div layout="row" layout-xs="column" layout-align="center" layout-margin="20" layout-margin-xs="20">
@@ -19,8 +31,7 @@
 
             <md-card-title>
                 <md-card-title-text>
-                <span class="md-headline">Transaction Requests</span>
-                <span class="md-subhead">List of transaction requests from retailers</span>
+                <span class="headline">Transaction Requests</span>
                 </md-card-title-text>        
             </md-card-title>
 
@@ -28,39 +39,35 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Transaction ID</th>
-                            <th>Quantity</th>
                             <th>GoodsID</th>
+                            <th>Quantity</th>                            
                             <th>Buying/Selling</th>
                             <th>Price</th>
                             <th>Participant</th>
+                            <th>Bank</th>
                             <th>Status</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <tr ng-repeat="tran in trans track by $index" class="md-clickable" ng-click="showConfirm($event,tran)">
-                            <td style="
-                                max-width: 16vw;
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                                white-space: nowrap;
-                            ">{{tran.transactionId}}</td>
-                            <td>{{tran.quantity}}</td>
                             <td>{{tran.goodsId}}</td>
+                            <td>{{tran.quantity}}</td>
                             <td>{{tran.state}}</td>
                             <td>{{tran.price}}</td>
                             <td>{{tran.participant}}</td>
-                            <td style="background-color:{{tran.status==='Pending'?'orange':'green'}}">{{tran.status}}</td>                    
+                            <td>Bank</td>
+                            <td style="background-color:{{tran.status==='Pending'?'orange':selectColor(tran)}}">{{tran.status}}</td>                    
                 
                         </tr>
                     </tbody>
                 </table>
             </div> 
 
-            <md-card-footer ng-show="view">
-                    There are no transaction requests yet!
+            <md-card-footer ng-show="isreq" style="text-align:center;">
+                    There are no orders yet!
             </md-card-footer>
+
         </md-card>
     </div>
 

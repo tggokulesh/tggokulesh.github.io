@@ -175,7 +175,7 @@ color: #fbdb58;
         <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#pastTrans/{{user.email}}" ng-click="close('PAST TRANSACTIONS')" >PAST TRANSACTIONS</md-nav-item>                   
         <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#verifyTrans/{{user.email}}" ng-click="close('VERIFY TRANSACTION')" >VERIFY TRANSACTION</md-nav-item>                        
             
-        <md-nav-item ng-show="isAuthenticated && isWholesaler" href="/#transReq/{{user.email}}" ng-click="close()">TRANSACTION REQUESTS</md-nav-item>          
+        <md-nav-item ng-show="isAuthenticated && isWholesaler" md-nav-href="/#transReq/{{user.email}}" ng-click="close()">TRANSACTION REQUESTS</md-nav-item>          
                     
         <md-nav-item ng-show="isAuthenticated && isBank" md-nav-href="/#financeReq/{{user.email}}" ng-click="close()" >FINANCIAL REQUESTS</md-nav-item>                    
         <md-nav-item ng-show="isAuthenticated && isBank" md-nav-href="/#bankVerifyReq/{{user.email}}" ng-click="close()" >VERIFY TRANSACTIONS</md-nav-item>                        

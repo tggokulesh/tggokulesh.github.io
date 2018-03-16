@@ -12,7 +12,8 @@
 
     .demo-dialog-button{
         padding: 1vh 1vw;
-        float: right;
+        display: flex;
+        align-content: flex-end;
         width: 50%;
     }
 </style>
@@ -32,29 +33,24 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Transaction ID</th>
-                            <th>Quantity</th>
                             <th>GoodsID</th>
+                            <th>Quantity</th>
                             <th>Buying/Selling</th>
                             <th>Price</th>
                             <th>Participant</th>
+                            <th>Bank</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="tran in trans track by $index" >
-                            <td style="
-                                max-width: 16vw;
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                                white-space: nowrap;
-                            ">{{tran.transactionId}}</td>
-                            <td>{{tran.quantity}}</td>
                             <td>{{tran.goodsId}}</td>
+                            <td>{{tran.quantity}}</td>
                             <td>{{tran.state}}</td>
                             <td>{{tran.price}}</td>
                             <td>{{tran.participant}}</td>
-                            <td style="background-color:{{tran.status==='Pending'?'orange':'green'}}">{{tran.status}}</td>                    
+                            <td>{{tran.bank}}</td>
+                            <td style="background-color:{{tran.status==='Pending'?'orange':selectColor(tran)}}">{{tran.status}}</td>                    
                 
                         </tr>
                     </tbody>
@@ -64,11 +60,11 @@
                 
             </div>
           
-            <div layout="column" class="demo-dialog-button">
-              <md-button md-autofocus flex class="md-primary" ng-click="approveRequest(true)">
+            <div layout="row" class="demo-dialog-button">
+              <md-button class="md-raised md-primary md-padding" ng-click="approveRequest(true)">
                 Accept
               </md-button>
-              <md-button md-autofocus flex class="md-danger" ng-click="approveRequest(false)">
+              <md-button md-autofocus class="md-raised md-warn md-padding" ng-click="approveRequest(false)">
                 Reject
             </md-button>
             </div>

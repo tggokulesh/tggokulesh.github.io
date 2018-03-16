@@ -66,6 +66,7 @@
                             </tbody>
                         </table>
                     </div> 
+
                     <div class="balance" layout="row" layout-margin="20">
                             <label >AVAILABLE BALANCE :  </label>
                             <p>{{retailer.Balance}}</p>
@@ -84,24 +85,24 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Quantity</th>
                                     <th>GoodsID</th>
+                                    <th>Quantity</th>
                                     <th>Buying/Selling</th>
                                     <th>Price</th>
                                     <th>Participant</th>
-                                    <!-- <th>Bank</th> -->
+                                    <th>Bank</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="tran in trans track by $index" >
-                                    <td>{{tran.quantity}}</td>
                                     <td>{{tran.goodsId}}</td>
+                                    <td>{{tran.quantity}}</td>
                                     <td>{{tran.state}}</td>
                                     <td>{{tran.price}}</td>
                                     <td>{{tran.participant}}</td>
-                                    <!-- <td>{{tran.bank}}</td> -->
-                                    <td style="background-color:{{tran.status==='Pending'?'orange':'green'}}">{{tran.status}}</td>                    
+                                    <td>{{tran.bank}}</td>
+                                    <td style="background-color:{{tran.status==='Pending'?'orange':selectColor(tran)}}">{{tran.status}}</td>                    
                         
                                 </tr>
                             </tbody>

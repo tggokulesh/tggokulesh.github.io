@@ -70,6 +70,7 @@ angular.module('protoApp')
       "financing": "Not_required",
       "request": "Pending",
       "retailer": "",
+      "bank": {},
       "listing": ""
     };
 
@@ -180,7 +181,7 @@ angular.module('protoApp')
   
     var alert;
     
-    var numbers = [1,2,3,4,5];       
+    var numbers = [1,2,3,4,5,6,7,8];       
     
     function shuffle(o) {
       var resp = "";
@@ -216,6 +217,13 @@ angular.module('protoApp')
       selectPanel(FinanceCtrl,'views/financeRequest.html','finance-dialog');            
     }; 
        
+    var existGoods = [];
+    $http.get("http://52.87.34.178:3000/api/Goods").then((res)=>{
+              if(res.status===200){
+              existGoods = res.data;
+              }
+        });
+
     function showfinance(){
       $scope.financeRequest();
     }
@@ -251,19 +259,44 @@ angular.module('protoApp')
 
       function GoodsCtrl(mdPanelRef,$scope,$rootScope){
         $scope._mdPanelRef = mdPanelRef;
-        
+        // var existGoods = [];
+        $scope.mode = true;
+
+        $scope.existGoods = existGoods;
+        if($scope.goodsMode === "New"){
+          $scope.mode = true;
+        }else{
+          $scope.mode = false;         
+        }
+
         $scope.addGoods = function() {
-          goodObject.GoodsID = shuffle(numbers).toString();
-          goodObject.Description = $scope.description;
-          goodObject.retailer = email;
-          $http.post("http://52.87.34.178:3000/api/Goods",goodObject).then((res)=>{
-              if(res.status===200){
-                isStep1 = true;
-                stepStatus('Step1',"step 1 completed!");
-                showSimpleToast("Step 1 completed!");
+          
+          if($scope.goodsMode === "New"){
+            goodObject.GoodsID = shuffle(numbers).toString();
+            goodObject.Description = $scope.description;
+            goodObject.retailer = email;
+            $http.post("http://52.87.34.178:3000/api/Goods",goodObject).then((res)=>{
+                if(res.status===200){
+                  isStep1 = true;
+                  stepStatus('Step1',"step 1 completed!");
+                  showSimpleToast("Step 1 completed!");
+                }
+                $scope._mdPanelRef && $scope._mdPanelRef.close();  
+              });
+          }else{
+            goodObject.GoodsID = $scope.GoodsId;
+            for(var j=0;j<existGoods.length;j++){
+              if(existGoods[j].GoodsID === $scope.GoodsId){
+                goodObject = existGoods[j];
+                goodObject.retailer = goodObject.retailer.split('#')[1];
               }
-              $scope._mdPanelRef && $scope._mdPanelRef.close();  
-            });
+            }
+            isStep1 = true;
+            stepStatus('Step1',"step 1 completed!");
+            showSimpleToast("Step 1 completed!");
+            $scope._mdPanelRef && $scope._mdPanelRef.close()
+          }
+        
             
         }; 
       }
@@ -341,20 +374,26 @@ angular.module('protoApp')
                   isStep4 = true;
                   stepStatus('Step4',"step 4 completed!");                  
                   showSimpleToast("Step 4 completed!");
+                  $scope._mdPanelRef && $scope._mdPanelRef.close();            
                   if(goodsListObject.state==="Buying"){
                     $('#finance').show();            
                   }else{
-                    $scope.submit = true;
-                    showDialog("Order Placed successfully");
-                  }
-                }
+                    financeReq.RequestID = shuffle(numbers).toString();
+                    financeReq.financing = "Not_required";
+                    financeReq.retailer = goodsListObject.retailer;
+                    financeReq.listing = "resource:org.acme.retail.GoodsListing#"+goodsListObject.ListingID;
+                    financeReq.bank =  "resource:org.acme.retail.Bank#"+bankObject.email;
+                    financeReq.Amount = 0;
 
-                $scope._mdPanelRef && $scope._mdPanelRef.close();            
-            });
-          }else{
-            alert("Please complete Step 1,2 and 3 first!");            
-          }
+                    $http.post("http://52.87.34.178:3000/api/FinanceRequest",financeReq).then((res =>{
+                        $scope._mdPanelRef && $scope._mdPanelRef.close();            
+                    }))
+
         }; 
+      }
+    })
+  }
+}
       }
 
       
@@ -374,6 +413,7 @@ angular.module('protoApp')
 
             });
       }
+    
 
 
       function FinanceCtrl(mdPanelRef,$scope){
@@ -392,6 +432,8 @@ angular.module('protoApp')
             }
             financeReq.retailer = goodsListObject.retailer;
             financeReq.listing = "resource:org.acme.retail.GoodsListing#"+goodsListObject.ListingID;
+            financeReq.bank =  "resource:org.acme.retail.Bank#"+bankObject.email;
+
             $http.post("http://52.87.34.178:3000/api/FinanceRequest",financeReq).then((res =>{
                 if(res.status === 200){
 

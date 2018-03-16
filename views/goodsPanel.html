@@ -19,15 +19,30 @@
       
         <div class="goods-dialog" layout="column" layout-xs="column" >
 
-                <!-- <md-input-container>
-                        <label>Name of the good</label>
-                        <input ng-model="name" type="text">
-                </md-input-container> -->
-                        
-                <md-input-container>
-                <label>Description of Good</label>
-                <input ng-model="description"></input>
-                </md-input-container>
+                                     
+           <!--Select mode of goods -->
+           <div class="md-block">
+              <label class="flabel">Want to choose existing goods or create new one!</label>
+              <md-radio-group ng-model="goodsMode" required layout="row" layout-xs="column">
+                  
+                  <md-radio-button value="New" class="md-primary"> New good </md-radio-button>
+                  <md-radio-button value="Existing"> Existing Goods </md-radio-button>                            
+                  
+              </md-radio-group>
+            </div>
+
+            <md-input-container ng-show="goodsMode=='New'">
+            <label>Description of Good</label>
+            <input ng-model="description"></input>
+            </md-input-container>
+
+            <md-input-container flex="50" ng-show="goodsMode=='Existing'">
+                <label>Select Existing Good</label>
+                <md-select name="good" ng-model="GoodsId" required>
+                  <md-option ng-repeat="good in existGoods track by $index" value="{{good.GoodsID}}">{{good.Description}}</md-option>
+                </md-select>
+                
+            </md-input-container>
 
         </div>
       

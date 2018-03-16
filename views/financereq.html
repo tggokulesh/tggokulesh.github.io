@@ -31,7 +31,7 @@
         box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
             0 13px 19px 2px rgba(0, 0, 0, 0.14),
             0 5px 24px 4px rgba(0, 0, 0, 0.12);
-        width: 50vw;
+        width: auto;
 }
 
 body {
@@ -51,7 +51,7 @@ top: 0;
                     <h1 class="banner-title">
                         Financial Requests from Retailers                    
                     </h1>
-                    <p>Have an exciting problem in mind? Want to know how deep learning can help your enterprise? Get in touch and let us take it forward to solve your problem together.</p>
+                    <p>Review all the financial requests made to your bank and Approve or Reject them by analysing all the transactions details of a particular user by clicking any of the transaction shown below!</p>
         </div>  
     </div>   
 </div>
@@ -63,35 +63,26 @@ top: 0;
     <table class="table">
         <thead>
             <tr>
-                <th>REQUEST ID</th>
-                <th>AMOUNT REQUIRED</th>  
-                <th>RETAILER</th>
-                <th>GOODS LISTING</th>
-                
+                <th>Request Id</th>
+                <th>Amount Required</th>  
+                <th>Retailer</th>
+                <th>GoodsListing Id</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>
                 <tr ng-repeat="fin_offer in fin_offers track by $index">
-                    <td style="
-                        max-width: 16vw;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                    ">{{fin_offer.RequestID}}</td>
+                    <td>{{fin_offer.RequestID}}</td>
                     <td>{{fin_offer.Amount}}</td>
-                    <td>{{fin_offer.Retailer}}</td>
-                    <td>{{fin_offer.Goodslisting}}</td>
-                    <td ng-hide="acceptStatus"><md-button class="md-raised md-primary md-padding"  ng-click="showDetails($event,fin_offer)">View Details</md-button></td>
-
-                    <!-- <td ng-hide="acceptStatus"><md-button class="md-raised md-primary md-padding"  ng-click="showConfirm($event,fin_offer)">Accept</md-button></td> -->
-                    <td ng-show="acceptStatus">{{fin_offer.request}}</td>
-                    <td ng-show="acceptStatus">
-                        <md-icon style="color:rgb(255, 254, 254);margin-left:10px;" md-svg-icon="done"></md-icon>
-                    </td>
+                    <td>{{fin_offer.retailer}}</td>
+                    <td>{{fin_offer.listing}}</td>
+                    <td ng-hide="acceptStatus"><md-button class="md-raised md-primary md-padding" style="padding: 0.5vh 1vw;" ng-click="showDetails($event,fin_offer)">Inspect User</md-button></td>
                 </tr>
             </tbody>
        
     </table>
 </div> 
+<md-card-footer ng-show="isreq" style="text-align:center">
+        There are no finance requests yet!
+</md-card-footer>
 </md-card>

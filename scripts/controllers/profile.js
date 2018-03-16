@@ -82,14 +82,17 @@ angular.module('protoApp')
     return myOffers;
   }
 
+   
     $scope.selectColor = function(tran){
-      
-        if(tran.status==="Pending"){
-          return "yellow";
-        }else{
-          return "white";
-        }
-    }
+    
+      if(tran.status==="Pending"){
+        return "orange";
+      }else if(tran.status==="Accepted"){
+        return "green";
+      }else{
+        return "red";
+      }
+  }
 
     function GetTransDetails(offer){
         console.log("GIT");
