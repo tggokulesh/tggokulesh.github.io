@@ -11,7 +11,8 @@ angular.module('protoApp')
   .controller('TransreqCtrl', function($scope,$http,$mdDialog,$mdToast,$rootScope,$routeParams,$location) {
 
       $scope.view = false;
-  
+      $scope.complete = false;
+      var index = 0;
       var offers = [];
       var myOffers = [];
       $scope.trans = [];
@@ -84,10 +85,8 @@ angular.module('protoApp')
               filterRequests(current);
             };
             $scope.trans = trans;
+            
             console.log($scope.trans.length);
-
-            // trans.length = 0;
-            // offers.length = 0;
         }
           
     })
@@ -98,11 +97,13 @@ angular.module('protoApp')
     for(var j=0;j<offers.length;j++){
       if(offers[j].other.localeCompare("resource:org.acme.retail.Other#"+email)==0 && offers[j].state1.localeCompare("Pending")==0){
         myOffers.push(offers[j]);
-      
-      }else{
-        $scope.isreq = true;
       }
     }
+    if(myOffers.length ==0){
+      $scope.isreq = true;
+      $scope.complete = true;
+    }
+
     return myOffers;
   }
   
@@ -118,71 +119,76 @@ angular.module('protoApp')
     }))
   }
 
-  var des;
-  // function getgoodName(id){
-  $scope.getgoodName = function(id) {
-      return $http.get("http://52.87.34.178:3000/api/Goods/"+id)
-             .then(
-                function (response) {
-                  return {
-                     Description: response.data.Description,
-                     goodsId:  response.data.GoodsID
-                  };
-                },
-                function (httpError) {
-                   // translate the error
-                   throw httpError.status + " : " + 
-                         httpError.data;
-                });
-};
 
-  function filterAcceptedones(fin_reqs,offer){
-    console.log(fin_reqs);
-    for(var i=0;i<fin_reqs.length;i++){
-      if(offer.ListingID.localeCompare(fin_reqs[i].listing.split('#')[1])==0){
-        if(fin_reqs[i].request.localeCompare("Accepted")==0 || fin_reqs[i].financing.localeCompare("Not_required")==0){
-          $scope.isreq = false;
-          var request;
-          var financing;
 
-          if(fin_reqs[i].financing== "Not_required"){
-            request = "NA";
-            financing = "Not_required";
-          }else{
-            financing = fin_reqs[i].financing;
-            request = fin_reqs[i].request;
-          }
+  function populate(offer,fin_req){
+    if(offer.ListingID.localeCompare(fin_req.listing.split('#')[1])==0){
+      if(fin_req.request.localeCompare("Accepted")==0 || fin_req.financing.localeCompare("Not_required")==0){
+        $scope.isreq = false;
+        var request;
+        var financing;
 
-          var good = {};
-          good = $scope.getgoodName(offer.goods.split('#')[1]);
-         
-          console.log(good);
-
-          var tran = 
-          {
-          'ListingID':offer.ListingID,
-          'quantity':offer.quantity,
-          'retailer':offer.retailer.split('#')[1],
-          'goodsId':offer.goods.split('#')[1],
-          'des':good.Description,
-          'state':offer.state,
-          'status':offer.state1,
-          'price':offer.Price,
-          'participant':offer.other.split('#')[1],
-          'bank':offer.bank.split('#')[1],
-          'request':"resource:org.acme.retail.FinanceRequest#"+fin_reqs[i].RequestID,
-          'finSup':financing,
-          'finStatus':request
-          };
-
-          console.log("CJECK"+i);
-          trans.push(tran);  
+        if(fin_req.financing== "Not_required"){
+          request = "NA";
+          financing = "Not_required";
         }else{
-          $scope.isreq = true;
+          financing = fin_req.financing;
+          request = fin_req.request;
         }
+
+        
+        $http.get("http://52.87.34.178:3000/api/Goods/"+offer.goods.split('#')[1]).then((res =>{
+          var Description = res.data.Description;
+          // console.log(good);
+
+        var tran = 
+        {
+        'ListingID':offer.ListingID,
+        'quantity':offer.quantity,
+        'retailer':offer.retailer.split('#')[1],
+        'goodsId':offer.goods.split('#')[1],
+        'des':Description,
+        'state':offer.state,
+        'status':offer.state1,
+        'price':offer.Price,
+        'participant':offer.other.split('#')[1],
+        'bank':offer.bank.split('#')[1],
+        'request':"resource:org.acme.retail.FinanceRequest#"+fin_req.RequestID,
+        'finSup':financing,
+        'finStatus':request
+        };
+
+        console.log("CJECK");
+        trans.push(tran); 
+        $scope.complete = true;
+        }))
+      }else{
+        // $scope.complete = false;
+        // $scope.isreq = true
       }
+    }else{
+      $scope.complete = true;
+      $scope.isreq = true;
     }
   }
+
+
+  function filterAcceptedones(fin_reqs,offer){
+    index = fin_reqs.length;
+    console.log(fin_reqs);
+    var i;
+    for(i=0;i<fin_reqs.length;i++){
+      var current = fin_reqs[i];
+      populate(offer,current);
+     
+    }
+
+    if(i==fin_reqs.length-1){
+      console.log(i);
+      $scope.complete= true;
+    }
+  }
+
 
   function showDialog(message) {
 

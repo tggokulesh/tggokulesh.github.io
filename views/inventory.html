@@ -30,7 +30,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="good in goods">
+                        <tr ng-repeat="good in goods | orderBy : 'Description' track by $index ">
                             <td>{{good.GoodsID}}</td>
                             <td>{{good.rinventory}}</td>
                             <td>{{good.Description}}</td>
@@ -38,7 +38,10 @@
                     </tbody>
                 </table>
             </div>  
-            <md-card-footer ng-show="isreq" style="text-align:center">
+            <div layout="row" layout-sm="column" layout-align="space-around">
+                    <md-progress-circular md-mode="indeterminate" ng-hide="complete"></md-progress-circular>
+            </div>
+            <md-card-footer ng-show="isreq && complete" style="text-align:center">
                     There are no goods
             </md-card-footer>  
 </md-card>

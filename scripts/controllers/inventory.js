@@ -11,6 +11,7 @@ angular.module('protoApp')
   .controller('InventoryCtrl', function ($scope,$http,$routeParams) {
     $scope.goods = [];
     var myGoods = [];
+    $scope.complete = false;
     $('html,body').scrollTop(0);
 
     var email = $routeParams.email;
@@ -27,6 +28,7 @@ angular.module('protoApp')
 
     $http.get('http://52.87.34.178:3000/api/Goods').then( (response => {
       $scope.goods = getMyGoods(response.data);
+      $scope.complete = true;
       if($scope.goods.length ==0){
         $scope.isreq = true;
       }else{

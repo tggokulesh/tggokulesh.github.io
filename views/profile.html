@@ -86,6 +86,7 @@
                             <thead>
                                 <tr>
                                     <th>GoodsID</th>
+                                    <th>Description</th>
                                     <th>Quantity</th>
                                     <th>Buying/Selling</th>
                                     <th>Price</th>
@@ -97,8 +98,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="tran in trans track by $index" >
+                                <tr ng-repeat="tran in trans | orderBy : 'des' track by $index" >
                                     <td>{{tran.goodsId}}</td>
+                                    <td>{{tran.des}}</td>
                                     <td>{{tran.quantity}}</td>
                                     <td>{{tran.state}}</td>
                                     <td>{{tran.price}}</td>
@@ -116,7 +118,10 @@
     
     
 </div>
-<md-card-footer ng-show="isreq && user.occupation=='Retailer' && !view" style="text-align:center;">
+<div layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="indeterminate" ng-show="!view && !complete && user.occupation=='Retailer';"></md-progress-circular>
+</div>
+<md-card-footer ng-show="isreq && user.occupation=='Retailer' && !view && complete" style="text-align:center;">
         There are no orders yet
 </md-card-footer>
 </md-card>

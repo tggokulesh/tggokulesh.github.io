@@ -42,8 +42,8 @@ angular.module('protoApp')
   $scope.user = {};
   var roles = ["Bank","Retailer","Wholesaler"];
   $('html,body').scrollTop(0);
-
-    $scope.goods = [];
+  $scope.file = "";
+  $scope.goods = [];
 
     var numbers = [1,2,3,4,5,6,7,8];       
 
@@ -99,6 +99,20 @@ angular.module('protoApp')
       }
     }
 
+    // $scope.file = document.getElementById('inputfile').value;
+
+    
+    $scope.alertFilename = function(){
+                var thefile = document.getElementById('inputfile');
+                // alert(thefile.value);
+                $scope.file = thefile.value;
+                $scope.file = $scope.file.replace(/.*[\/\\]/, '');
+            }
+
+    // document.getElementById('inputfile').onchange = function () {
+    //   // alert('Selected file: ' + this.value);
+     
+    // };
 
     $scope.createUser=function(){
         
@@ -115,7 +129,7 @@ angular.module('protoApp')
     }
 
     Auth.createUser($scope.user); 
-    delete $scope.user.confirm_password;
+    // delete $scope.user.confirm_password;
 
     // $http.post("http://52.87.34.178:3000/api/User",$scope.user).then((res => {
     //   if(res.status === 200){

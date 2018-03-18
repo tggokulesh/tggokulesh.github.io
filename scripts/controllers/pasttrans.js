@@ -19,7 +19,7 @@ angular.module('protoApp')
     $scope.view = false;
     var allfinReq = [];
     var id = "#transStatus";
-
+    $scope.complete = false;
     $scope.isreq = false;
     
 
@@ -61,6 +61,10 @@ return allfinReq;
         myOffers.push(offers[j]);
       }
     }
+    if(myOffers.length==0){
+      $scope.complete  = true;
+      $scope.isreq = true;
+    }
     return myOffers;
   }
 
@@ -89,6 +93,8 @@ return allfinReq;
       return [financing,request]
     }
 
+
+    
     function GetTransDetails(offer){
         console.log("GIT");
 
@@ -99,20 +105,30 @@ return allfinReq;
           var fin_det = [];
         var financing = "Not_required";
         var request = "NA";
+        var txn_status = offer.state1;
+
         fin_det = GetFinRequests(offer);
         financing = fin_det[0];
         request = fin_det[1];
         console.log("FFF"+request);
         if(financing === "Not_required"){
           request = "NA";
+        }else if(financing === "Required"){
+          if(request==="Rejected"){
+            txn_status = "NA";
+          }
         }
 
+        $http.get("http://52.87.34.178:3000/api/Goods/"+offer.goods.split('#')[1]).then((res =>{
+            var Description = res.data.Description;
+            // console.log(good);
         var tran = 
         {
         'quantity':offer.quantity,
+        'des':Description,
         'goodsId':offer.goods.split('#')[1],
         'state':offer.state,
-        'status':offer.state1,
+        'status':txn_status,
         'price':offer.Price,
         'participant':offer.other.split('#')[1],
         'bank':offer.bank.split('#')[1],
@@ -121,11 +137,14 @@ return allfinReq;
         };
         
         trans.push(tran); 
+        $scope.complete = true;
+        
         if(trans.length ==0){
           $scope.isreq = true;
         }else{
           $scope.isreq = false;
         }
+      }));
         
     })
     );

@@ -34,7 +34,16 @@
                     <md-radio-button value="Required" class="md-primary">Required</md-radio-button>
                     <md-radio-button value="Not_required"> Not Required </md-radio-button>
                     
-            </md-radio-group>
+                </md-radio-group>
+
+                <div class="md-block"  ng-show="financing=='Required'">
+                    <br><br>
+                    <label class="flabel">Upload document</label>
+                    <input class="md-raised md-primary" id="inputfile" multiple type="file" />
+                    <!-- <label for="inputfile" class="md-button md-raised md-primary" style="padding:1vh 2vw;" ng-click="alertFilename()" >Choose Files</label>
+                    <span class="md-raised" style="background-color:rgb(172, 160, 145);" ng-model="file" >{{file}}</span> -->
+                    <br><br>
+                </div>
               </div>
 
                         

@@ -12,7 +12,7 @@ angular.module('protoApp')
 
       $scope.view = false;
       $scope.isreq = false;
-
+      $scope.complete = false;
       var offers = [];
       var fin_offers = [];
       var myOffers = [];
@@ -81,12 +81,16 @@ angular.module('protoApp')
                 //   GetFinRequests(current);                
                 // };
 
-                if(offers.length==0){
-                  $scope.isreq = true;
-                }else{
+                // if(offers.length==0){
+                //   $scope.isreq = true;
+                // }else{
+                //   $scope.isreq = false;
+                // }
+                if(offers.length>0){
                   $scope.isreq = false;
                 }
                 $scope.fin_offers = offers;
+                $scope.complete = true;
                 console.log($scope.fin_offers[2]);
                 
               
@@ -103,9 +107,11 @@ angular.module('protoApp')
             offers[j].bank = offers[j].bank.split('#')[1];
             myOffers.push(offers[j]);
             console.log("HEET"+myOffers.length);
-          }else{
-            $scope.isreq = true;
           }
+        }
+        if(myOffers.length ==0){
+          $scope.complete = true;
+          $scope.isreq = true;
         }
         return myOffers;
       }     
@@ -189,10 +195,12 @@ angular.module('protoApp')
         $scope.trans = [];
         var trans = [];
         var review_offer = {};
-        
+        $scope.retailer = "";
+        $scope.complete = false;
         $scope.isreq = false;
 
           review_offer = selTrans;
+          $scope.retailer = review_offer.retailer;
           console.log("Entered Review ");
 
          
@@ -274,17 +282,27 @@ angular.module('protoApp')
           fin_det = GetFinRequests(offer);
           financing = fin_det[0];
           request = fin_det[1];
+          var txn_status = offer.state1;
           console.log("FFF"+request);
           if(financing === "Not_required"){
             request = "NA";
+          }else if(financing === "Required"){
+            if(request==="Rejected"){
+              txn_status = "NA";
+            }
           }
+
+          $http.get("http://52.87.34.178:3000/api/Goods/"+offer.goods.split('#')[1]).then((res =>{
+            var Description = res.data.Description;
+            // console.log(good);
 
           var tran = 
           {
           'quantity':offer.quantity,
+          'des':Description,
           'goodsId':offer.goods.split('#')[1],
           'state':offer.state,
-          'status':offer.state1,
+          'status':txn_status,
           'price':offer.Price,
           'participant':offer.other.split('#')[1],
           'bank':offer.bank.split('#')[1],
@@ -292,12 +310,13 @@ angular.module('protoApp')
           'finStatus':request
           };
   
-            trans.push(tran);  
+            trans.push(tran); 
+            $scope.complete  =true; 
               if(trans.length==0){
               $scope.isreq = true;
             }else{
               $scope.isreq = false;
-            }
+            }}));
         })
       );
         

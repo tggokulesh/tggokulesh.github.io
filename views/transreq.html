@@ -53,9 +53,9 @@
                             <th>Txn Status</th>
                         </tr>
                     </thead>
-
+                    
                     <tbody>
-                        <tr ng-repeat="tran in trans track by $index" class="md-clickable" ng-click="showConfirm($event,tran)">
+                        <tr ng-repeat="tran in trans | orderBy : 'des' track by $index " class="md-clickable" ng-click="showConfirm($event,tran)">
                             <td>{{tran.goodsId}}</td>
                             <td>{{tran.des}}</td>
                             <td>{{tran.quantity}}</td>
@@ -72,7 +72,10 @@
                 </table>
             </div> 
 
-            <md-card-footer ng-show="isreq" style="text-align:center;">
+            <div layout="row" layout-sm="column" layout-align="space-around">
+                    <md-progress-circular md-mode="indeterminate" ng-hide="complete"></md-progress-circular>
+            </div>
+            <md-card-footer ng-show="isreq && complete" style="text-align:center;">
                     There are no orders yet
             </md-card-footer>
 
