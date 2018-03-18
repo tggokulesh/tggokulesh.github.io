@@ -29,7 +29,7 @@ angular.module('protoApp')
 
     $scope.loginCredentials = function(){
         var islogged = false;
-        $http.get("http://52.87.34.178:3000/api/User").then((res=>{
+        $http.get("https://52.87.34.178:3000/api/User").then((res=>{
             if(res.status === 200){
               for(var i=0;i<res.data.length;i++){
                 if(res.data[i].email === $scope.credentials.email && res.data[i].Password === $scope.credentials.Password){
