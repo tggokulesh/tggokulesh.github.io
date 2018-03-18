@@ -33,7 +33,7 @@
                            User Profile
                         
                         </h1>
-                        <p>Here we show user details and have cool features like check Balance and view recent transactions!</p>
+                        <p class="pg-des">Shows user details , balance, recent transactions</p>
             </div>  
         </div>   
 </div>
@@ -67,31 +67,33 @@
                         </table>
                     </div> 
 
-                    <div class="balance" layout="row" layout-margin="20">
+                    <div class="balance" layout="row" layout-margin="20" ng-show="user.occupation=='Retailer'">
                             <label >AVAILABLE BALANCE :  </label>
                             <p>{{retailer.Balance}}</p>
                     </div>
                 </div>
 
                               
-                <md-card-actions layout="row" layout-align="center">
+                <md-card-actions layout="row" layout-align="center"  ng-show="user.occupation=='Retailer'">
                         <md-button style="padding:2vh 2vw; margin:2vh auto;"ng-show="view" class="md-raised md-primary md-padding" md-ink-ripple="#FFFFFF" ng-click="viewTrans()">View Recent Transactions</md-button>
                 </md-card-actions>
-                <md-card-actions layout="row" layout-align="center">
+                <md-card-actions layout="row" layout-align="center"  ng-show="user.occupation=='Retailer'">
                     <md-button style="padding:2vh 2vw;margin:4vh auto;" ng-hide="view" class="md-raised md-warning md-padding" md-ink-ripple="#FFFFFF" ng-click="hideTrans()">Hide Recent Transactions</md-button>
                 </md-card-actions>
             
-                <div class="table-responsive" ng-hide="view" layout="center center">
-                        <table class="table">
+                <div class="table-responsive" layout="center center"  ng-show="user.occupation=='Retailer' && !view">
+                        <table class="table" style="border-collapse:separate;border-spacing:0.1vw 1px;">
                             <thead>
                                 <tr>
                                     <th>GoodsID</th>
                                     <th>Quantity</th>
                                     <th>Buying/Selling</th>
                                     <th>Price</th>
-                                    <th>Participant</th>
+                                    <th>Wholesaler</th>
                                     <th>Bank</th>
-                                    <th>Status</th>
+                                    <th>Credit</th>
+                                    <th>Credit Status</th>
+                                    <th>Txn Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -102,7 +104,10 @@
                                     <td>{{tran.price}}</td>
                                     <td>{{tran.participant}}</td>
                                     <td>{{tran.bank}}</td>
-                                    <td style="background-color:{{tran.status==='Pending'?'orange':selectColor(tran)}}">{{tran.status}}</td>                    
+                                    <td>{{tran.finSup}}</td>
+                                    <td style="background-color:{{tran.finStatus==='Pending'?'orange':selectColor(tran.finStatus)}}">{{tran.finStatus}}</td>
+                                    <td style="background-color:{{tran.status==='Pending'?'orange':selectColor(tran.status)}}">{{tran.status}}</td>                    
+                                    <!-- <td style="background-color:{{tran.status==='Pending'?'orange':selectColor(tran)}}">{{tran.status}}</td>                     -->
                         
                                 </tr>
                             </tbody>
@@ -111,4 +116,7 @@
     
     
 </div>
+<md-card-footer ng-show="isreq && user.occupation=='Retailer' && !view" style="text-align:center;">
+        There are no orders yet
+</md-card-footer>
 </md-card>

@@ -10,10 +10,10 @@
         <div class="layout-container" layout-align="center center">
             <div class="inner-banner-content">
                         <h1 class="banner-title">
-                           Want to check all your past transactions?
+                           Past Transactions
                         
                         </h1>
-                        <p>Here is the list of all transactions you have successfully done shown with their Id and relevant details!</p>
+                        <p class="pg-des">List of all transactions you have done shown with their ID and relevant details</p>
             </div>  
         </div>   
 </div>
@@ -21,16 +21,18 @@
 <md-card class="card" layout-align="center">
         <md-card-title class="headline" layout="column"> Past Transactions </md-card-title>
 <div class="table-responsive" ng-hide="view" layout="center center">
-    <table class="table">
+    <table class="table" style="border-collapse:separate;border-spacing:0.1vw 1px;">
         <thead>
             <tr>
                 <th>GoodsID</th>
                 <th>Quantity</th>
                 <th>Buying/Selling</th>
                 <th>Price</th>
-                <th>Participant</th>
+                <th>Wholesaler</th>
                 <th>Bank</th>
-                <th>Status</th>
+                <th>Credit</th>
+                <th>Credit Status</th>
+                <th>Txn Status</th>
             </tr>
         </thead>
         <tbody>
@@ -41,10 +43,17 @@
                 <td>{{tran.price}}</td>
                 <td>{{tran.participant}}</td>
                 <td>{{tran.bank}}</td>
-                <td style="background-color:{{tran.status==='Pending'?'orange':selectColor(tran)}}">{{tran.status}}</td>                    
+                <td>{{tran.finSup}}</td>
+                <td style="background-color:{{tran.finStatus==='Pending'?'orange':selectColor(tran.finStatus)}};">{{tran.finStatus}}</td>
+                <td style="background-color:{{tran.status==='Pending'?'orange':selectColor(tran.status)}}">{{tran.status}}</td>                    
     
             </tr>
         </tbody>
     </table>
 </div> 
+
+<md-card-footer ng-show="isreq" style="text-align:center;">
+        There are no orders yet
+</md-card-footer>
+
 </md-card>

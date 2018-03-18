@@ -33,15 +33,13 @@ angular.module('protoApp')
             if(res.status === 200){
               for(var i=0;i<res.data.length;i++){
                 if(res.data[i].email === $scope.credentials.email && res.data[i].Password === $scope.credentials.Password){
-                  alert("Logged In successfully!");
+                  alert("Logged in successfully");
                   islogged = true;
                   $window.sessionStorage.token = shuffle(numbers).toString();     
                   AuthToken.setID(res.data[i].email);                          
                   res.data[i].Password = "";
                   console.log($window.sessionStorage.token);
-                  // $rootScope.$emit("LoggedIn",true);
                   $window.location.reload();                  
-                  // $location.url('/');
                   break;
                 }
               }

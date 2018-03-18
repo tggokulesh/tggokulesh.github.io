@@ -10,10 +10,10 @@
         <div class="layout-container" layout-align="center center">
             <div class="inner-banner-content">
                         <h1 class="banner-title">
-                           Want to know the Stats of your Goods? 
+                            Goods Inventory
                         
                         </h1>
-                        <p>Here is the list of all goods you bought shown with their goodsId to track them easily!</p>
+                        <p class="pg-des">List of all goods you own shown with their goods ID</p>
             </div>  
         </div>   
 </div>
@@ -21,12 +21,12 @@
 <md-card class="card" layout-align="center">
     <md-card-title class="headline" layout="column"> INVENTORY </md-card-title>
         <div class="table-responsive">
-                <table class="table">
+                <table class="table" align="center" style="text-align:center">
                     <thead>
-                        <tr>
-                            <th>Goods ID</th>
-                            <th>Inventory</th>
-                            <th>Description</th>
+                        <tr >
+                            <th style="text-align:center">Goods ID</th>
+                            <th style="text-align:center">Inventory</th>
+                            <th style="text-align:center">Description</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,6 +37,9 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>    
+            </div>  
+            <md-card-footer ng-show="isreq" style="text-align:center">
+                    There are no goods
+            </md-card-footer>  
 </md-card>
 

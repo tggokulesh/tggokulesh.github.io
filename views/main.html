@@ -11,7 +11,16 @@
         background-position: center center;
         background-image: url("/images/home2gif.gif");
         position: relative;
+    
       }
+
+      .layout-container{
+        position: absolute;
+        top: 15%;
+        left: 8%;
+      }
+
+
       .main-banner{
         position: absolute;
         top: 50%;
@@ -36,22 +45,42 @@
         margin:10px auto 0;
       }
 
-      .fixed-flex{
-        padding: 0px;
-        min-height: 625px;
-        min-width: 100%;
-        background-size: cover;
-        width: 100%;
-        height: 100%;
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-image: url("/images/home3.jpg");
-        position: fixed;
-      }
       .wrapper{
           display: flex;
           flex-direction: column;
       }
+
+      .over-flex{
+    padding: 0px;
+    min-width: 100%;
+    background-size: cover;
+    width: 100%;
+    height:100%;
+    background-repeat: no-repeat;
+    z-index: 1;
+    background-position: center center;
+    background-image: url("/images/backgrd.png");
+    position: relative;
+    filter: blur(3px) ;
+    opacity: 0.9;
+  }
+
+  .about-flex{
+    padding: 0px;
+    min-width: 100%;
+    background-size: cover;
+    width: 100%;
+    height:100%;
+    background-repeat: no-repeat;
+    z-index: 10;
+    background-position: center center;
+    background-image: url("/images/backgrd.png");
+    position: relative;
+    filter: blur(10px) ;
+    opacity: 0.5;
+  }
+  
+  
     </style>
 
     
@@ -59,25 +88,25 @@
     <!--Banner start-->
     <div class="wrapper">
 
-    <div class="main-flex flex-center flex-justify flex-column center full-height" >    
+    <div class="main-flex flex-center flex-justify flex-column center full-height" >
+        <div class="over-flex flex-center flex-justify flex-column center full-height" >  
+            
+          </div>
     </div>
 
-    <section class="main-banner">
-        <div class="container">
-            <div class="inner-banner-content">
-                <h1 class="banner-title">
-                    TECHNOLOGY
-                </h1>
-                <p>Today, AI is poised where cloud was in the early 2000s. Moving forward, companies will have to make the choice between embracing this change early and riding the wave like Salesforce did or being swept away by competitors who will ride this wave.</p>
-            </div>
-        </div>
-
-    </section>
-    <!-- <div class="fixed-flex">
-    </div> -->
+    <div class="layout-container" layout-align="center center">
+        <div class="inner-banner-content">
+                    <h1 class="banner-title" style="color:#ff9b05;opacity:1">
+                        chain finance
+                    </h1>
+                    <h3 class="sub-title">Blockchain based solutions for retail financing</h3>
+                    <h4 class="sub-sub-title">Where Retailer , Wholesaler, Bank connects</h4>
+        </div>  
+    </div>
     
-    <div style=" background-color:transparent;position:relative; width:60vw; min-height:100vh; overflow-x: hidden; padding-top: 5vh; padding-bottom: 5vh; margin:auto;">
-            <div ng-cloak="ng-cloak" >
+    
+
+    <div class="about" style=" background-color:transparent;position:relative;  padding: 5vh 2vw;">
               <md-card flex="flex" style=" background-color:transparent;">
                 <md-card-title>
                   <md-card-title-text>
@@ -86,10 +115,10 @@
                   </md-card-title-text>
                 </md-card-title>
                 <md-card-content style="text-align:center;" >
-                    We are a bunch of highly enthusiastic students about Blockchain from IIT Madras.
-                    We used Hyperledger blockchain for building the backend of this platform and we used 
-                    studmax frontend developer who has done a great job!
+                    We are a bunch of students from IIT Madras highly enthusiastic about Blockchain.
+                    We used Hyperledger platform for building the backend of this product and we used 
+                   Angular JS for the frontend.
                 </md-card-content>
                  </md-card>
-               </div>
+  </div>
 </div>

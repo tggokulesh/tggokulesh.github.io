@@ -45,6 +45,17 @@ angular.module('authServices',[])
       }
     };
 
+    authfactory.postgoods = function(goods){
+      for(var i=0;i<goods.length;i++){
+        var current = goods[i];
+        console.log(i);
+        AuthToken.postgoods(current);
+        // postgoods(current);
+       
+      } 
+    }
+      
+
     // authfactory.login = function(user, callback) {
     //     var cb = callback || angular.noop;
     //     var deferred = $q.defer();
@@ -69,11 +80,14 @@ angular.module('authServices',[])
     //     return deferred.promise;
     //   };
 
-    authfactory.createUser=function(user, callback) {
+    
+
+    authfactory.createUser=function(user,callback) {
       return $http.post("http://52.87.34.178:3000/api/User",user)
       .then((res => {
         if(res.status === 200){
           console.log("Succefully user with role"+res.data.occupation+"created");
+          
           AuthToken.setToken(shuffle(numbers).toString());  
           AuthToken.setID(res.data.email);        
         
@@ -100,8 +114,15 @@ angular.module('authServices',[])
         
             $http.post("http://52.87.34.178:3000/api/Retailer",retailerObject).then((res =>{
               if(res.status === 200){
-                console.log("retailer created");                  
+                console.log("retailer created");  
+                // for(var i=0;i<goods.length;i++){
+                //   var current = goods[i];
+                //   AuthToken.postgoods(current);
+                //   // postgoods(current);
+                 
+                // }                
               }
+
             }));
             
           }else if(user.occupation === roles[2]){
@@ -121,6 +142,7 @@ angular.module('authServices',[])
   
           }
           alert("Successfully created!");
+          location.reload();
           $location.url('/login');
           return authfactory.safeCb(callback)(null, user);          
         }
@@ -135,14 +157,14 @@ angular.module('authServices',[])
     authfactory.logout=function(){
      console.log('entered the logout');
      AuthToken.setToken();
-     $location.url('/'); 
+     $location.url('/login'); 
     };
 
 
   return authfactory;
 })
 
-.factory('AuthToken', function($window){
+.factory('AuthToken', function($window,$http){
   var authTokenfactory=[];
 
   authTokenfactory.setToken=function(token){
@@ -153,6 +175,13 @@ angular.module('authServices',[])
       delete $window.sessionStorage.token;
     }
   };
+
+
+  authTokenfactory.postgoods = function(good){  
+    return $http.post("http://52.87.34.178:3000/api/Goods",good).then((res =>{
+      console.log("goods created");
+    })); 
+  }
 
   authTokenfactory.setID=function(id){
     if(id){

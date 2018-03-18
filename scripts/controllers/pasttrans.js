@@ -17,26 +17,42 @@ angular.module('protoApp')
     var email = $routeParams.email;
     $('html,body').scrollTop(0);
     $scope.view = false;
-
+    var allfinReq = [];
     var id = "#transStatus";
 
-     
+    $scope.isreq = false;
     
 
     $http.get("http://52.87.34.178:3000/api/GoodsListing/").then( (res =>{
           if(res.status === 200){
             console.log(res.data);
             offers = getMyTrans(res.data);
+            getAllfinReq();
             for(var i=0;i<offers.length;i++){
               var current = offers[i];
               GetTransDetails(current);                
             };
+
+            if(trans.length ==0){
+              $scope.isreq = true;
+            }else{
+              $scope.isreq = false;
+            }
+            
             $scope.trans = trans;
             console.log($scope.trans.length);
         }
           
     })
   )
+
+  function getAllfinReq(){
+
+    allfinReq.length = 0;
+   
+return allfinReq;
+  }
+  
 
 
   function getMyTrans(offers) {
@@ -48,19 +64,48 @@ angular.module('protoApp')
     return myOffers;
   }
 
-    $scope.selectColor = function(tran){
+    $scope.selectColor = function(status){
     
-        if(tran.status==="Pending"){
+        if(status==="Pending"){
           return "orange";
-        }else if(tran.status==="Accepted"){
+        }else if(status==="Accepted"){
           return "green";
-        }else{
+        }else if(status==="Rejected"){
           return "red";
+        }else{
+          return "#FFFFCC";
         }
+    }
+
+    function GetFinRequests(offer){
+      var financing;
+      var request;
+      for(var j=0;j<allfinReq.length;j++){
+        if(allfinReq[j].listing.localeCompare("resource:org.acme.retail.GoodsListing#"+offer.ListingID)==0){
+          financing = allfinReq[j].financing;
+          request = allfinReq[j].request;
+        }
+      }
+      return [financing,request]
     }
 
     function GetTransDetails(offer){
         console.log("GIT");
+
+        $http.get("http://52.87.34.178:3000/api/FinanceRequest/").then((res =>{
+
+          console.log(res.data);
+          allfinReq = res.data;
+          var fin_det = [];
+        var financing = "Not_required";
+        var request = "NA";
+        fin_det = GetFinRequests(offer);
+        financing = fin_det[0];
+        request = fin_det[1];
+        console.log("FFF"+request);
+        if(financing === "Not_required"){
+          request = "NA";
+        }
 
         var tran = 
         {
@@ -70,13 +115,21 @@ angular.module('protoApp')
         'status':offer.state1,
         'price':offer.Price,
         'participant':offer.other.split('#')[1],
-        'bank':offer.bank.split('#')[1]
+        'bank':offer.bank.split('#')[1],
+        'finSup':financing,
+        'finStatus':request
         };
-
-               
-
+        
         trans.push(tran); 
-         
+        if(trans.length ==0){
+          $scope.isreq = true;
+        }else{
+          $scope.isreq = false;
+        }
+        
+    })
+    );
+        
         
     }
 

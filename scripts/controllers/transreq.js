@@ -62,14 +62,16 @@ angular.module('protoApp')
         );
       };
 
-      $scope.selectColor = function(tran){
+      $scope.selectColor = function(status){
     
-        if(tran.status==="Pending"){
+        if(status==="Pending"){
           return "orange";
-        }else if(tran.status==="Accepted"){
+        }else if(status==="Accepted"){
           return "green";
-        }else{
+        }else if(status==="Rejected"){
           return "red";
+        }else{
+          return "#FFFFCC";
         }
     }
 
@@ -116,25 +118,63 @@ angular.module('protoApp')
     }))
   }
 
+  var des;
+  // function getgoodName(id){
+  $scope.getgoodName = function(id) {
+      return $http.get("http://52.87.34.178:3000/api/Goods/"+id)
+             .then(
+                function (response) {
+                  return {
+                     Description: response.data.Description,
+                     goodsId:  response.data.GoodsID
+                  };
+                },
+                function (httpError) {
+                   // translate the error
+                   throw httpError.status + " : " + 
+                         httpError.data;
+                });
+};
+
   function filterAcceptedones(fin_reqs,offer){
     console.log(fin_reqs);
     for(var i=0;i<fin_reqs.length;i++){
       if(offer.ListingID.localeCompare(fin_reqs[i].listing.split('#')[1])==0){
         if(fin_reqs[i].request.localeCompare("Accepted")==0 || fin_reqs[i].financing.localeCompare("Not_required")==0){
           $scope.isreq = false;
+          var request;
+          var financing;
+
+          if(fin_reqs[i].financing== "Not_required"){
+            request = "NA";
+            financing = "Not_required";
+          }else{
+            financing = fin_reqs[i].financing;
+            request = fin_reqs[i].request;
+          }
+
+          var good = {};
+          good = $scope.getgoodName(offer.goods.split('#')[1]);
+         
+          console.log(good);
+
           var tran = 
           {
           'ListingID':offer.ListingID,
           'quantity':offer.quantity,
-          'retailer':offer.retailer,
+          'retailer':offer.retailer.split('#')[1],
           'goodsId':offer.goods.split('#')[1],
+          'des':good.Description,
           'state':offer.state,
           'status':offer.state1,
           'price':offer.Price,
           'participant':offer.other.split('#')[1],
           'bank':offer.bank.split('#')[1],
-          'request':"resource:org.acme.retail.FinanceRequest#"+fin_reqs[i].RequestID
+          'request':"resource:org.acme.retail.FinanceRequest#"+fin_reqs[i].RequestID,
+          'finSup':financing,
+          'finStatus':request
           };
+
           console.log("CJECK"+i);
           trans.push(tran);  
         }else{
@@ -147,8 +187,8 @@ angular.module('protoApp')
   function showDialog(message) {
 
     alert = $mdDialog.alert({
-      title: 'Congrats',
-      textContent: message+'!',
+      title: 'Congratulations',
+      textContent: message,
       ok: 'Close'
     });
 
@@ -160,20 +200,25 @@ angular.module('protoApp')
       });
 }
 
+      var accept = false;
+
       $scope.showConfirm = function(ev,tran) {
         // Appending dialog to document.body to cover sidenav in docs app
         var confirm = $mdDialog.confirm()
-              .title('Would you like to Accept the transaction?')
-              .textContent('Approve the transaction if you want to complete it!')
+              .title('Would you like to accept the transaction?')
+              .textContent('Approve the transaction if you want to complete it')
               .ariaLabel('Lucky day')
               .targetEvent(ev)
               .ok('Accept')
-              .cancel('Cancel');
+              .cancel('Reject');
     
         $mdDialog.show(confirm).then(function() {
+          accept = true;
           approveRequest(tran);
         }, function() {
-          showSimpleToast("Cancelled!");
+          accept = false;
+          approveRequest(tran);
+          // showSimpleToast("Cancelled!");
         });
       };
 
@@ -191,12 +236,12 @@ angular.module('protoApp')
           "timestamp": Date.now()
         };
 
-        if(!status){
+        if(accept){
           $http.post('http://52.87.34.178:3000/api/OfferAccept/',Trans_obj).then((res =>{
             showDialog("Successfully approved the transaction");
           }))
         
-        }else{
+        }else if(!accept){
           Trans_obj.$class = "org.acme.retail.OfferReject"
           $http.post('http://52.87.34.178:3000/api/OfferReject/',Trans_obj).then((res =>{
             showDialog("Rejected the transaction");

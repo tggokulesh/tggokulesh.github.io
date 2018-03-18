@@ -22,7 +22,8 @@
    }
 
    .footer{
-    text-align: left;
+    /* text-align: left; */
+   
     background-color: #1b1b1b;
     padding: 60px 0;    
    }
@@ -42,15 +43,37 @@
 
   .banner-title{
     font-family: dinbold;
-    color: #ededed;
+    font-weight: 1000;
+    font-weight: bold;
+    color: #292827;
     margin-top: 60px;
+    text-transform: uppercase;
+
   }
-  .banner-title::after{
-      content: " ";
-      line-height: 4px;
+  
+  .sub-title{
+    font-family: dinbold;
+    font-weight: bold;
+    margin-top: 40px;
+
+    color: rgb(34, 29, 29);
+    text-transform: uppercase;
   }
-  .layout-container p{
-    color: #ededed;
+
+  .sub-sub-title{
+    font-family: dinbold;
+    font-weight: bold;
+    color: rgb(26, 25, 25);
+    margin-top: 20px;
+    text-transform: uppercase;
+  }
+
+  .pg-des{
+    font-family: dinbold;
+    font-weight: bold;
+    color: rgb(24, 24, 3);
+    margin-top: 20px;
+    text-transform: uppercase;
   }
 
   .common-flex{
@@ -64,6 +87,8 @@
     background-position: center center;
     background-image: url("/images/backgrd.png");
     position: relative;
+    filter: blur(0.01px) ;
+    opacity: 1;
   }
 
   .headline{
@@ -72,12 +97,11 @@
     text-transform: uppercase;  
   }
   
-
   .headline::after{
     content: "";
     width: 60px;
     height: 2px;
     background-color: #f04f43;
     display: block;
-    margin:10px auto 0;
+    margin:1vh auto 0;
   }

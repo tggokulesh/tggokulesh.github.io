@@ -14,6 +14,7 @@ angular.module('protoApp')
     $('html,body').scrollTop(0);
 
     var email = $routeParams.email;
+    $scope.isreq = true;
 
     function getMyGoods(goods) {
       for(var j=0;j<goods.length;j++){
@@ -26,5 +27,10 @@ angular.module('protoApp')
 
     $http.get('http://52.87.34.178:3000/api/Goods').then( (response => {
       $scope.goods = getMyGoods(response.data);
+      if($scope.goods.length ==0){
+        $scope.isreq = true;
+      }else{
+        $scope.isreq = false;
+      }
     }))
   });

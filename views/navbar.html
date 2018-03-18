@@ -170,15 +170,15 @@ color: #fbdb58;
             <p ng-show="isClicked">{{routeName}}</p>            
         </md-nav-item> -->
     
-        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#newTrans/{{user.email}}" ng-click="close('NEW TRANSACTION')">PLACE ORDERS</md-nav-item>              
-        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#inventory/{{user.email}}" ng-click="close('INVENTORY')" >INVENTORY</md-nav-item>    
-        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#pastTrans/{{user.email}}" ng-click="close('PAST TRANSACTIONS')" >PAST TRANSACTIONS</md-nav-item>                   
-        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#verifyTrans/{{user.email}}" ng-click="close('VERIFY TRANSACTION')" >VERIFY TRANSACTION</md-nav-item>                        
+        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#newTrans/{{user.email}}" ng-click="close('NEW TRANSACTION')"><b>PLACE ORDERS</b></md-nav-item>              
+        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#inventory/{{user.email}}" ng-click="close('INVENTORY')" ><b>INVENTORY</b></md-nav-item>    
+        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#pastTrans/{{user.email}}" ng-click="close('PAST TRANSACTIONS')" ><b>PAST TRANSACTIONS</b></md-nav-item>                   
+        <!-- <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#verifyTrans/{{user.email}}" ng-click="close('VERIFY TRANSACTION')" >VERIFY TRANSACTION</md-nav-item>                         -->
             
-        <md-nav-item ng-show="isAuthenticated && isWholesaler" md-nav-href="/#transReq/{{user.email}}" ng-click="close()">TRANSACTION REQUESTS</md-nav-item>          
+        <md-nav-item ng-show="isAuthenticated && isWholesaler" md-nav-href="/#transReq/{{user.email}}" ng-click="close()"><b>TRANSACTION REQUESTS</b></md-nav-item>          
                     
-        <md-nav-item ng-show="isAuthenticated && isBank" md-nav-href="/#financeReq/{{user.email}}" ng-click="close()" >FINANCIAL REQUESTS</md-nav-item>                    
-        <md-nav-item ng-show="isAuthenticated && isBank" md-nav-href="/#bankVerifyReq/{{user.email}}" ng-click="close()" >VERIFY TRANSACTIONS</md-nav-item>                        
+        <md-nav-item ng-show="isAuthenticated && isBank" md-nav-href="/#financeReq/{{user.email}}" ng-click="close()" ><b>FINANCIAL REQUESTS</b> </md-nav-item>                    
+        <!-- <md-nav-item ng-show="isAuthenticated && isBank" md-nav-href="/#bankVerifyReq/{{user.email}}" ng-click="close()" >VERIFY TRANSACTIONS</md-nav-item>                         -->
                                             
         <span flex></span>
         <span flex></span>

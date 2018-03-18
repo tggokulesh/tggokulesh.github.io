@@ -218,11 +218,23 @@ angular.module('protoApp')
     }; 
        
     var existGoods = [];
+    var mygoods = [];
+
     $http.get("http://52.87.34.178:3000/api/Goods").then((res)=>{
               if(res.status===200){
               existGoods = res.data;
+              for(var i =0;i<existGoods.length;i++){
+                var current = existGoods[i];
+                getMygoods(current);
+              }
               }
         });
+    
+    function getMygoods(good){
+      if(good.retailer.split('#')[1] === email){
+        mygoods.push(good);
+      }
+    }
 
     function showfinance(){
       $scope.financeRequest();
@@ -262,7 +274,12 @@ angular.module('protoApp')
         // var existGoods = [];
         $scope.mode = true;
 
-        $scope.existGoods = existGoods;
+        if(mygoods.length ==0){
+          $scope.existGoods = [{"GoodsID":1,"Description":'Not applicable'}];
+        }else{
+          $scope.existGoods = mygoods;
+        }
+
         if($scope.goodsMode === "New"){
           $scope.mode = true;
         }else{
@@ -367,7 +384,13 @@ angular.module('protoApp')
             goodsListObject.retailer = "resource:org.acme.retail.Retailer#"+goodObject.retailer;
             goodsListObject.bank = "resource:org.acme.retail.Bank#"+bankObject.email;
 
-            console.log("GOODSIDAPPENDED");
+            if($scope.state==="Selling"){
+              goodsListObject.ostate = "Retailer";
+            }else{
+              goodsListObject.ostate = "Other";
+            }
+
+            console.log("GOODSI"+goodsListObject.ostate);
             
             $http.post("http://52.87.34.178:3000/api/GoodsListing",goodsListObject).then((res)=>{
                 if(res.status===200){
@@ -378,15 +401,20 @@ angular.module('protoApp')
                   if(goodsListObject.state==="Buying"){
                     $('#finance').show();            
                   }else{
+                    $('#finance').hide();
+                    financeReq = {};
                     financeReq.RequestID = shuffle(numbers).toString();
                     financeReq.financing = "Not_required";
                     financeReq.retailer = goodsListObject.retailer;
                     financeReq.listing = "resource:org.acme.retail.GoodsListing#"+goodsListObject.ListingID;
                     financeReq.bank =  "resource:org.acme.retail.Bank#"+bankObject.email;
                     financeReq.Amount = 0;
+                    financeReq.request = "Pending";
 
                     $http.post("http://52.87.34.178:3000/api/FinanceRequest",financeReq).then((res =>{
-                        $scope._mdPanelRef && $scope._mdPanelRef.close();            
+                        $scope._mdPanelRef && $scope._mdPanelRef.close();   
+                        showDialog("Order placed successfully");
+                        StatusTrans(true);         
                     }))
 
         }; 
@@ -400,8 +428,8 @@ angular.module('protoApp')
       function showDialog(message) {
 
           alert = $mdDialog.alert({
-            title: 'Congrats',
-            textContent: message+'!',
+            title: 'Congratulations',
+            textContent: message,
             ok: 'Close'
           });
 
@@ -426,6 +454,7 @@ angular.module('protoApp')
             financeReq.financing = $scope.financing;
             if($scope.financing=="Not_required"){
               financeReq.Amount = 0;
+              financeReq.request = "Pending";
             }else{
               financeReq.Amount = goodsListObject.quantity*goodsListObject.Price;      
               financeReq.request = "Pending";        
@@ -454,7 +483,7 @@ angular.module('protoApp')
                   stepStatus('Step5',"step 5 completed!");   
                   $scope.submit = true;
                   $scope._mdPanelRef && $scope._mdPanelRef.close(); 
-                  showDialog("Order Placed successfully");
+                  showDialog("Order placed successfully");
                   StatusTrans(true);                                   
 
                 }

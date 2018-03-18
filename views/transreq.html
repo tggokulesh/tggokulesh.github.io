@@ -1,7 +1,9 @@
 <style>
     .card{
-        width: 100%;
         height: auto;
+        margin: auto;
+        padding: 5vh 5vw;
+        width: 100%;
     }
 
     .md-clickable:hover{
@@ -15,17 +17,17 @@
             <div class="layout-container" layout-align="center center">
                 <div class="inner-banner-content">
                             <h1 class="banner-title">
-                                Check all your Orders from the retailers all over the world!
+                                Orders from retailers
                             
                             </h1>
-                            <p>Here is the list of all orders you got from retailers! Please accept or reject the order after inspecting the details given about each order!</p>
+                            <p class="pg-des">List of all orders you got from retailers. Accept or reject the order after inspecting the details given about each order</p>
                 </div>  
             </div>   
     </div>
 
     <div id="toaster" layout-align="center center"></div>
 
-    <div layout="row" layout-xs="column" layout-align="center" layout-margin="20" layout-margin-xs="20">
+    <div layout="row" layout-xs="column" layout-align="center" >
 
         <md-card class="card">
 
@@ -36,28 +38,34 @@
             </md-card-title>
 
             <div class="table-responsive" ng-hide="view">
-                <table class="table">
+                <table class="table" style="border-collapse:separate;border-spacing:0.1vw 1px;">
                     <thead>
                         <tr>
                             <th>GoodsID</th>
+                            <th>Description</th>
                             <th>Quantity</th>                            
                             <th>Buying/Selling</th>
                             <th>Price</th>
-                            <th>Participant</th>
+                            <th>Retailer</th>
                             <th>Bank</th>
-                            <th>Status</th>
+                            <th>Credit</th>
+                            <th>Credit Status</th>
+                            <th>Txn Status</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <tr ng-repeat="tran in trans track by $index" class="md-clickable" ng-click="showConfirm($event,tran)">
                             <td>{{tran.goodsId}}</td>
+                            <td>{{tran.des}}</td>
                             <td>{{tran.quantity}}</td>
                             <td>{{tran.state}}</td>
                             <td>{{tran.price}}</td>
-                            <td>{{tran.participant}}</td>
-                            <td>Bank</td>
-                            <td style="background-color:{{tran.status==='Pending'?'orange':selectColor(tran)}}">{{tran.status}}</td>                    
+                            <td>{{tran.retailer}}</td>
+                            <td>{{tran.bank}}</td>
+                            <td>{{tran.finSup}}</td>
+                            <td style="background-color:{{tran.finStatus==='Pending'?'orange':selectColor(tran.finStatus)}}">{{tran.finStatus}}</td>
+                            <td style="background-color:{{tran.status==='Pending'?'orange':selectColor(tran.status)}}">{{tran.status}}</td>                    
                 
                         </tr>
                     </tbody>
@@ -65,7 +73,7 @@
             </div> 
 
             <md-card-footer ng-show="isreq" style="text-align:center;">
-                    There are no orders yet!
+                    There are no orders yet
             </md-card-footer>
 
         </md-card>

@@ -1,8 +1,8 @@
 <style>
 
 .card{
-    padding: 2vh 1vw;
-    width: 20vw;
+    padding: 2vh 0.1vw;
+    width: 18vw;
     height: 50vh;
     margin-top: 2vh;
     overflow-y: hidden;
@@ -26,8 +26,8 @@
    
     font-family: din_lightregular;
     color: #302f2f;
-    font-size: 0.8 rem;
-    margin: 0 auto 2vh;
+    /* font-size: 0 em; */
+    /* margin: 0 auto 2vh; */
     text-align: center;
     }
 
@@ -82,6 +82,7 @@
 }
 
 .headline{
+
   margin:0 auto;
   font-weight: bold;  
 }
@@ -123,10 +124,9 @@ overflow:hidden;
     <div class="layout-container" layout-align="center center">
         <div class="inner-banner-content">
                     <h1 class="banner-title">
-                        Procedures for New Transactions 
-                    
+                        Retailer Order Placement 
                     </h1>
-                    <p>Have an exciting problem in mind? Want to know how deep learning can help your enterprise? Get in touch and let us take it forward to solve your problem together.</p>
+                    <p class="pg-des">Follow the below procedure to place your order</p>
         </div>  
     </div>   
 </div>
@@ -147,9 +147,12 @@ overflow:hidden;
           <span class="headline" style="font-size:1 rem;" >Select Goods</span>
         </md-card-title-text>
       </md-card-title>
+      <div>
         <p>
-            Enter name of the goods or Choose existing goods
-        </p>
+            Enter name of the goods
+        </p><br>
+      </div>
+      
     </md-card>
 
     
@@ -161,12 +164,15 @@ overflow:hidden;
             <img ng-src="images/participant.png" class="md-card-image" alt="other participants">
             <md-card-title>
               <md-card-title-text>
-                <span class="headline"  style="font-size:1 rem;">Select Participants</span>
+                <span class="headline"  style="font-size:1 rem;">Select Wholesaler</span>
               </md-card-title-text>
             </md-card-title>
-              <p>
-                Enter other participants
-            </p>
+            <div>
+                <p>
+                    Choose the Wholesaler
+                </p><br>
+            </div>
+              
     </md-card>
 
     <md-card class="card"  ng-click="selectBank()">
@@ -182,7 +188,7 @@ overflow:hidden;
                 <div>
                     <p>
                         Enter a Bank name
-                    </p>
+                    </p><br>
                 </div>
                  
     </md-card> 
@@ -197,22 +203,39 @@ overflow:hidden;
                 <span class="headline"  style="font-size:1 rem;" >Decide Quantity</span>
               </md-card-title-text>
             </md-card-title>
-            <div>
-                <p>
-                    Enter the quantity of the good and other details
+            <div style="padding:0 0.5vw;">
+                <p >
+                    Enter quantity and price of the good
                   </p>
             </div>
              
     </md-card>
 
-    
+    <md-card class="card"  ng-click="financeRequest()" id="finance">
+        <md-tooltip  md-direction="{{demo.tipDirection}}" >
+            {{Step5}}
+        </md-tooltip>
+            <img ng-src="images/finsup.jpg" class="md-card-image" alt="Financial Support">
+            <md-card-title>
+              <md-card-title-text>
+                <span class="headline"  style="font-size:1 rem;" >Financial Support</span>
+              </md-card-title-text>
+            </md-card-title>
+            <div>
+                <p>
+                    Choose your requirement
+                </p><br>
+            </div>
+             
+    </md-card>
 
 </div>    
 
+<!-- 
 <div style="text-align:center;" layout-align="center" layout-margin="4% 5%" layout="row" id="finance">
     <label  style="margin-top: 35px;font-size: 1em;">Step: 5 Need Financial Help?</label>
     <md-button class="md-raised md-primary" ng-click="financeRequest()" style="margin-top: 25px;font-size: 0.8em;" >Click here!</md-button>
-</div>
+</div> -->
 
 <!-- <div style="text-align:center;" layout-align="center" layout-margin="4% 5%">
     <md-button class="md-raised md-primary" ng-disabled="submit" ng-click="submitTrans()" style="padding:2vh 2vw;margin-top: 25px;font-size: 1em;" >Submit the Transaction</md-button>

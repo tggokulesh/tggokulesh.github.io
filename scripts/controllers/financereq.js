@@ -12,10 +12,12 @@ angular.module('protoApp')
 
       $scope.view = false;
       $scope.isreq = false;
+
       var offers = [];
       var fin_offers = [];
       var myOffers = [];
       $scope.fin_offers = [];
+      var allfinReq = [];
       var email = $routeParams.email;
       $scope.acceptStatus = false;  
       var fin_reqs = [];
@@ -61,6 +63,7 @@ angular.module('protoApp')
       position: position,
       trapFocus: true,
       zIndex: 10,
+      overflow: scroll, 
       clickOutsideToClose: true,
       clickEscapeToClose: true,
       disableParentScroll:true,
@@ -71,19 +74,21 @@ angular.module('protoApp')
     $http.get("http://52.87.34.178:3000/api/FinanceRequest/").then((res =>{
 
                 console.log(res.data);
+                allfinReq = res.data;
                 offers = getMyTrans(res.data);
-
                 // for(var i=0;i<offers.length;i++){
                 //   var current = offers[i];
                 //   GetFinRequests(current);                
                 // };
 
+                if(offers.length==0){
+                  $scope.isreq = true;
+                }else{
+                  $scope.isreq = false;
+                }
                 $scope.fin_offers = offers;
                 console.log($scope.fin_offers[2]);
                 
-                // fin_offers.length = 0;
-                // offers.length = 0;
-                // fin_reqs.length = 0;  
               
         })
       );
@@ -92,6 +97,7 @@ angular.module('protoApp')
         myOffers = [];
         for(var j=0;j<offers.length;j++){
           if(offers[j].bank.localeCompare("resource:org.acme.retail.Bank#"+email)==0 && offers[j].financing.localeCompare("Required")==0 && offers[j].request.localeCompare("Pending")==0){
+            $scope.isreq = false;
             offers[j].retailer = offers[j].retailer.split('#')[1];
             offers[j].listing = offers[j].listing.split('#')[1];
             offers[j].bank = offers[j].bank.split('#')[1];
@@ -104,29 +110,8 @@ angular.module('protoApp')
         return myOffers;
       }     
 
-      // function GetFinRequests(offer){
-
-        
-      //               if(.listing.localeCompare("resource:org.acme.retail.GoodsListing#"+offer.ListingId)==0){
-      //                 console.log(fin_reqs[j].financing + fin_reqs[j].request);
-        
-      //                 if(fin_reqs[j].financing.localeCompare("Required")==0 && fin_reqs[j].request.localeCompare("Pending")==0){
-      //                   var fin_offer = 
-      //                           {'RequestId':fin_reqs[j].RequestID,
-      //                           'Amount':fin_reqs[j].Amount,
-      //                           'Financing':fin_reqs[j].financing,
-      //                           'Retailer':fin_reqs[j].retailer.split('#')[1],
-      //                           'Goodslisting':fin_reqs[j].listing.split('#')[1],
-      //                           'request':fin_reqs[j].request
-      //                           };
-        
-      //                   fin_offers.push(fin_offer);
-      //                   console.log("FWD")
-      //                 }
-      //               }
-      //             } 
-      //           }));   
-      // }
+      
+      
 
       
      
@@ -183,8 +168,8 @@ angular.module('protoApp')
       function showDialog(message) {
 
         alert = $mdDialog.alert({
-          title: 'Congrats',
-          textContent: message+'!',
+          title: 'Congratulations',
+          textContent: message,
           ok: 'Close'
         });
 
@@ -205,7 +190,8 @@ angular.module('protoApp')
         var trans = [];
         var review_offer = {};
         
-       
+        $scope.isreq = false;
+
           review_offer = selTrans;
           console.log("Entered Review ");
 
@@ -219,6 +205,12 @@ angular.module('protoApp')
                 GetTransDetails(current);                
               };
 
+              if(trans.length==0){
+                $scope.isreq = true;
+              }else{
+                $scope.isreq = false;
+              }
+
               $scope.trans = trans;
               console.log($scope.trans.length);
               
@@ -227,14 +219,28 @@ angular.module('protoApp')
       })
       )
     
-      $scope.selectColor = function(tran){
+      function GetFinRequests(offer){
+        var financing;
+        var request;
+        for(var j=0;j<allfinReq.length;j++){
+          if(allfinReq[j].listing.localeCompare("resource:org.acme.retail.GoodsListing#"+offer.ListingID)==0){
+            financing = allfinReq[j].financing;
+            request = allfinReq[j].request;
+          }
+        }
+        return [financing,request]
+      }
+        
+      $scope.selectColor = function(status){
     
-        if(tran.status==="Pending"){
+        if(status==="Pending"){
           return "orange";
-        }else if(tran.status==="Accepted"){
+        }else if(status==="Accepted"){
           return "green";
-        }else{
+        }else if(status==="Rejected"){
           return "red";
+        }else{
+          return "#FFFFCC";
         }
     }
 
@@ -246,13 +252,33 @@ angular.module('protoApp')
           console.log("GEFE")
         }
       }
+      if(myOffers.length ==0){
+        $scope.isreq = true;
+      }else{
+        $scope.isreq = false;
+      }
       return myOffers;
     }
   
-  
       function GetTransDetails(offer){
           console.log("GIT");
-  
+          allfinReq.length = 0;
+          $http.get("http://52.87.34.178:3000/api/FinanceRequest/").then((res =>{
+
+                console.log(res.data);
+                allfinReq = res.data;
+               
+          var fin_det = [];
+          var financing = "Not_required";
+          var request = "NA";
+          fin_det = GetFinRequests(offer);
+          financing = fin_det[0];
+          request = fin_det[1];
+          console.log("FFF"+request);
+          if(financing === "Not_required"){
+            request = "NA";
+          }
+
           var tran = 
           {
           'quantity':offer.quantity,
@@ -261,10 +287,20 @@ angular.module('protoApp')
           'status':offer.state1,
           'price':offer.Price,
           'participant':offer.other.split('#')[1],
-          'bank':offer.bank.split('#')[1]
+          'bank':offer.bank.split('#')[1],
+          'finSup':financing,
+          'finStatus':request
           };
   
-            trans.push(tran);          
+            trans.push(tran);  
+              if(trans.length==0){
+              $scope.isreq = true;
+            }else{
+              $scope.isreq = false;
+            }
+        })
+      );
+        
           
         }
       
@@ -282,7 +318,7 @@ angular.module('protoApp')
           if(status){
             $http.post('http://52.87.34.178:3000/api/Finance_Trans_Accept/',finTrans).then((res =>{
               $scope._mdPanelRef && $scope._mdPanelRef.close();  
-              showDialog("Successfully accepted the Request");
+              showDialog("Successfully accepted the request");
               
             }))
           
@@ -290,16 +326,12 @@ angular.module('protoApp')
             finTrans.$class = "org.acme.retail.Finance_Trans_Reject";
             $http.post('http://52.87.34.178:3000/api/Finance_Trans_Reject/',finTrans).then((res =>{
               $scope._mdPanelRef && $scope._mdPanelRef.close();  
-              showDialog("Rejected the Request");
+              showDialog("Rejected the request");
             }))
           }
           }
 
       }
-
-      
-
-     
 
       $scope.showConfirm = function(ev,fin_offer) {
         // Appending dialog to document.body to cover sidenav in docs app
@@ -309,7 +341,7 @@ angular.module('protoApp')
               .ariaLabel('Lucky day')
               .targetEvent(ev)
               .ok('Accept')
-              .cancel('Cancel');
+              .cancel('Reject');
     
         $mdDialog.show(confirm).then(function() {
           approveRequest(fin_offer);

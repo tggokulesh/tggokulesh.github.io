@@ -66,10 +66,9 @@
         <div class="layout-container" layout-align="center center">
             <div class="inner-banner-content">
                         <h1 class="banner-title">
-                            Let us solve problems together
-                        
+                            Create a new account                   
                         </h1>
-                        <p>Have an exciting problem in mind? Want to know how deep learning can help your enterprise? Get in touch and let us take it forward to solve your problem together.</p>
+                        <p class="pg-des">Signup into Chain Finance - Blockchain based solutions for retail financing</p>
             </div>  
         </div>
          
@@ -117,7 +116,6 @@
                     <input type="password"  name="user_password" ng-required="true" ng-model="user.Password" password-verify="{{user.confirm_password}}">
                     <div ng-messages="signupForm.user_password.$error">
                     <div ng-message="required">This is required.</div>
-                    <div ng-message="passwordVerify">Password doesn't match.</div>
                     </div>
                 </md-input-container>
         
@@ -126,6 +124,7 @@
                     <input  id="confirm_password" ng-model="user.confirm_password" name="confirm_password" type="password"  ng-required="true" password-verify="{{user.Password}}">
                     <div ng-messages="signupForm.confirm_password.$error">
                     <div ng-message="required">This is required.</div>
+                    <div ng-message="passwordVerify">Password doesn't match.</div>
                     </div>
                 </md-input-container>
             
@@ -151,8 +150,53 @@
                         <div ng-messages="signupForm.balance.$error">
                         <div ng-message="required">This is required.</div>
                         </div>
-                </md-input-container>    
+                </md-input-container>
                 
+
+                <div style="margin-top:20px; padding:1vh 0.3vw;" ng-show="user.occupation=='Retailer'">
+                        <label class="flabel">Add Inventory</label>
+                        <p>Click on Add Good to add any no of goods</p>
+                        <div style="text-align:center">
+                                <md-button class="md-raised md-primary" style="padding:1vh 1vw;text-align:center" ng-click="addgoods()" >Add good</md-button>
+                        </div>
+                    
+                        <div class="container" style="padding:2vh 2vw;">
+                        
+                        <fieldset data-ng-repeat="good in goods track by $index">
+                    
+                        
+                        <div layout="row" style="padding:1vh 1vw;" class="md-icon-float">
+
+                                <span style="margin-top:10px; margin-right:20px;"><b>{{$index + 1}}</b></span>
+
+                                <md-input-container  class="md-block" style="margin-top:10px; margin-right:20px;" >
+                                        <label class="flabel" >Enter name of good</label>
+                                        <input  id="des"  ng-disabled="good.action"ng-model="good.Description" name="des" type="text">
+                                </md-input-container>
+
+                                <md-input-container class="md-icon-float md-block" style="margin-top:10px; margin-right:50px;" >
+                                        <label class="flabel" >No of goods</label>
+                                        <input  id="stock" ng-disabled="good.action" ng-model="good.rinventory" name="stock" type="Number">
+                                </md-input-container>
+                                <button type="button" ng-hide="good.action" class="btn btn-primary btn-sm" ng-click="confirmgood(good)" style="width:auto; height:30px;margin-top:10px; margin-right:10px;" >
+                                    CONFIRM
+                                </button>
+                                <button type="button" ng-hide="good.action" class="btn btn-danger btn-sm" ng-click="removegood($index)" style="width:auto; height:30px;margin-top:10px; margin-right:20px;" >
+                                    REMOVE
+                                </button>
+                                <button type="button" class="btn btn-success btn-sm" style="width:auto; height:30px;margin-top:10px; margin-right:10px;" ng-show="good.action">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                </button>
+                                
+                        </div>
+                            
+                    
+                          </fieldset>
+                    
+                        
+                    
+                    </div>
+               
                 <br/>
                 <div layout="row" layout-align="center center">
                    <md-button class="md-raised md-primary" ng-click="createUser()" ng-disabled="!signupForm.$valid">SIGNUP</md-button>
