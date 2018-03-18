@@ -11,6 +11,11 @@
       text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
     }
 
+    .card{
+        /* margin: auto; */
+        /* width: 100%; */
+        height: auto;
+    }
     .reg-flex{
         padding: 0px;
         min-width: 100%;
@@ -76,7 +81,7 @@
 
     <div style=" position:relative; width:60vw; min-height:100vh; overflow-x: hidden; padding-top: 5vh; padding-bottom: 5vh; margin: auto; min-width: 320px;">
       <div ng-cloak="ng-cloak" style="margin-top:5%;">
-        <md-card flex="flex">
+        <md-card flex="flex" class="card">
           <md-card-title>
             <md-card-title-text>
               <span class="md-headline" layout-align="center" style="text-align:center;">REGISTER              
@@ -175,23 +180,23 @@
                         <fieldset data-ng-repeat="good in goods track by $index">
                     
                         
-                        <div layout="row" style="padding:1vh 1vw;" class="md-icon-float">
+                        <div layout="row" style="padding:1vh 1vw; text-align:center" class="md-icon-float">
 
-                                <span style="margin-top:10px; margin-right:20px;"><b>{{$index + 1}}</b></span>
+                                <span style="margin:20px 0 0"><b>{{$index + 1}}</b></span>
 
                                 <md-input-container  class="md-block" style="margin-top:10px; margin-right:20px;" >
                                         <label class="flabel" >Enter name of good</label>
-                                        <input  id="des"  ng-disabled="good.action"ng-model="good.Description" name="des" type="text">
+                                        <input  id="des"  ng-required = "true" ng-disabled="good.action"ng-model="good.Description" name="des" type="text">
                                 </md-input-container>
 
-                                <md-input-container class="md-icon-float md-block" style="margin-top:10px; margin-right:50px;" >
+                                <md-input-container class="md-icon-float md-block" style="margin-top:10px; margin-right:20px;" >
                                         <label class="flabel" >No of goods</label>
-                                        <input  id="stock" ng-disabled="good.action" ng-model="good.rinventory" name="stock" type="Number">
+                                        <input  id="stock" ng-required = "true" ng-disabled="good.action" ng-model="good.rinventory" name="stock" type="Number">
                                 </md-input-container>
-                                <button type="button" ng-hide="good.action" class="btn btn-primary btn-sm" ng-click="confirmgood(good)" style="width:auto; height:30px;margin-top:10px; margin-right:10px;" >
+                                <button type="button" ng-hide="good.action" class="btn btn-primary btn-sm" ng-click="confirmgood(good)" style=" padding:0.1vh 1vw; width:auto; height:30px;margin-top:10px; margin-right:10px;" >
                                     CONFIRM
                                 </button>
-                                <button type="button" ng-hide="good.action" class="btn btn-danger btn-sm" ng-click="removegood($index)" style="width:auto; height:30px;margin-top:10px; margin-right:20px;" >
+                                <button type="button" ng-hide="good.action" class="btn btn-danger btn-sm" ng-click="removegood($index)" style=" padding:0.1vh 1vw; width:auto; height:30px;margin-top:10px; margin-right:30px;" >
                                     REMOVE
                                 </button>
                                 <button type="button" class="btn btn-success btn-sm" style="width:auto; height:30px;margin-top:10px; margin-right:10px;" ng-show="good.action">

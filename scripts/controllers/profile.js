@@ -88,6 +88,10 @@ angular.module('protoApp')
         myOffers.push(offers[j]);
       }
     }
+    if(myOffers.length==0){
+      $scope.complete = true;
+      $scope.isreq = true;
+    }
     return myOffers;
   }
 
