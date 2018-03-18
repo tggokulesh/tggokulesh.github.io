@@ -161,6 +161,8 @@ angular.module('protoApp')
         console.log("CJECK");
         trans.push(tran); 
         $scope.complete = true;
+        $scope.isreq = false;
+
         }))
       }else{
         // $scope.complete = false;
