@@ -17,6 +17,21 @@
             display: flex;
             box-sizing: content-box;
         }
+
+      md-radio-button .md-off{
+          border-color:rgb(130, 130, 130);
+      }
+
+
+
+      md-radio-button.md-checked.my-radio .md-on{
+          background-color:rgb(16, 163, 16);
+      }
+
+      md-radio-button.md-checked.my-radio2 .md-on{
+          background-color:rgb(150, 84, 150);
+      }
+
     </style>
         <div role="dialog" aria-label="finance Request" layout="column" layout-align="center" >
                                        
@@ -26,7 +41,7 @@
                 </div>
               </md-toolbar>
 
-              <div class="md-block" style="padding:2vh 1vw;">
+              <div class="md-block" style="padding:2vh 2vw;">
                 <label class="flabel">Select your financial requirement</label>
 
                 <md-radio-group ng-model="financing" layout="row" layout-xs="column" >
@@ -35,6 +50,20 @@
                     <md-radio-button value="Not_required"> Not Required </md-radio-button>
                     
                 </md-radio-group>
+
+                <div class="md-block"  ng-show="financing=='Required'">
+                    <br><br>
+                    <label class="flabel">Tenor</label>
+
+                    <md-radio-group ng-model="tenor" layout="row" layout-xs="column" >
+                            
+                        <md-radio-button value="30" class="md-primary">30 days</md-radio-button>
+                        <md-radio-button value="45" class="my-radio">45 days</md-radio-button>
+                        <md-radio-button value="90" class="my-radio2" style="border-color: rgb(2, 79, 2);">90 days</md-radio-button>
+                        <md-radio-button value="120" style="border-color: violet";class="md-warn">120 days</md-radio-button>
+
+                    </md-radio-group>
+                </div>
 
                 <div class="md-block"  ng-show="financing=='Required'">
                     <br><br>
